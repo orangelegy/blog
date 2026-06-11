@@ -437,7 +437,7 @@ body td {
 @font-face {
   font-style: normal;
   font-family: "Cascadia Next";
-  src: url("../lib/CascadiaNext/CascadiaNextSC.woff2") format("woff2-variations");
+  src: url("../lib/CascadiaNext/CascadiaNextSC.woff2") format("woff2");
 }
 *,
 *:before,
