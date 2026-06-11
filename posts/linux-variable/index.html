@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="变量与变量的内容荣以一个等号&#x3D;来连接  1myname&#x3D;Vbird   等号两边不能直接接空格  1myname &#x3D; VBird 或 myname&#x3D;VBird Tsai ❌   变量名称只能是英文字母与数字，但是开头字符不能是数字  12myname&#x3D;VBird ❌   变量内容若有空格可使用双引号&quot;或单引号&#39;将变量内容结合起来，但：  双引号内的特殊字符如$等，可以保有原本的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;笔记&gt; 变量的设置规则">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-variable/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="变量与变量的内容荣以一个等号&#x3D;来连接  1myname&#x3D;Vbird   等号两边不能直接接空格  1myname &#x3D; VBird 或 myname&#x3D;VBird Tsai ❌   变量名称只能是英文字母与数字，但是开头字符不能是数字  12myname&#x3D;VBird ❌   变量内容若有空格可使用双引号&quot;或单引号&#39;将变量内容结合起来，但：  双引号内的特殊字符如$等，可以保有原本的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-04-01T14:09:14.000Z">
+<meta property="article:modified_time" content="2026-04-10T19:36:46.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="variable">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>&lt;笔记&gt; 变量的设置规则</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/pc-setup-software-md/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-study-day04/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-variable/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-variable/&text=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-variable/&is_video=false&description=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; 变量的设置规则&body=Check out this article: https://blog.webrelay.cn/posts/linux-variable/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-variable/&name=&lt;笔记&gt; 变量的设置规则&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-variable/&t=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        &lt;笔记&gt; 变量的设置规则
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-04-01T14:09:14.000Z" class="dt-published" itemprop="datePublished">Apr 01 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/variable/" rel="tag">variable</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <ul>
+<li>变量与变量的内容荣以一个等号<code>=</code>来连接</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myname=Vbird</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>等号两边不能直接接空格</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myname = VBird 或 myname=VBird Tsai ❌</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>变量名称只能是英文字母与数字，但是开头字符不能是数字</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2myname=VBird ❌</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>变量内容若有空格可使用双引号<code>&quot;</code>或单引号<code>&#39;</code>将变量内容结合起来，但：</p>
+</li>
+<li><p>双引号内的特殊字符如<code>$</code>等，可以保有原本的特性</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var=<span class="string">&#x27;lang is $LANG&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$var</span>    // lang is zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>单引号内的特殊字符则仅为一般字符（纯文本）</p>
+<ul>
+<li>可用转义符<code>\</code>将特殊符号（如 <code>[Enter]</code> <code>$</code> <code>空格</code> <code>&#39;</code>等）变成一般字符</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myname=VBird\ Tsai</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在一串命令的执行中，还需要借由其他额外的命令提供的信息时，可以使用反单引号<code>`</code>或<code>$(命令)</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">version=$( <span class="built_in">uname</span> -r )</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$version</span>    // 3.10 .0-229.el7.x86-64</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若该变量为扩增变量内容时，则可用<code>&quot;$变量名称&quot;</code>或<code>${变量}</code>累加内容</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PATH=<span class="string">&quot;<span class="variable">$PATH</span>&quot;</span>:/home/bin</span><br><span class="line">PATH=<span class="variable">$&#123;PATH&#125;</span>:/home/bin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若该变量需要在其他子程序执行，则需要以<code>export</code>来使变量变成环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>通常大写字符为系统默认变量，自行设置变量可以使用小写字符，方便判断（非强制）</p>
+</li>
+<li><p>取消变量的方法通常为使用<code>unset</code>:<code>unset 变量名称</code></p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> myname</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>单引号与双引号的区别</p>
+<p>单引号与双引号的最大不同在于双引号仍然可以保有变量的内容，但单引号内仅能是一般字符，而不会有特殊符号。</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-variable/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-variable/&text=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-variable/&is_video=false&description=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; 变量的设置规则&body=Check out this article: https://blog.webrelay.cn/posts/linux-variable/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-variable/&name=&lt;笔记&gt; 变量的设置规则&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-variable/&t=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

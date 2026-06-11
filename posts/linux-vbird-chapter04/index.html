@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="学习资料：鳥哥私房菜 - 第四章、首次登入與線上求助  一、终端环境认识1. 提示符格式 [user@host ~]$ 详解：123[dmtsai@study ~]$    ↑    ↑   ↑↑用户名 主机名 目录 身份   dmtsai：当前登录的用户名 study：主机名称 ~：当前目录（家目录的缩写，即 &#x2F;home&#x2F;dmtsai） $：普通用户身份提示符（如果是root，显示 #）  2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(1) 首次登录与在线求助">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter04/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="学习资料：鳥哥私房菜 - 第四章、首次登入與線上求助  一、终端环境认识1. 提示符格式 [user@host ~]$ 详解：123[dmtsai@study ~]$    ↑    ↑   ↑↑用户名 主机名 目录 身份   dmtsai：当前登录的用户名 study：主机名称 ~：当前目录（家目录的缩写，即 &#x2F;home&#x2F;dmtsai） $：普通用户身份提示符（如果是root，显示 #）  2">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-28T16:16:56.000Z">
+<meta property="article:modified_time" content="2026-04-17T09:47:32.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(1) 首次登录与在线求助</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter05/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/hexo-theme-cactus-custom/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter04/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&text=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&is_video=false&description=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(1) 首次登录与在线求助&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter04/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&name=Linux学习日志(1) 首次登录与在线求助&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&t=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E8%AE%A4%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">一、终端环境认识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8F%90%E7%A4%BA%E7%AC%A6%E6%A0%BC%E5%BC%8F-user-host-%E8%AF%A6%E8%A7%A3%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">1. 提示符格式 [user@host ~]$ 详解：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">2. 常用基础命令：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Linux%E7%83%AD%E9%94%AE%EF%BC%88%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%81%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、Linux热键（非常重要！）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Tab-%E9%94%AE-%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%96%87%E4%BB%B6%E8%A1%A5%E5%85%A8"><span class="toc-number">2.1.</span> <span class="toc-text">1. Tab 键 - 命令与文件补全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Ctrl-C-%E4%B8%AD%E6%96%AD%E5%BD%93%E5%89%8D%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.2.</span> <span class="toc-text">2. Ctrl + C - 中断当前程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Ctrl-D-%E8%BE%93%E5%85%A5%E7%BB%93%E6%9D%9F-%E9%80%80%E5%87%BA"><span class="toc-number">2.3.</span> <span class="toc-text">3. Ctrl + D - 输入结束&#x2F;退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E6%9C%89%E7%94%A8%E7%83%AD%E9%94%AE%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">4. 其他有用热键：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E7%BA%BF%E6%B1%82%E5%8A%A9%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">三、在线求助系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-help-%E9%80%89%E9%A1%B9-%E5%BF%AB%E9%80%9F%E5%B8%AE%E5%8A%A9"><span class="toc-number">3.1.</span> <span class="toc-text">1. --help 选项 - 快速帮助</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-man-%E5%91%BD%E4%BB%A4-%E8%AF%A6%E7%BB%86%E6%89%8B%E5%86%8C"><span class="toc-number">3.2.</span> <span class="toc-text">2. man 命令 - 详细手册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-info-%E5%91%BD%E4%BB%A4-%E6%9B%B4%E8%AF%A6%E7%BB%86%E7%9A%84%E6%96%87%E6%A1%A3"><span class="toc-number">3.3.</span> <span class="toc-text">3. info 命令 - 更详细的文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">4. 文档目录位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%85%B3%E6%9C%BA%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">四、正确的关机方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E5%9C%A8%E7%BA%BF%E7%94%A8%E6%88%B7"><span class="toc-number">4.1.</span> <span class="toc-text">1. 查看当前在线用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%9A%E7%9F%A5%E7%94%A8%E6%88%B7"><span class="toc-number">4.2.</span> <span class="toc-text">2. 通知用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B3%E6%9C%BA%E5%91%BD%E4%BB%A4"><span class="toc-number">4.3.</span> <span class="toc-text">3. 关机命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">五、本章重点命令速查表</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(1) 首次登录与在线求助
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-28T16:16:56.000Z" class="dt-published" itemprop="datePublished">Mar 01 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>学习资料：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/centos7/0160startlinux.php">鳥哥私房菜 - 第四章、首次登入與線上求助</a></p>
+</blockquote>
+<h2 id="一、终端环境认识"><a href="#一、终端环境认识" class="headerlink" title="一、终端环境认识"></a><strong>一、终端环境认识</strong></h2><h3 id="1-提示符格式-user-host-详解："><a href="#1-提示符格式-user-host-详解：" class="headerlink" title="1. 提示符格式 [user@host ~]$ 详解："></a><strong>1. 提示符格式 <code>[user@host ~]$</code> 详解：</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ </span><br><span class="line">   ↑    ↑   ↑↑</span><br><span class="line">用户名 主机名 目录 身份</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>dmtsai</code></strong>：当前登录的用户名</li>
+<li><strong><code>study</code></strong>：主机名称</li>
+<li><strong><code>~</code></strong>：当前目录（家目录的缩写，即 <code>/home/dmtsai</code>）</li>
+<li><strong><code>$</code></strong>：普通用户身份提示符（如果是root，显示 <code>#</code>）</li>
+</ul>
+<h3 id="2-常用基础命令："><a href="#2-常用基础命令：" class="headerlink" title="2. 常用基础命令："></a><strong>2. 常用基础命令：</strong></h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>date</code></strong></td>
+<td>显示日期时间</td>
+<td><code>date +%Y/%m/%d</code></td>
+<td>可自定义格式</td>
+</tr>
+<tr>
+<td><strong><code>cal</code></strong></td>
+<td>显示日历</td>
+<td><code>cal 2025</code></td>
+<td>显示全年日历</td>
+</tr>
+<tr>
+<td><strong><code>bc</code></strong></td>
+<td>计算器</td>
+<td><code>scale=2; 10/3</code></td>
+<td><code>scale</code> 设置小数位</td>
+</tr>
+</tbody></table>
+<p><strong>date常用格式：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span> +%Y/%m/%d      <span class="comment"># 2026/03/01</span></span><br><span class="line"><span class="built_in">date</span> +%H:%M:%S      <span class="comment"># 14:30:45</span></span><br><span class="line"><span class="built_in">date</span> <span class="string">&quot;+%Y-%m-%d %H:%M&quot;</span>  <span class="comment"># 2026-03-01 14:30</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>cal使用示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cal         <span class="comment"># 本月日历</span></span><br><span class="line">cal -3      <span class="comment"># 上个月、本月、下个月</span></span><br><span class="line">cal 2025    <span class="comment"># 2025年全年</span></span><br><span class="line">cal 7 2025  <span class="comment"># 2025年7月</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>bc计算器操作：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bc          <span class="comment"># 进入计算器</span></span><br><span class="line">scale=2     <span class="comment"># 设置小数精度为2位</span></span><br><span class="line">10/3        <span class="comment"># 显示 3.33</span></span><br><span class="line">quit        <span class="comment"># 退出</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、Linux热键（非常重要！）"><a href="#二、Linux热键（非常重要！）" class="headerlink" title="二、Linux热键（非常重要！）"></a><strong>二、Linux热键（非常重要！）</strong></h2><h3 id="1-Tab-键-命令与文件补全"><a href="#1-Tab-键-命令与文件补全" class="headerlink" title="1. Tab 键 - 命令与文件补全"></a><strong>1. Tab 键 - 命令与文件补全</strong></h3><ul>
+<li><strong>命令补全</strong>：输入 <code>da</code> + Tab → <code>date</code>（唯一匹配）</li>
+<li><strong>文件补全</strong>：输入 <code>cd /et</code> + Tab → <code>cd /etc/</code>（唯一匹配）</li>
+<li><strong>双重Tab</strong>：输入 <code>d</code> + Tab + Tab → 列出所有以d开头的命令</li>
+</ul>
+<h3 id="2-Ctrl-C-中断当前程序"><a href="#2-Ctrl-C-中断当前程序" class="headerlink" title="2. Ctrl + C - 中断当前程序"></a><strong>2. Ctrl + C - 中断当前程序</strong></h3><ul>
+<li>停止正在运行的程序</li>
+<li>返回Shell提示符</li>
+<li>适用于：<code>ping</code>、<code>find</code>、<code>top</code> 等长时间命令</li>
+</ul>
+<h3 id="3-Ctrl-D-输入结束-退出"><a href="#3-Ctrl-D-输入结束-退出" class="headerlink" title="3. Ctrl + D - 输入结束&#x2F;退出"></a><strong>3. Ctrl + D - 输入结束&#x2F;退出</strong></h3><ul>
+<li>退出当前Shell（相当于输入 <code>exit</code>）</li>
+<li>表示EOF（End Of File）</li>
+</ul>
+<h3 id="4-其他有用热键："><a href="#4-其他有用热键：" class="headerlink" title="4. 其他有用热键："></a><strong>4. 其他有用热键：</strong></h3><table>
+<thead>
+<tr>
+<th>热键</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ctrl + L</strong></td>
+<td>清屏（相当于 <code>clear</code>）</td>
+</tr>
+<tr>
+<td><strong>Ctrl + Z</strong></td>
+<td>暂停程序（可用 <code>fg</code> 恢复）</td>
+</tr>
+<tr>
+<td><strong>Shift + PageUp&#x2F;PageDown</strong></td>
+<td>翻看屏幕输出历史</td>
+</tr>
+<tr>
+<td><strong>上下箭头</strong></td>
+<td>浏览命令历史</td>
+</tr>
+<tr>
+<td><strong>Ctrl + R</strong></td>
+<td>搜索历史命令</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、在线求助系统"><a href="#三、在线求助系统" class="headerlink" title="三、在线求助系统"></a><strong>三、在线求助系统</strong></h2><h3 id="1-help-选项-快速帮助"><a href="#1-help-选项-快速帮助" class="headerlink" title="1. --help 选项 - 快速帮助"></a><strong>1. <code>--help</code> 选项 - 快速帮助</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span> --<span class="built_in">help</span>      <span class="comment"># 显示date命令的简要帮助</span></span><br><span class="line">cal --<span class="built_in">help</span>       <span class="comment"># 显示cal命令的简要帮助</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong></p>
+<ul>
+<li>所有GNU程序都支持</li>
+<li>显示常用选项和用法</li>
+<li>适合快速查询</li>
+</ul>
+<h3 id="2-man-命令-详细手册"><a href="#2-man-命令-详细手册" class="headerlink" title="2. man 命令 - 详细手册"></a><strong>2. <code>man</code> 命令 - 详细手册</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man <span class="built_in">date</span>         <span class="comment"># 查看date的详细手册</span></span><br><span class="line">man man          <span class="comment"># 查看man命令自己的手册</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>man手册的章节：</strong></p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>用户命令（可执行命令）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>系统调用</td>
+</tr>
+<tr>
+<td>3</td>
+<td>库函数</td>
+</tr>
+<tr>
+<td>4</td>
+<td>设备文件</td>
+</tr>
+<tr>
+<td>5</td>
+<td>配置文件格式</td>
+</tr>
+<tr>
+<td>6</td>
+<td>游戏</td>
+</tr>
+<tr>
+<td>7</td>
+<td>杂项</td>
+</tr>
+<tr>
+<td>8</td>
+<td>系统管理命令</td>
+</tr>
+</tbody></table>
+<p><strong>man手册操作键：</strong></p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>空格键</strong></td>
+<td>向下翻一页</td>
+</tr>
+<tr>
+<td><strong>b键</strong></td>
+<td>向上翻一页</td>
+</tr>
+<tr>
+<td><strong>&#x2F;关键词</strong></td>
+<td>向下搜索关键词</td>
+</tr>
+<tr>
+<td><strong>?关键词</strong></td>
+<td>向上搜索关键词</td>
+</tr>
+<tr>
+<td><strong>n</strong></td>
+<td>跳到下一个搜索结果</td>
+</tr>
+<tr>
+<td><strong>N</strong></td>
+<td>跳到上一个搜索结果</td>
+</tr>
+<tr>
+<td><strong>q</strong></td>
+<td>退出</td>
+</tr>
+</tbody></table>
+<h3 id="3-info-命令-更详细的文档"><a href="#3-info-命令-更详细的文档" class="headerlink" title="3. info 命令 - 更详细的文档"></a><strong>3. <code>info</code> 命令 - 更详细的文档</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info <span class="built_in">date</span>        <span class="comment"># 查看date的info文档</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>比man更详细</li>
+<li>支持超链接导航（类似网页）</li>
+<li>用 <strong>Tab</strong> 在链接间跳转，<strong>Enter</strong> 进入链接</li>
+</ul>
+<h3 id="4-文档目录位置"><a href="#4-文档目录位置" class="headerlink" title="4. 文档目录位置"></a><strong>4. 文档目录位置</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/doc/  <span class="comment"># 存放已安装软件的详细文档</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、正确的关机方法"><a href="#四、正确的关机方法" class="headerlink" title="四、正确的关机方法"></a><strong>四、正确的关机方法</strong></h2><h3 id="1-查看当前在线用户"><a href="#1-查看当前在线用户" class="headerlink" title="1. 查看当前在线用户"></a><strong>1. 查看当前在线用户</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">who</span>          <span class="comment"># 查看谁在线</span></span><br><span class="line"><span class="built_in">whoami</span>       <span class="comment"># 查看自己是谁</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通知用户"><a href="#2-通知用户" class="headerlink" title="2. 通知用户"></a><strong>2. 通知用户</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wall <span class="string">&quot;System will shutdown in 5 minutes&quot;</span>  <span class="comment"># 广播消息</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-关机命令"><a href="#3-关机命令" class="headerlink" title="3. 关机命令"></a><strong>3. 关机命令</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sync</span>         <span class="comment"># 将内存数据同步到磁盘</span></span><br><span class="line">shutdown -h now     <span class="comment"># 立即关机</span></span><br><span class="line">shutdown -h 20:30   <span class="comment"># 20:30关机</span></span><br><span class="line">shutdown -r now     <span class="comment"># 立即重启</span></span><br><span class="line">shutdown -r +10     <span class="comment"># 10分钟后重启</span></span><br><span class="line">reboot       <span class="comment"># 重启</span></span><br><span class="line">poweroff     <span class="comment"># 关机</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>shutdown常用选项：</strong></p>
+<ul>
+<li><code>-h</code>：关机（halt）</li>
+<li><code>-r</code>：重启（reboot）</li>
+<li><code>-k</code>：假关机（只发警告）</li>
+<li><code>-c</code>：取消关机计划</li>
+</ul>
+<hr>
+<h2 id="五、本章重点命令速查表"><a href="#五、本章重点命令速查表" class="headerlink" title="五、本章重点命令速查表"></a><strong>五、本章重点命令速查表</strong></h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>常用选项&#x2F;示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date</code></td>
+<td>显示日期时间</td>
+<td><code>date +%Y%m%d</code></td>
+</tr>
+<tr>
+<td><code>cal</code></td>
+<td>显示日历</td>
+<td><code>cal -3</code>, <code>cal 2025</code></td>
+</tr>
+<tr>
+<td><code>bc</code></td>
+<td>计算器</td>
+<td><code>scale=4</code> 设小数位</td>
+</tr>
+<tr>
+<td><code>man</code></td>
+<td>查看手册</td>
+<td><code>man 5 passwd</code></td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td>查看info文档</td>
+<td><code>info coreutils</code></td>
+</tr>
+<tr>
+<td><code>who</code></td>
+<td>查看在线用户</td>
+<td><code>who -b</code> 看最后启动时间</td>
+</tr>
+<tr>
+<td><code>wall</code></td>
+<td>广播消息</td>
+<td><code>wall &quot;message&quot;</code></td>
+</tr>
+<tr>
+<td><code>shutdown</code></td>
+<td>关机&#x2F;重启</td>
+<td><code>shutdown -h now</code></td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E8%AE%A4%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">一、终端环境认识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8F%90%E7%A4%BA%E7%AC%A6%E6%A0%BC%E5%BC%8F-user-host-%E8%AF%A6%E8%A7%A3%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">1. 提示符格式 [user@host ~]$ 详解：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">2. 常用基础命令：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Linux%E7%83%AD%E9%94%AE%EF%BC%88%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%81%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、Linux热键（非常重要！）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Tab-%E9%94%AE-%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%96%87%E4%BB%B6%E8%A1%A5%E5%85%A8"><span class="toc-number">2.1.</span> <span class="toc-text">1. Tab 键 - 命令与文件补全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Ctrl-C-%E4%B8%AD%E6%96%AD%E5%BD%93%E5%89%8D%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.2.</span> <span class="toc-text">2. Ctrl + C - 中断当前程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Ctrl-D-%E8%BE%93%E5%85%A5%E7%BB%93%E6%9D%9F-%E9%80%80%E5%87%BA"><span class="toc-number">2.3.</span> <span class="toc-text">3. Ctrl + D - 输入结束&#x2F;退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E6%9C%89%E7%94%A8%E7%83%AD%E9%94%AE%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">4. 其他有用热键：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E7%BA%BF%E6%B1%82%E5%8A%A9%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">三、在线求助系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-help-%E9%80%89%E9%A1%B9-%E5%BF%AB%E9%80%9F%E5%B8%AE%E5%8A%A9"><span class="toc-number">3.1.</span> <span class="toc-text">1. --help 选项 - 快速帮助</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-man-%E5%91%BD%E4%BB%A4-%E8%AF%A6%E7%BB%86%E6%89%8B%E5%86%8C"><span class="toc-number">3.2.</span> <span class="toc-text">2. man 命令 - 详细手册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-info-%E5%91%BD%E4%BB%A4-%E6%9B%B4%E8%AF%A6%E7%BB%86%E7%9A%84%E6%96%87%E6%A1%A3"><span class="toc-number">3.3.</span> <span class="toc-text">3. info 命令 - 更详细的文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">4. 文档目录位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%85%B3%E6%9C%BA%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">四、正确的关机方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E5%9C%A8%E7%BA%BF%E7%94%A8%E6%88%B7"><span class="toc-number">4.1.</span> <span class="toc-text">1. 查看当前在线用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%9A%E7%9F%A5%E7%94%A8%E6%88%B7"><span class="toc-number">4.2.</span> <span class="toc-text">2. 通知用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B3%E6%9C%BA%E5%91%BD%E4%BB%A4"><span class="toc-number">4.3.</span> <span class="toc-text">3. 关机命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">五、本章重点命令速查表</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter04/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&text=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&is_video=false&description=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(1) 首次登录与在线求助&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter04/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&title=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&name=Linux学习日志(1) 首次登录与在线求助&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter04/&t=Linux学习日志(1) 首次登录与在线求助"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

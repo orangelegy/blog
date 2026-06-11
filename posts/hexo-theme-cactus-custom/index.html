@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="本文基于Hexo博客框架的Cactus主题定制，主题地址hexo-theme-cactus，安装和官方配置等部分请看官方文档，这里不做赘述。 一、BUG修复关于文章页面导航在滚动时会消失的BUG，已经有人在Github提出了Issue并且底下给出了解决方案：Post page navigation disappears when scrolling down · Issue #378 · prob">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cactus主题个人美化定制教程">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="本文基于Hexo博客框架的Cactus主题定制，主题地址hexo-theme-cactus，安装和官方配置等部分请看官方文档，这里不做赘述。 一、BUG修复关于文章页面导航在滚动时会消失的BUG，已经有人在Github提出了Issue并且底下给出了解决方案：Post page navigation disappears when scrolling down · Issue #378 · prob">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-11T07:08:02.000Z">
+<meta property="article:modified_time" content="2026-03-03T20:59:48.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="cactus">
+<meta property="article:tag" content="custom">
+<meta property="article:tag" content="fonts">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="theme">
+<meta property="article:tag" content="waline">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cactus主题个人美化定制教程</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter04/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/ffmpeg-use-guide/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&text=Cactus主题个人美化定制教程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&is_video=false&description=Cactus主题个人美化定制教程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cactus主题个人美化定制教程&body=Check out this article: https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&name=Cactus主题个人美化定制教程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&t=Cactus主题个人美化定制教程"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81BUG%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.</span> <span class="toc-text">一、BUG修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E9%A2%98%E9%A2%9C%E8%89%B2"><span class="toc-number">2.</span> <span class="toc-text">二、主题颜色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">三、自定义字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BF%AE%E6%94%B9"><span class="toc-number">4.</span> <span class="toc-text">四、导航栏修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%80%89%E4%B8%AD%E9%93%BE%E6%8E%A5%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">五、选中链接渐变效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">六、日期时间格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%B7%BB%E5%8A%A0%E7%82%B9%E5%87%BB%E9%87%8F%E7%BB%9F%E8%AE%A1"><span class="toc-number">7.</span> <span class="toc-text">七、添加点击量统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%B7%BB%E5%8A%A0waline%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F"><span class="toc-number">8.</span> <span class="toc-text">八、添加waline评论系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81SEO%E4%BC%98%E5%8C%96"><span class="toc-number">9.</span> <span class="toc-text">九、SEO优化</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Cactus主题个人美化定制教程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-11T07:08:02.000Z" class="dt-published" itemprop="datePublished">Feb 11 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Blog/">Blog</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/blog/" rel="tag">blog</a>, <a class="p-category" href="/tags/cactus/" rel="tag">cactus</a>, <a class="p-category" href="/tags/custom/" rel="tag">custom</a>, <a class="p-category" href="/tags/fonts/" rel="tag">fonts</a>, <a class="p-category" href="/tags/hexo/" rel="tag">hexo</a>, <a class="p-category" href="/tags/theme/" rel="tag">theme</a>, <a class="p-category" href="/tags/waline/" rel="tag">waline</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>本文基于Hexo博客框架的Cactus主题定制，主题地址<a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">hexo-theme-cactus</a>，安装和官方配置等部分请看官方文档，这里不做赘述。</p>
+<h2 id="一、BUG修复"><a href="#一、BUG修复" class="headerlink" title="一、BUG修复"></a>一、BUG修复</h2><p>关于文章页面导航在滚动时会消失的BUG，已经有人在Github提出了Issue并且底下给出了解决方案：<a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus/issues/378">Post page navigation disappears when scrolling down · Issue #378 · probberechts&#x2F;hexo-theme-cactus · GitHub</a> </p>
+<p>总结：</p>
+<ul>
+<li><p>问题代码：<code>.\themes\cactus\source\js\main.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (menu.<span class="property">length</span>) &#123;</span><br><span class="line">      $(<span class="variable language_">window</span>).<span class="title function_">on</span>(<span class="string">&quot;scroll&quot;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> topDistance = menu.<span class="title function_">offset</span>().<span class="property">top</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// hide only the navigation links on desktop</span></span><br><span class="line">        <span class="keyword">if</span> (!nav.<span class="title function_">is</span>(<span class="string">&quot;:visible&quot;</span>) &amp;&amp; topDistance &lt; <span class="number">50</span>) &#123;</span><br><span class="line">          nav.<span class="title function_">show</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nav.<span class="title function_">is</span>(<span class="string">&quot;:visible&quot;</span>) &amp;&amp; topDistance &gt; <span class="number">100</span>) &#123;</span><br><span class="line">          nav.<span class="title function_">hide</span>();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解决方案</p>
+<ul>
+<li><p>将限制从 50 改为 100：</p>
+</li>
+<li><p>或者，<code>menu.offset().top</code> 的替代方案：</p>
+<ul>
+<li><code>document.documentElement.scrollTop</code></li>
+<li><code>window.pageYOffset</code></li>
+<li><code>window.scrollY</code></li>
+<li><code>$(window).scrollTop()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、主题颜色"><a href="#二、主题颜色" class="headerlink" title="二、主题颜色"></a>二、主题颜色</h2><ul>
+<li><p>相关文件路径：<code>.\themes\cactus\source\css_colors\dark.styl</code></p>
+<p>这里以<code>dark</code>风格举例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$color</span>-<span class="attribute">background</span> = <span class="number">#282c34</span>    // 背景颜色</span><br><span class="line"><span class="variable">$color</span>-footer-mobile-<span class="number">1</span> = <span class="built_in">lighten</span>(<span class="variable">$color</span>-<span class="attribute">background</span>, <span class="number">2%</span>)    // 移动端</span><br><span class="line"><span class="variable">$color</span>-footer-mobile-<span class="number">2</span> = <span class="built_in">lighten</span>(<span class="variable">$color</span>-<span class="attribute">background</span>, <span class="number">10%</span>)   // 移动端</span><br><span class="line"><span class="variable">$color</span>-<span class="attribute">background</span>-code = <span class="built_in">lighten</span>(<span class="variable">$color</span>-background, <span class="number">2%</span>)    // 代码块背景颜色</span><br><span class="line"><span class="variable">$color</span>-<span class="attribute">border</span> = <span class="number">#818896</span>    // 边框颜色</span><br><span class="line"><span class="variable">$color</span>-scrollbar = <span class="number">#818896</span>    <span class="comment">// 滚动块颜色</span></span><br><span class="line"><span class="variable">$color</span>-meta = <span class="number">#818896</span>    <span class="comment">// 主页日期和页脚颜色</span></span><br><span class="line"><span class="variable">$color</span>-meta-<span class="selector-tag">code</span> = <span class="number">#818896</span>    <span class="comment">// “代码”样式字体颜色（非代码块）</span></span><br><span class="line"><span class="variable">$color</span>-link = <span class="built_in">rgba</span>(<span class="number">224</span>, <span class="number">108</span>, <span class="number">117</span>, <span class="number">1</span>)    <span class="comment">// 链接:hover下划线颜色</span></span><br><span class="line"><span class="variable">$color</span>-<span class="selector-tag">text</span> = <span class="number">#abb2bf</span>    <span class="comment">// 正文颜色</span></span><br><span class="line"><span class="variable">$color</span>-accent-<span class="number">3</span> = <span class="number">#abb2bf</span>    <span class="comment">// 文章元数据（作者、日期、标签、分类）颜色</span></span><br><span class="line"><span class="variable">$color</span>-accent-<span class="number">2</span> = <span class="number">#eeeeee</span>    <span class="comment">// 文章标题颜色</span></span><br><span class="line"><span class="variable">$color</span>-accent-<span class="number">1</span> = <span class="number">#98c379</span>    <span class="comment">// 博客主色调（主页标题、导航栏、标题标号颜色）   </span></span><br><span class="line"><span class="variable">$color</span>-<span class="selector-tag">quote</span> = <span class="number">#61aeee</span>    <span class="comment">// “引用”样式字体颜色</span></span><br><span class="line"><span class="variable">$highlight</span> = <span class="built_in">hexo-config</span>(<span class="string">&quot;highlight&quot;</span>) || <span class="string">&quot;agate&quot;</span>    <span class="comment">// 代码块hignliht风格及默认风格</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="三、自定义字体"><a href="#三、自定义字体" class="headerlink" title="三、自定义字体"></a>三、自定义字体</h2><p>    由于博客原字体对中文支持不太友好，所以决定将博客字体更改为微软的<a target="_blank" rel="noopener" href="https://github.com/microsoft/cascadia-code/discussions/762">CascadiaNextSC</a></p>
+<p>    1. 首先下载字体文件，我将.ttf格式在线转换成了.woff2格式文件压缩了体积，再将字体文件放在<code>.\themes\cactus\source\lib\CascadiaNext\</code>目录下。</p>
+<p>    2. 接着打开<code>.\themes\cactus\source\css\_fonts.styl</code>文件，修改为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span></span><br><span class="line">  <span class="attribute">font-style</span>: normal</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Cascadia Next&quot;</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">local</span>(<span class="string">&quot;Cascadia Next SC&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;../lib/CascadiaNext/CascadiaNextSC.wght.woff2&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;woff2&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>    3. 最后打开<code>.\themes\cactus\source\css\_variables.styl</code>,将变量的字体更改为我们自定义的字体：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$font</span>-family-<span class="selector-tag">body</span> = <span class="string">&quot;Cascadia Next SC&quot;</span>, <span class="string">&quot;Cascadia Next&quot;</span>, monospace, sans-serif</span><br><span class="line"><span class="variable">$font</span>-family-mono = <span class="string">&quot;Cascadia Next SC&quot;</span>, <span class="string">&quot;Cascadia Next&quot;</span>, monospace, sans-serif</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><p>字体名中间有空格要加<code>“”</code>。</p>
+</li>
+<li><p>设置通用字体族，在找不到自定义字体时，计算机会优先使用本地符合条件的字体。常用字体族：</p>
+<p><code>sans-serif</code>（无衬线，适合屏幕）、<code>serif</code>（衬线）、<code>monospace</code>（等宽，适合代码）；</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="四、导航栏修改"><a href="#四、导航栏修改" class="headerlink" title="四、导航栏修改"></a>四、导航栏修改</h2><p>    最近在学习Linux，所以把导航栏菜单修改成了<code>/home</code>的样式</p>
+<p>    1. 首先要将菜单项右边的分隔线去除，打开<code>.\themes\cactus\source\css\_partial\header.styl</code>，修改为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#header</span></span><br><span class="line">  <span class="selector-id">#nav</span></span><br><span class="line">    <span class="selector-tag">ul</span></span><br><span class="line">      <span class="selector-tag">li</span></span><br><span class="line">        <span class="attribute">margin-right</span>: <span class="number">5px</span>    // 右边距可设置为<span class="number">5px</span>，以自己舒服为准</span><br><span class="line">        <span class="attribute">border-right</span>: <span class="number">0px</span> dotted    // 右边框，删除该行或设置为<span class="number">0</span>，方便改回来</span><br></pre></td></tr></table></figure>
+
+<p>    2. 把文章页的导航栏菜单的分隔线也去除，打开<code>.\themes\cactus\source\css\_partial\post\actions_desktop.styl</code>，修改为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#header-post</span></span><br><span class="line">  <span class="selector-id">#nav</span></span><br><span class="line">    <span class="selector-tag">ul</span></span><br><span class="line">      <span class="selector-tag">a</span></span><br><span class="line">        <span class="attribute">margin-right</span>: <span class="number">5px</span>    // 右边距个人设置<span class="number">5px</span></span><br><span class="line">      <span class="selector-tag">li</span></span><br><span class="line">        <span class="attribute">border-right</span>: <span class="number">0px</span> dotted <span class="variable">$color</span>-accent-<span class="number">1</span>    // 删除右边框或设置为<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、选中链接渐变效果"><a href="#五、选中链接渐变效果" class="headerlink" title="五、选中链接渐变效果"></a>五、选中链接渐变效果</h2><ol>
+<li><p>首先打开<code>.\themes\cactus\source\css\style.styl</code>,把主页文章标题的下划线去除：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span></span><br><span class="line">  <span class="selector-tag">a</span></span><br><span class="line">    <span class="built_in">underline</span>(<span class="number">5px</span>, <span class="variable">$color</span>-text)    <span class="comment">// 注释或删除该行</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接着修改鼠标选中链接的渐变效果：【<a href="./#%E4%BA%94%E3%80%81%E9%80%89%E4%B8%AD%E9%93%BE%E6%8E%A5%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C">鼠标移到这里预览效果</a>】</p>
+<p>同一文件内找到下面代码，修改成此样式：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span></span><br><span class="line">  <span class="selector-tag">a</span></span><br><span class="line">    <span class="selector-pseudo">&amp;:hover</span></span><br><span class="line">      <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(transparent <span class="number">0px</span>, <span class="variable">$color</span>-link <span class="number">15px</span>);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="六、日期时间格式"><a href="#六、日期时间格式" class="headerlink" title="六、日期时间格式"></a>六、日期时间格式</h2><p>个人总结表格：</p>
+<table>
+<thead>
+<tr>
+<th>类型及示例</th>
+<th>1位（不补0）</th>
+<th>2位（补0）</th>
+<th>3位（简写）</th>
+<th>4位（全写）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>年</td>
+<td></td>
+<td><code>yy</code>：26</td>
+<td></td>
+<td><code>yyyy</code>：2026</td>
+</tr>
+<tr>
+<td>月</td>
+<td><code>M</code>：2</td>
+<td><code>MM</code>：02</td>
+<td><code>MMM</code>：Feb</td>
+<td><code>MMMM</code>：February</td>
+</tr>
+<tr>
+<td>日</td>
+<td><code>D</code>：9</td>
+<td><code>DD</code>：09</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>周</td>
+<td><code>E</code>：Wed</td>
+<td></td>
+<td><code>EEE</code>：Wed</td>
+<td><code>EEEE</code>：Wednesday</td>
+</tr>
+<tr>
+<td>时</td>
+<td><code>H</code>：15<br/><code>h</code>：3</td>
+<td><code>HH</code>：15<br/><code>hh</code>：03</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>分</td>
+<td><code>m</code>：5</td>
+<td><code>mm</code>：05</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>秒</td>
+<td><code>s</code>：8</td>
+<td><code>ss</code>：08</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>打开<code>.\_config.yml</code>，修改日期和时间格式</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">date_format:</span> <span class="string">MMM</span> <span class="string">DD</span> <span class="string">YYYY</span>    <span class="string">//</span> <span class="string">Feb</span> <span class="number">10</span> <span class="number">2026</span></span><br><span class="line"><span class="attr">time_format:</span> <span class="string">HH:mm:ss</span>    <span class="string">//</span> <span class="number">15</span><span class="string">:30:00</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="七、添加点击量统计"><a href="#七、添加点击量统计" class="headerlink" title="七、添加点击量统计"></a>七、添加点击量统计</h2><ol>
+<li>打开<code>.\themes\cactus\_config.yml</code>，添加以下代码：</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 是否开启不蒜子访问量统计功能</span></span><br><span class="line"><span class="attr">busuanzi:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>打开<code>.\themes\cactus\layout\_partial\footer.ejs</code>，在此位置添加代码：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;footer-right&quot;&gt;</span><br><span class="line">    &lt;nav&gt;</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &lt;% for (var i in theme.nav) &#123; %&gt;&lt;!--</span><br><span class="line">       --&gt;&lt;li&gt;&lt;a href=&quot;&lt;%- url_for(theme.nav[i]) %&gt;&quot;&gt;&lt;%= __(&#x27;nav.&#x27;+i).replace(&quot;nav.&quot;, &quot;&quot;) %&gt;&lt;/a&gt;&lt;/li&gt;&lt;!--</span><br><span class="line">     --&gt;&lt;% &#125; %&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">      &lt;!-- 不蒜子统计 添加代码 开始--&gt;</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">            &lt;% if (theme.busuanzi &amp;&amp; theme.busuanzi.enable)&#123; %&gt;</span><br><span class="line">              &lt;span id=&quot;busuanzi_container_site_pv&quot;&gt;</span><br><span class="line">                  &lt;i class=&quot;fa-solid fa-rocket&quot;&gt;&lt;/i&gt; </span><br><span class="line">                  &lt;span id=&quot;busuanzi_value_site_pv&quot;&gt;&lt;/span&gt;</span><br><span class="line">              &lt;/span&gt;</span><br><span class="line">              &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;</span><br><span class="line">              &lt;span id=&quot;busuanzi_container_site_uv&quot; style=&#x27;display:none&#x27;&gt;</span><br><span class="line">                  &lt;i class=&quot;fa-solid fa-user&quot;&gt;&lt;/i&gt;</span><br><span class="line">                  &lt;span id=&quot;busuanzi_value_site_uv&quot;&gt;&lt;/span&gt;</span><br><span class="line">              &lt;/span&gt;</span><br><span class="line">            &lt;script async src=&quot;//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">            &lt;% &#125; %&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">      &lt;!-- 不蒜子统计 添加代码 结束--&gt;</span><br><span class="line">    &lt;/nav&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、添加waline评论系统"><a href="#八、添加waline评论系统" class="headerlink" title="八、添加waline评论系统"></a>八、添加waline评论系统</h2><blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://sx1ang.github.io/2023/10/08/Hexo-Cactus-%E4%B8%BB%E9%A2%98%E5%AE%9E%E7%8E%B0%E6%94%AF%E6%8C%81-Waline-%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/">Hexo Cactus主题实现支持Waline评论系统</a></p>
+</blockquote>
+<h2 id="九、SEO优化"><a href="#九、SEO优化" class="headerlink" title="九、SEO优化"></a>九、SEO优化</h2><p>    之前做过很多次，现在懒得折腾了，啥时候想弄再说……</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81BUG%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.</span> <span class="toc-text">一、BUG修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E9%A2%98%E9%A2%9C%E8%89%B2"><span class="toc-number">2.</span> <span class="toc-text">二、主题颜色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">三、自定义字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BF%AE%E6%94%B9"><span class="toc-number">4.</span> <span class="toc-text">四、导航栏修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%80%89%E4%B8%AD%E9%93%BE%E6%8E%A5%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">五、选中链接渐变效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">六、日期时间格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%B7%BB%E5%8A%A0%E7%82%B9%E5%87%BB%E9%87%8F%E7%BB%9F%E8%AE%A1"><span class="toc-number">7.</span> <span class="toc-text">七、添加点击量统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%B7%BB%E5%8A%A0waline%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F"><span class="toc-number">8.</span> <span class="toc-text">八、添加waline评论系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81SEO%E4%BC%98%E5%8C%96"><span class="toc-number">9.</span> <span class="toc-text">九、SEO优化</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&text=Cactus主题个人美化定制教程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&is_video=false&description=Cactus主题个人美化定制教程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cactus主题个人美化定制教程&body=Check out this article: https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&title=Cactus主题个人美化定制教程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&name=Cactus主题个人美化定制教程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/hexo-theme-cactus-custom/&t=Cactus主题个人美化定制教程"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="学习资料：鳥哥私房菜 - 第五章、Linux 的檔案權限與目錄配置  1. 文件权限概念Linux是多用户系统，每个文件都有所有者(owner)和所属组(group)，通过权限机制保护文件安全。 查看文件属性： 123ls -l-rw-r--r-- 1 root root 1024 Jan 1 file.txtdrwxr-xr-x 2 root root 4096 Jan 1 dir&#x2F;  输出7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(2) Linux的文件权限与目录配置">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter05/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="学习资料：鳥哥私房菜 - 第五章、Linux 的檔案權限與目錄配置  1. 文件权限概念Linux是多用户系统，每个文件都有所有者(owner)和所属组(group)，通过权限机制保护文件安全。 查看文件属性： 123ls -l-rw-r--r-- 1 root root 1024 Jan 1 file.txtdrwxr-xr-x 2 root root 4096 Jan 1 dir&#x2F;  输出7">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-28T17:15:00.000Z">
+<meta property="article:modified_time" content="2026-04-17T09:43:34.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(2) Linux的文件权限与目录配置</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter06/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter04/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter05/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&text=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&is_video=false&description=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(2) Linux的文件权限与目录配置&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter05/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&name=Linux学习日志(2) Linux的文件权限与目录配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&t=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">1. 文件权限概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9D%83%E9%99%90%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">2. 权限字段详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%95%B0%E5%AD%97%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">3. 数字表示法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%AC%A6%E5%8F%B7%E6%B3%95%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">4.</span> <span class="toc-text">4. 符号法修改权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E5%8C%BA%E5%88%AB"><span class="toc-number">5.</span> <span class="toc-text">5. 文件与目录权限区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E8%80%85%E5%92%8C%E7%BB%84"><span class="toc-number">6.</span> <span class="toc-text">6. 修改所有者和组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%BB%98%E8%AE%A4%E6%9D%83%E9%99%90-umask"><span class="toc-number">7.</span> <span class="toc-text">7. 默认权限 umask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90"><span class="toc-number">8.</span> <span class="toc-text">8. 特殊权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%9A%90%E8%97%8F%E6%9D%83%E9%99%90"><span class="toc-number">9.</span> <span class="toc-text">9. 隐藏权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-FHS%E7%9B%AE%E5%BD%95%E6%A0%87%E5%87%86"><span class="toc-number">10.</span> <span class="toc-text">10. FHS目录标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%B8%B8%E7%94%A8%E5%AE%89%E5%85%A8%E6%9D%83%E9%99%90"><span class="toc-number">11.</span> <span class="toc-text">11. 常用安全权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4"><span class="toc-number">12.</span> <span class="toc-text">12. 本章重点命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">13.</span> <span class="toc-text">一句话总结</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(2) Linux的文件权限与目录配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-28T17:15:00.000Z" class="dt-published" itemprop="datePublished">Mar 01 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>学习资料：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/centos7/0210filepermission.php">鳥哥私房菜 - 第五章、Linux 的檔案權限與目錄配置</a></p>
+</blockquote>
+<h2 id="1-文件权限概念"><a href="#1-文件权限概念" class="headerlink" title="1. 文件权限概念"></a><strong>1. 文件权限概念</strong></h2><p>Linux是多用户系统，每个文件都有<strong>所有者(owner)<strong>和</strong>所属组(group)</strong>，通过权限机制保护文件安全。</p>
+<p><strong>查看文件属性：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br><span class="line">-rw-r--r-- 1 root root 1024 Jan 1 file.txt</span><br><span class="line">drwxr-xr-x 2 root root 4096 Jan 1 <span class="built_in">dir</span>/</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出7个字段：</strong></p>
+<ol>
+<li>权限(10字符) | 2. 链接数 | 3. 所有者 | 4. 所属组 | 5. 大小 | 6. 修改时间 | 7. 文件名</li>
+</ol>
+<hr>
+<h2 id="2-权限字段详解"><a href="#2-权限字段详解" class="headerlink" title="2. 权限字段详解"></a><strong>2. 权限字段详解</strong></h2><p><strong>第1字符：文件类型</strong></p>
+<ul>
+<li><code>-</code>：普通文件</li>
+<li><code>d</code>：目录</li>
+<li><code>l</code>：符号链接</li>
+<li><code>b</code>：块设备</li>
+<li><code>c</code>：字符设备</li>
+</ul>
+<p><strong>第2-10字符：权限三组</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr--</span><br><span class="line">  ↑  ↑  ↑</span><br><span class="line">  u  g  o</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>u</strong>：所有者(user)</li>
+<li><strong>g</strong>：所属组(group)</li>
+<li><strong>o</strong>：其他人(others)</li>
+</ul>
+<p><strong>权限字符：</strong></p>
+<ul>
+<li><code>r</code>：读(read)</li>
+<li><code>w</code>：写(write)</li>
+<li><code>x</code>：执行(execute)</li>
+<li><code>-</code>：无权限</li>
+</ul>
+<hr>
+<h2 id="3-数字表示法"><a href="#3-数字表示法" class="headerlink" title="3. 数字表示法"></a><strong>3. 数字表示法</strong></h2><table>
+<thead>
+<tr>
+<th>权限</th>
+<th>数字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>4</td>
+<td>读</td>
+</tr>
+<tr>
+<td>w</td>
+<td>2</td>
+<td>写</td>
+</tr>
+<tr>
+<td>x</td>
+<td>1</td>
+<td>执行</td>
+</tr>
+<tr>
+<td>-</td>
+<td>0</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p><strong>常用组合：</strong></p>
+<ul>
+<li><code>7</code> &#x3D; rwx (4+2+1)</li>
+<li><code>6</code> &#x3D; rw- (4+2)</li>
+<li><code>5</code> &#x3D; r-x (4+1)</li>
+<li><code>4</code> &#x3D; r–</li>
+<li><code>0</code> &#x3D; —</li>
+</ul>
+<p><strong>三位数字：</strong> <code>chmod 754 file</code></p>
+<ul>
+<li>7(所有者): rwx</li>
+<li>5(组): r-x</li>
+<li>4(其他人): r–</li>
+</ul>
+<p><strong>常用设置：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 755 file  <span class="comment"># rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 644 file  <span class="comment"># rw-r--r-- (最常用)</span></span><br><span class="line"><span class="built_in">chmod</span> 700 file  <span class="comment"># rwx------</span></span><br><span class="line"><span class="built_in">chmod</span> 600 file  <span class="comment"># rw-------</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-符号法修改权限"><a href="#4-符号法修改权限" class="headerlink" title="4. 符号法修改权限"></a><strong>4. 符号法修改权限</strong></h2><p><strong>对象：</strong> u(所有者) g(组) o(其他人) a(所有人)</p>
+<p><strong>操作：</strong> +(添加) -(移除) &#x3D;(精确设置)</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> u+x file     <span class="comment"># 所有者加执行</span></span><br><span class="line"><span class="built_in">chmod</span> g-w file     <span class="comment"># 组移除写</span></span><br><span class="line"><span class="built_in">chmod</span> o=r file     <span class="comment"># 其他人设为只读</span></span><br><span class="line"><span class="built_in">chmod</span> a+rw file    <span class="comment"># 所有人加读写</span></span><br><span class="line"><span class="built_in">chmod</span> u=rwx,g=rx,o=r file  <span class="comment"># 精确设置</span></span><br><span class="line"><span class="built_in">chmod</span> -R 755 <span class="built_in">dir</span>/  <span class="comment"># 递归修改目录</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-文件与目录权限区别"><a href="#5-文件与目录权限区别" class="headerlink" title="5. 文件与目录权限区别"></a><strong>5. 文件与目录权限区别</strong></h2><table>
+<thead>
+<tr>
+<th>权限</th>
+<th>对文件意义</th>
+<th>对目录意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>r</strong></td>
+<td>查看内容(cat)</td>
+<td>列出内容(ls)</td>
+</tr>
+<tr>
+<td><strong>w</strong></td>
+<td>修改内容(vim)</td>
+<td>增删文件(touch&#x2F;rm)</td>
+</tr>
+<tr>
+<td><strong>x</strong></td>
+<td>执行文件(.&#x2F;)</td>
+<td>进入目录(cd)</td>
+</tr>
+</tbody></table>
+<p><strong>目录权限铁律：</strong></p>
+<ul>
+<li>有 <strong>x</strong> 才能 <code>cd</code> 进入</li>
+<li>有 <strong>r</strong> 才能 <code>ls</code> 列出</li>
+<li>有 <strong>w</strong> 才能创建&#x2F;删除文件(<strong>必须同时有x</strong>)</li>
+</ul>
+<p><strong>实验结论：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 711 <span class="built_in">dir</span>/      <span class="comment"># rwx--x--x (有x无r)</span></span><br><span class="line"><span class="built_in">cd</span> <span class="built_in">dir</span>/             <span class="comment"># ✅ 可以进入</span></span><br><span class="line"><span class="built_in">ls</span> <span class="built_in">dir</span>/             <span class="comment"># ❌ 无法列出</span></span><br><span class="line"><span class="built_in">cat</span> <span class="built_in">dir</span>/file        <span class="comment"># ✅ 知道文件名可访问</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 755 <span class="built_in">dir</span>/      <span class="comment"># rwxr-xr-x (有r有x)</span></span><br><span class="line"><span class="built_in">ls</span> <span class="built_in">dir</span>/             <span class="comment"># ✅ 正常列出</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-修改所有者和组"><a href="#6-修改所有者和组" class="headerlink" title="6. 修改所有者和组"></a><strong>6. 修改所有者和组</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chown</span> user file           <span class="comment"># 改所有者</span></span><br><span class="line"><span class="built_in">chown</span> user:group file     <span class="comment"># 同时改</span></span><br><span class="line"><span class="built_in">chown</span> :group file         <span class="comment"># 只改组</span></span><br><span class="line"><span class="built_in">chgrp</span> group file          <span class="comment"># 改组(同上)</span></span><br><span class="line"><span class="built_in">chown</span> -R user <span class="built_in">dir</span>/        <span class="comment"># 递归修改</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>限制：</strong> 普通用户不能改所有者(需root)，只能改自己所属的组</p>
+<hr>
+<h2 id="7-默认权限-umask"><a href="#7-默认权限-umask" class="headerlink" title="7. 默认权限 umask"></a><strong>7. 默认权限 umask</strong></h2><ul>
+<li>文件默认最大：<strong>666</strong> (rw-rw-rw-)</li>
+<li>目录默认最大：<strong>777</strong> (rwxrwxrwx)</li>
+<li>最终权限 &#x3D; 最大权限 - umask</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">umask</span></span><br><span class="line">0022</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件: 666 - 022 = 644 (rw-r--r--)</span></span><br><span class="line"><span class="comment"># 目录: 777 - 022 = 755 (rwxr-xr-x)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">umask</span> 002    <span class="comment"># 更开放(组可写)</span></span><br><span class="line"><span class="built_in">umask</span> 077    <span class="comment"># 更严格(仅所有者)</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-特殊权限"><a href="#8-特殊权限" class="headerlink" title="8. 特殊权限"></a><strong>8. 特殊权限</strong></h2><table>
+<thead>
+<tr>
+<th>权限</th>
+<th>数字</th>
+<th>符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SUID</strong></td>
+<td>4</td>
+<td>u+s</td>
+<td>执行时拥有所有者权限(passwd)</td>
+</tr>
+<tr>
+<td><strong>SGID</strong></td>
+<td>2</td>
+<td>g+s</td>
+<td>文件:继承组权限; 目录:新文件继承组</td>
+</tr>
+<tr>
+<td><strong>SBIT</strong></td>
+<td>1</td>
+<td>o+t</td>
+<td>仅所有者可删除文件(&#x2F;tmp)</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 4755 file    <span class="comment"># SUID + rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 2755 <span class="built_in">dir</span>     <span class="comment"># SGID + rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 1777 <span class="built_in">dir</span>     <span class="comment"># SBIT + rwxrwxrwx</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>显示：</strong></p>
+<ul>
+<li>SUID: <code>-rwsr-xr-x</code> (所有者x变s)</li>
+<li>SGID: <code>-rwxr-sr-x</code> (组x变s)</li>
+<li>SBIT: <code>drwxrwxrwt</code> (其他人x变t)</li>
+</ul>
+<hr>
+<h2 id="9-隐藏权限"><a href="#9-隐藏权限" class="headerlink" title="9. 隐藏权限"></a><strong>9. 隐藏权限</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chattr +i file     <span class="comment"># 不可修改、删除(连root)</span></span><br><span class="line">chattr +a file     <span class="comment"># 只能追加</span></span><br><span class="line">lsattr file        <span class="comment"># 查看隐藏权限</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-FHS目录标准"><a href="#10-FHS目录标准" class="headerlink" title="10. FHS目录标准"></a><strong>10. FHS目录标准</strong></h2><p><strong>根目录(&#x2F;)必须存在：</strong></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>&#x2F;bin</strong></td>
+<td>一般用户命令(ls, cp)</td>
+</tr>
+<tr>
+<td><strong>&#x2F;boot</strong></td>
+<td>启动引导文件(内核)</td>
+</tr>
+<tr>
+<td><strong>&#x2F;dev</strong></td>
+<td>设备文件</td>
+</tr>
+<tr>
+<td><strong>&#x2F;etc</strong></td>
+<td>系统配置文件</td>
+</tr>
+<tr>
+<td><strong>&#x2F;lib</strong></td>
+<td>函数库</td>
+</tr>
+<tr>
+<td><strong>&#x2F;sbin</strong></td>
+<td>系统管理命令</td>
+</tr>
+<tr>
+<td><strong>&#x2F;tmp</strong></td>
+<td>临时文件</td>
+</tr>
+</tbody></table>
+<p><strong>其他重要目录：</strong></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>&#x2F;home</strong></td>
+<td>用户家目录</td>
+</tr>
+<tr>
+<td><strong>&#x2F;root</strong></td>
+<td>root家目录</td>
+</tr>
+<tr>
+<td><strong>&#x2F;opt</strong></td>
+<td>第三方软件</td>
+</tr>
+<tr>
+<td><strong>&#x2F;usr</strong></td>
+<td>系统资源</td>
+</tr>
+<tr>
+<td><strong>&#x2F;var</strong></td>
+<td>日志、缓存等可变数据</td>
+</tr>
+</tbody></table>
+<p><strong>&#x2F;usr子目录：</strong></p>
+<ul>
+<li><code>/usr/bin</code>：用户命令</li>
+<li><code>/usr/sbin</code>：系统命令</li>
+<li><code>/usr/lib</code>：函数库</li>
+<li><code>/usr/local</code>：本地软件</li>
+<li><code>/usr/share</code>：共享文档</li>
+<li><code>/usr/src</code>：源代码</li>
+</ul>
+<p><strong>&#x2F;var子目录：</strong></p>
+<ul>
+<li><code>/var/log</code>：日志文件</li>
+<li><code>/var/mail</code>：邮件</li>
+<li><code>/var/spool</code>：队列</li>
+<li><code>/var/tmp</code>：临时文件(重启保留)</li>
+</ul>
+<hr>
+<h2 id="11-常用安全权限"><a href="#11-常用安全权限" class="headerlink" title="11. 常用安全权限"></a><strong>11. 常用安全权限</strong></h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>权限</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通文件</td>
+<td><strong>644</strong></td>
+<td>rw-r–r–</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><strong>755</strong></td>
+<td>rwxr-xr-x</td>
+</tr>
+<tr>
+<td>脚本</td>
+<td><strong>755</strong></td>
+<td>rwxr-xr-x</td>
+</tr>
+<tr>
+<td>私密文件</td>
+<td><strong>600</strong></td>
+<td>rw——-</td>
+</tr>
+<tr>
+<td>临时目录</td>
+<td><strong>1777</strong></td>
+<td>rwxrwxrwt</td>
+</tr>
+</tbody></table>
+<p><strong>最小权限原则：</strong> 只给必要的权限</p>
+<hr>
+<h2 id="12-本章重点命令"><a href="#12-本章重点命令" class="headerlink" title="12. 本章重点命令"></a><strong>12. 本章重点命令</strong></h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ls -l</code></td>
+<td>查看权限</td>
+<td><code>ls -la</code></td>
+</tr>
+<tr>
+<td><code>chmod</code></td>
+<td>修改权限</td>
+<td><code>chmod 755 file</code></td>
+</tr>
+<tr>
+<td><code>chown</code></td>
+<td>改所有者</td>
+<td><code>chown user:group file</code></td>
+</tr>
+<tr>
+<td><code>chgrp</code></td>
+<td>改所属组</td>
+<td><code>chgrp group file</code></td>
+</tr>
+<tr>
+<td><code>umask</code></td>
+<td>默认权限</td>
+<td><code>umask 002</code></td>
+</tr>
+<tr>
+<td><code>chattr</code></td>
+<td>隐藏权限</td>
+<td><code>chattr +i file</code></td>
+</tr>
+<tr>
+<td><code>lsattr</code></td>
+<td>查看隐藏权限</td>
+<td><code>lsattr file</code></td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>查看文件类型</td>
+<td><code>file /bin/ls</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a><strong>一句话总结</strong></h2><p><strong>权限 &#x3D; 谁(u&#x2F;g&#x2F;o) + 做什么(r&#x2F;w&#x2F;x) + 在哪里(文件&#x2F;目录)</strong>，遵循最小权限原则，目录需x才能进入，文件权限看内容操作。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">1. 文件权限概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9D%83%E9%99%90%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">2. 权限字段详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%95%B0%E5%AD%97%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">3. 数字表示法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%AC%A6%E5%8F%B7%E6%B3%95%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">4.</span> <span class="toc-text">4. 符号法修改权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E5%8C%BA%E5%88%AB"><span class="toc-number">5.</span> <span class="toc-text">5. 文件与目录权限区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E8%80%85%E5%92%8C%E7%BB%84"><span class="toc-number">6.</span> <span class="toc-text">6. 修改所有者和组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%BB%98%E8%AE%A4%E6%9D%83%E9%99%90-umask"><span class="toc-number">7.</span> <span class="toc-text">7. 默认权限 umask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90"><span class="toc-number">8.</span> <span class="toc-text">8. 特殊权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%9A%90%E8%97%8F%E6%9D%83%E9%99%90"><span class="toc-number">9.</span> <span class="toc-text">9. 隐藏权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-FHS%E7%9B%AE%E5%BD%95%E6%A0%87%E5%87%86"><span class="toc-number">10.</span> <span class="toc-text">10. FHS目录标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%B8%B8%E7%94%A8%E5%AE%89%E5%85%A8%E6%9D%83%E9%99%90"><span class="toc-number">11.</span> <span class="toc-text">11. 常用安全权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4"><span class="toc-number">12.</span> <span class="toc-text">12. 本章重点命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">13.</span> <span class="toc-text">一句话总结</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter05/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&text=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&is_video=false&description=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(2) Linux的文件权限与目录配置&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter05/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&title=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&name=Linux学习日志(2) Linux的文件权限与目录配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter05/&t=Linux学习日志(2) Linux的文件权限与目录配置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

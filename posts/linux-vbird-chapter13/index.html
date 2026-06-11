@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考文档：鸟哥私房菜 - 第十三章、Linux 帐号管理与 ACL 权限设置 - 鸟哥的 Linux 私房菜  1. Linux 的帐号与群组1.1 用户识别码：UID 与 GIDLinux 系统识别用户的不是账号名称，而是数字代号。  UID (User ID)：用户识别码 GID (Group ID)：群组识别码  系统通过 &#x2F;etc&#x2F;passwd 与 &#x2F;etc&#x2F;group 将 UID&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(10) Linux 帐号管理与 ACL 权限设置">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter13/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="参考文档：鸟哥私房菜 - 第十三章、Linux 帐号管理与 ACL 权限设置 - 鸟哥的 Linux 私房菜  1. Linux 的帐号与群组1.1 用户识别码：UID 与 GIDLinux 系统识别用户的不是账号名称，而是数字代号。  UID (User ID)：用户识别码 GID (Group ID)：群组识别码  系统通过 &#x2F;etc&#x2F;passwd 与 &#x2F;etc&#x2F;group 将 UID&amp;#x">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-05-17T14:30:43.000Z">
+<meta property="article:modified_time" content="2026-05-17T14:41:36.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="password">
+<meta property="article:tag" content="user">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(10) Linux 帐号管理与 ACL 权限设置</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-command-list/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter13/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&text=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&is_video=false&description=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter13/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&name=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&t=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Linux-%E7%9A%84%E5%B8%90%E5%8F%B7%E4%B8%8E%E7%BE%A4%E7%BB%84"><span class="toc-number">1.</span> <span class="toc-text">1. Linux 的帐号与群组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%94%A8%E6%88%B7%E8%AF%86%E5%88%AB%E7%A0%81%EF%BC%9AUID-%E4%B8%8E-GID"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 用户识别码：UID 与 GID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%94%A8%E6%88%B7%E5%B8%90%E5%8F%B7"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 用户帐号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%85%B3%E4%BA%8E%E7%BE%A4%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 关于群组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%90%E5%8F%B7%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. 帐号管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%B7%BB%E5%8A%A0%E4%B8%8E%E7%A7%BB%E9%99%A4%E7%94%A8%E6%88%B7"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 添加与移除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%A8%E6%88%B7%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 用户功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%B7%BB%E5%8A%A0%E4%B8%8E%E7%A7%BB%E9%99%A4%E7%BE%A4%E7%BB%84"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 添加与移除群组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%B8%90%E5%8F%B7%E7%AE%A1%E7%90%86%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 帐号管理实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 使用外部身份认证系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BB%E6%9C%BA%E7%9A%84%E7%BB%86%E9%83%A8%E6%9D%83%E9%99%90%E8%A7%84%E5%88%92%EF%BC%9AACL-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">3. 主机的细部权限规划：ACL 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BB%80%E4%B9%88%E6%98%AF-ACL-%E4%B8%8E%E5%A6%82%E4%BD%95%E6%94%AF%E6%8C%81%E5%90%AF%E5%8A%A8-ACL"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 什么是 ACL 与如何支持启动 ACL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-ACL-%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 ACL 的设置技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E5%88%87%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">4. 用户身份切换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-su"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 su</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-sudo"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 sudo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%94%A8%E6%88%B7%E7%9A%84%E7%89%B9%E6%AE%8A-shell-%E4%B8%8E-PAM-%E6%A8%A1%E5%9D%97"><span class="toc-number">5.</span> <span class="toc-text">5. 用户的特殊 shell 与 PAM 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%89%B9%E6%AE%8A%E7%9A%84-shell%EF%BC%9A-sbin-nologin"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 特殊的 shell：&#x2F;sbin&#x2F;nologin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-PAM-%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 PAM 模块简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-PAM-%E6%A8%A1%E5%9D%97%E8%AE%BE%E7%BD%AE%E8%AF%AD%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 PAM 模块设置语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 常用模块简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%EF%BC%9Alimits-conf"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 其他相关文件：limits.conf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Linux-%E4%B8%BB%E6%9C%BA%E4%B8%8A%E7%9A%84%E7%94%A8%E6%88%B7%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92"><span class="toc-number">6.</span> <span class="toc-text">6. Linux 主机上的用户消息传递</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%9F%A5%E6%89%BE%E7%94%A8%E6%88%B7"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 查找用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%94%A8%E6%88%B7%E5%AF%B9%E8%B0%88"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 用户对谈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E7%94%A8%E6%88%B7%E9%82%AE%E4%BB%B6%E4%BF%A1%E7%AE%B1%EF%BC%9Amail"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 用户邮件信箱：mail</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-CentOS-7-%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A4%A7%E9%87%8F%E5%BB%BA%E7%BD%AE%E5%B8%90%E5%8F%B7%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">7. CentOS 7 环境下大量建置帐号的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%B8%90%E5%8F%B7%E7%9B%B8%E5%85%B3%E7%9A%84%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 帐号相关的检查工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%A4%A7%E9%87%8F%E5%BB%BA%E7%BD%AE%E5%B8%90%E5%8F%B7%E8%8C%83%E6%9C%AC%EF%BC%88%E9%80%82%E7%94%A8-passwd-%E2%80%93stdin-%E9%80%89%E9%A1%B9%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 大量建置帐号范本（适用 passwd –stdin 选项）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">8.</span> <span class="toc-text">8. 本章重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">9.</span> <span class="toc-text">9. 核心要点</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(10) Linux 帐号管理与 ACL 权限设置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-05-17T14:30:43.000Z" class="dt-published" itemprop="datePublished">May 17 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/password/" rel="tag">password</a>, <a class="p-category" href="/tags/user/" rel="tag">user</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>参考文档：<a target="_blank" rel="noopener" href="https://vbird.org.cn/linux_basic/centos7/0410accountmanager.php">鸟哥私房菜 - 第十三章、Linux 帐号管理与 ACL 权限设置 - 鸟哥的 Linux 私房菜</a></p>
+</blockquote>
+<h2 id="1-Linux-的帐号与群组"><a href="#1-Linux-的帐号与群组" class="headerlink" title="1. Linux 的帐号与群组"></a>1. Linux 的帐号与群组</h2><h3 id="1-1-用户识别码：UID-与-GID"><a href="#1-1-用户识别码：UID-与-GID" class="headerlink" title="1.1 用户识别码：UID 与 GID"></a>1.1 用户识别码：UID 与 GID</h3><p>Linux 系统识别用户的不是账号名称，而是<strong>数字代号</strong>。</p>
+<ul>
+<li><strong>UID (User ID)</strong>：用户识别码</li>
+<li><strong>GID (Group ID)</strong>：群组识别码</li>
+</ul>
+<p>系统通过 <code>/etc/passwd</code> 与 <code>/etc/group</code> 将 UID&#x2F;GID 转换为账号名称显示。<strong>随意修改 UID 会导致用户无法正确访问自己的文件</strong>。</p>
+<h3 id="1-2-用户帐号"><a href="#1-2-用户帐号" class="headerlink" title="1.2 用户帐号"></a>1.2 用户帐号</h3><p><strong>&#x2F;etc&#x2F;passwd 文件结构</strong></p>
+<p>每行代表一个账号，用冒号 <code>:</code> 分隔为 7 个字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>账号名称</td>
+</tr>
+<tr>
+<td>2</td>
+<td>密码占位符（x 表示密码在 &#x2F;etc&#x2F;shadow）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>UID（0&#x3D;root，1-999&#x3D;系统账号，1000-60000&#x3D;一般用户）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GID（初始群组）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>用户信息说明栏</td>
+</tr>
+<tr>
+<td>6</td>
+<td>家目录</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Shell（如 <code>/bin/bash</code>、<code>/sbin/nologin</code>）</td>
+</tr>
+</tbody></table>
+<p><strong>&#x2F;etc&#x2F;shadow 文件结构</strong></p>
+<p>每行 9 个字段，用冒号分隔：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>账号名称</td>
+</tr>
+<tr>
+<td>2</td>
+<td>加密密码（* 或 ! 表示无法登录）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>最近更改密码日期（1970&#x2F;1&#x2F;1 起算）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>密码不可更改天数</td>
+</tr>
+<tr>
+<td>5</td>
+<td>密码需重新更改天数</td>
+</tr>
+<tr>
+<td>6</td>
+<td>密码过期前警告天数</td>
+</tr>
+<tr>
+<td>7</td>
+<td>密码过期后宽限天数（密码失效日）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>账号失效日期</td>
+</tr>
+<tr>
+<td>9</td>
+<td>保留字段</td>
+</tr>
+</tbody></table>
+<p><strong>加密机制</strong>：目前主流使用 <strong>SHA512</strong>（密码字段以 <code>$6$</code> 开头）。</p>
+<h3 id="1-3-关于群组"><a href="#1-3-关于群组" class="headerlink" title="1.3 关于群组"></a>1.3 关于群组</h3><p><strong>&#x2F;etc&#x2F;group 文件结构</strong></p>
+<p>每行 4 个字段，用冒号分隔：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>群组名称</td>
+</tr>
+<tr>
+<td>2</td>
+<td>群组密码占位符</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GID</td>
+</tr>
+<tr>
+<td>4</td>
+<td>此群组支持的账号名称</td>
+</tr>
+</tbody></table>
+<p><strong>有效群组与初始群组</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>初始群组（initial group）</strong></td>
+<td><code>/etc/passwd</code> 第4字段 GID 对应的群组，用户登录即拥有</td>
+</tr>
+<tr>
+<td><strong>有效群组（effective group）</strong></td>
+<td>当前正在使用的群组，新建文件的群组归属依据有效群组</td>
+</tr>
+</tbody></table>
+<p><strong>groups</strong></p>
+<p>查看当前用户所属的所有群组，第一个显示的是有效群组。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">groups</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>newgrp</strong></p>
+<p>切换有效群组（会新建 shell，用 <code>exit</code> 返回）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newgrp 群组名</span><br></pre></td></tr></table></figure>
+
+<p><strong>&#x2F;etc&#x2F;gshadow</strong></p>
+<p>每行 4 个字段，用冒号分隔：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>群组名称</td>
+</tr>
+<tr>
+<td>2</td>
+<td>加密后的群组密码</td>
+</tr>
+<tr>
+<td>3</td>
+<td>群组管理员账号</td>
+</tr>
+<tr>
+<td>4</td>
+<td>此群组支持的账号名称</td>
+</tr>
+</tbody></table>
+<h2 id="2-帐号管理"><a href="#2-帐号管理" class="headerlink" title="2. 帐号管理"></a>2. 帐号管理</h2><h3 id="2-1-添加与移除用户"><a href="#2-1-添加与移除用户" class="headerlink" title="2.1 添加与移除用户"></a>2.1 添加与移除用户</h3><p><strong>useradd</strong></p>
+<p>命令格式：<code>useradd [-u UID] [-g 初始群组] [-G 次要群组] [-c 说明] [-d 家目录] [-s shell] [-r] 账号名称</code></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-u</code></td>
+<td>指定 UID</td>
+</tr>
+<tr>
+<td><code>-g</code></td>
+<td>指定初始群组</td>
+</tr>
+<tr>
+<td><code>-G</code></td>
+<td>指定次要群组</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>用户说明栏</td>
+</tr>
+<tr>
+<td><code>-d</code></td>
+<td>指定家目录</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>指定 shell</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>创建系统账号</td>
+</tr>
+<tr>
+<td><code>-m</code></td>
+<td>强制创建家目录</td>
+</tr>
+<tr>
+<td><code>-M</code></td>
+<td>强制不创建家目录</td>
+</tr>
+</tbody></table>
+<p><strong>useradd 创建用户时执行的操作</strong>：</p>
+<ol>
+<li>在 <code>/etc/passwd</code>、<code>/etc/shadow</code>、<code>/etc/group</code>、<code>/etc/gshadow</code> 中增加记录</li>
+<li>在 <code>/home</code> 下创建家目录（从 <code>/etc/skel</code> 复制环境文件）</li>
+<li>设置家目录权限（默认 700）</li>
+</ol>
+<p><strong>useradd 参考档</strong></p>
+<ul>
+<li><code>/etc/default/useradd</code>：定义家目录、shell、密码失效日等默认值</li>
+<li><code>/etc/login.defs</code>：定义 UID&#x2F;GID 范围、密码加密机制、家目录创建策略等<ul>
+<li><code>UID_MIN</code> &#x2F; <code>UID_MAX</code>：一般用户 UID 范围（1000-60000）</li>
+<li><code>SYS_UID_MIN</code> &#x2F; <code>SYS_UID_MAX</code>：系统账号 UID 范围（201-999）</li>
+<li><code>ENCRYPT_METHOD SHA512</code>：密码加密机制</li>
+<li><code>CREATE_HOME yes</code>：是否默认创建家目录</li>
+<li><code>USERGROUPS_ENAB yes</code>：删除用户时是否删除其初始群组</li>
+</ul>
+</li>
+</ul>
+<p><strong>passwd</strong></p>
+<p>命令格式：<code>passwd [--stdin] [账号名称]</code></p>
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>passwd</code></td>
+<td>修改当前用户密码</td>
+</tr>
+<tr>
+<td><code>passwd 账号</code></td>
+<td>root 修改他人密码</td>
+</tr>
+<tr>
+<td><code>echo &quot;密码&quot; | passwd --stdin 账号</code></td>
+<td>通过标准输入设置密码</td>
+</tr>
+</tbody></table>
+<p>密码管理参数（仅 root 可用）：</p>
+<ul>
+<li><code>-l</code>：锁定账号（Lock）</li>
+<li><code>-u</code>：解锁账号（Unlock）</li>
+<li><code>-S</code>：显示密码状态</li>
+<li><code>-x 天数</code>：设置密码需重新更改天数</li>
+<li><code>-n 天数</code>：设置密码不可更改天数</li>
+<li><code>-w 天数</code>：设置警告天数</li>
+<li><code>-i 天数</code>：设置密码失效天数</li>
+</ul>
+<p><strong>chage</strong></p>
+<p>命令格式：<code>chage [-l] [-d 日期] [-E 日期] [-I 天数] [-m 天数] [-M 天数] [-W 天数] 账号</code></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-l</code></td>
+<td>列出详细密码参数</td>
+</tr>
+<tr>
+<td><code>-d 0</code></td>
+<td>强制用户下次登录修改密码</td>
+</tr>
+<tr>
+<td><code>-E</code></td>
+<td>设置账号失效日期</td>
+</tr>
+<tr>
+<td><code>-I</code></td>
+<td>设置密码失效天数</td>
+</tr>
+<tr>
+<td><code>-m</code></td>
+<td>设置密码最短保留天数</td>
+</tr>
+<tr>
+<td><code>-M</code></td>
+<td>设置密码最长保留天数</td>
+</tr>
+<tr>
+<td><code>-W</code></td>
+<td>设置警告天数</td>
+</tr>
+</tbody></table>
+<p><strong>usermod</strong></p>
+<p>命令格式：<code>usermod [-cdegGlsuLU] 账号</code></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-g</code></td>
+<td>修改初始群组</td>
+</tr>
+<tr>
+<td><code>-G</code></td>
+<td>修改次要群组</td>
+</tr>
+<tr>
+<td><code>-a -G</code></td>
+<td>增加次要群组（而非设置）</td>
+</tr>
+<tr>
+<td><code>-L</code></td>
+<td>锁定账号</td>
+</tr>
+<tr>
+<td><code>-U</code></td>
+<td>解锁账号</td>
+</tr>
+<tr>
+<td><code>-u</code></td>
+<td>修改 UID</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>修改 shell</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>修改说明栏</td>
+</tr>
+<tr>
+<td><code>-d</code></td>
+<td>修改家目录</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>修改账号失效日期</td>
+</tr>
+<tr>
+<td><code>-l</code></td>
+<td>修改账号名称</td>
+</tr>
+</tbody></table>
+<p><strong>userdel</strong></p>
+<p>命令格式：<code>userdel [-r] 账号</code></p>
+<ul>
+<li><code>-r</code>：连同用户的家目录一起删除</li>
+</ul>
+<h3 id="2-2-用户功能"><a href="#2-2-用户功能" class="headerlink" title="2.2 用户功能"></a>2.2 用户功能</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>id</code></td>
+<td>查看 UID&#x2F;GID 及所属群组</td>
+</tr>
+<tr>
+<td><code>finger</code></td>
+<td>查看用户详细信息（需安装）</td>
+</tr>
+<tr>
+<td><code>chfn</code></td>
+<td>修改 finger 信息（&#x2F;etc&#x2F;passwd 第5字段）</td>
+</tr>
+<tr>
+<td><code>chsh</code></td>
+<td>修改 shell（需在 &#x2F;etc&#x2F;shells 中）</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-添加与移除群组"><a href="#2-3-添加与移除群组" class="headerlink" title="2.3 添加与移除群组"></a>2.3 添加与移除群组</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>常用选项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>groupadd</code></td>
+<td>新增群组</td>
+<td><code>-g GID</code>、<code>-r</code>（系统群组）</td>
+</tr>
+<tr>
+<td><code>groupmod</code></td>
+<td>修改群组</td>
+<td><code>-g GID</code>、<code>-n 新名称</code></td>
+</tr>
+<tr>
+<td><code>groupdel</code></td>
+<td>删除群组</td>
+<td>不能删除是某用户初始群组的群组</td>
+</tr>
+</tbody></table>
+<p><strong>gpasswd：群组管理员</strong></p>
+<p>系统管理员操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gpasswd 群组名                    <span class="comment"># 设置群组密码</span></span><br><span class="line">gpasswd -A 用户 群组名            <span class="comment"># 设置群组管理员</span></span><br><span class="line">gpasswd -M 用户1,用户2 群组名     <span class="comment"># 设置群组成员</span></span><br></pre></td></tr></table></figure>
+
+<p>群组管理员操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpasswd -a 用户 群组名     <span class="comment"># 添加成员</span></span><br><span class="line">gpasswd -d 用户 群组名     <span class="comment"># 移除成员</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-帐号管理实例"><a href="#2-4-帐号管理实例" class="headerlink" title="2.4 帐号管理实例"></a>2.4 帐号管理实例</h3><p><strong>任务一：创建不同需求的用户</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groupadd mygroup1</span><br><span class="line">useradd -G mygroup1 -c <span class="string">&quot;1st user&quot;</span> myuser1</span><br><span class="line">useradd -G mygroup1 -c <span class="string">&quot;2nd user&quot;</span> myuser2</span><br><span class="line">useradd -c <span class="string">&quot;3rd user&quot;</span> -s /sbin/nologin myuser3</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;password&quot;</span> | passwd --stdin myuser1</span><br></pre></td></tr></table></figure>
+
+<p><strong>任务二：创建协作项目目录（使用 SGID）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">groupadd projecta</span><br><span class="line">useradd -G projecta pro1</span><br><span class="line">useradd -G projecta pro2</span><br><span class="line">useradd -G projecta pro3</span><br><span class="line"><span class="built_in">mkdir</span> /srv/projecta</span><br><span class="line"><span class="built_in">chgrp</span> projecta /srv/projecta</span><br><span class="line"><span class="built_in">chmod</span> 2770 /srv/projecta</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-使用外部身份认证系统"><a href="#2-5-使用外部身份认证系统" class="headerlink" title="2.5 使用外部身份认证系统"></a>2.5 使用外部身份认证系统</h3><ul>
+<li>使用 <code>authconfig-tui</code> 命令配置外部身份验证（如 LDAP、NIS、AD）</li>
+<li>该工具提供图形化界面，可在各个认证项目间切换</li>
+</ul>
+<h2 id="3-主机的细部权限规划：ACL-的使用"><a href="#3-主机的细部权限规划：ACL-的使用" class="headerlink" title="3. 主机的细部权限规划：ACL 的使用"></a>3. 主机的细部权限规划：ACL 的使用</h2><h3 id="3-1-什么是-ACL-与如何支持启动-ACL"><a href="#3-1-什么是-ACL-与如何支持启动-ACL" class="headerlink" title="3.1 什么是 ACL 与如何支持启动 ACL"></a>3.1 什么是 ACL 与如何支持启动 ACL</h3><p><strong>ACL (Access Control List)</strong>：传统 <code>owner/group/others</code> 权限只能针对三个身份设置，ACL 可针对<strong>单一用户</strong>或<strong>单一群组</strong>单独设置权限。</p>
+<p>ACL 可针对的项目：</p>
+<ul>
+<li>用户（user）</li>
+<li>群组（group）</li>
+<li>默认属性（mask）</li>
+<li>默认权限（default）</li>
+</ul>
+<p><strong>启动 ACL</strong>：CentOS 7 中 ext4&#x2F;xfs 默认支持，可通过 <code>dmesg | grep -i acl</code> 确认。</p>
+<h3 id="3-2-ACL-的设置技巧"><a href="#3-2-ACL-的设置技巧" class="headerlink" title="3.2 ACL 的设置技巧"></a>3.2 ACL 的设置技巧</h3><p><strong>getfacl：查看 ACL</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getfacl 文件名</span><br></pre></td></tr></table></figure>
+
+<p><strong>setfacl：设置 ACL</strong></p>
+<p>命令格式：<code>setfacl [-bkRd] [{-m|-x} acl参数] 目标文件名</code></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-m</code></td>
+<td>设置 ACL 参数</td>
+</tr>
+<tr>
+<td><code>-x</code></td>
+<td>移除 ACL 参数</td>
+</tr>
+<tr>
+<td><code>-b</code></td>
+<td>移除所有 ACL</td>
+</tr>
+<tr>
+<td><code>-k</code></td>
+<td>移除默认 ACL</td>
+</tr>
+<tr>
+<td><code>-R</code></td>
+<td>递归设置</td>
+</tr>
+<tr>
+<td><code>-d</code></td>
+<td>设置默认 ACL</td>
+</tr>
+</tbody></table>
+<p><strong>ACL 设置格式</strong></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>u:用户:权限</code></td>
+<td>设置用户 ACL</td>
+<td><code>setfacl -m u:vbird1:rx file</code></td>
+</tr>
+<tr>
+<td><code>u::权限</code></td>
+<td>设置文件拥有者权限</td>
+<td><code>setfacl -m u::rwx file</code></td>
+</tr>
+<tr>
+<td><code>g:群组:权限</code></td>
+<td>设置群组 ACL</td>
+<td><code>setfacl -m g:mygroup1:rx file</code></td>
+</tr>
+<tr>
+<td><code>m:权限</code></td>
+<td>设置 mask（有效权限上限）</td>
+<td><code>setfacl -m m:r file</code></td>
+</tr>
+<tr>
+<td><code>d:u:用户:权限</code></td>
+<td>设置默认 ACL</td>
+<td><code>setfacl -m d:u:vbird1:rx dir</code></td>
+</tr>
+<tr>
+<td><code>d:g:群组:权限</code></td>
+<td>设置默认群组 ACL</td>
+<td><code>setfacl -m d:g:projecta:rwx dir</code></td>
+</tr>
+</tbody></table>
+<p><strong>mask 的作用</strong></p>
+<p>用户或群组的权限必须与 mask 的权限进行“与”运算后才是实际有效权限。mask 用于规范最大允许权限。</p>
+<h2 id="4-用户身份切换"><a href="#4-用户身份切换" class="headerlink" title="4. 用户身份切换"></a>4. 用户身份切换</h2><h3 id="4-1-su"><a href="#4-1-su" class="headerlink" title="4.1 su"></a>4.1 su</h3><table>
+<thead>
+<tr>
+<th>用法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>su</code></td>
+<td>切换为 root，non-login shell，环境变量不变</td>
+</tr>
+<tr>
+<td><code>su -</code> 或 <code>su -l</code></td>
+<td>切换为 root，login shell，环境完全切换（<strong>推荐</strong>）</td>
+</tr>
+<tr>
+<td><code>su - 用户</code></td>
+<td>切换为指定用户</td>
+</tr>
+<tr>
+<td><code>su - -c &quot;指令&quot;</code></td>
+<td>以 root 执行单条指令</td>
+</tr>
+</tbody></table>
+<p><strong>缺点</strong>：需要知道目标用户的密码，多人管理时 root 密码容易外流。</p>
+<h3 id="4-2-sudo"><a href="#4-2-sudo" class="headerlink" title="4.2 sudo"></a>4.2 sudo</h3><ul>
+<li>执行时输入<strong>自己的密码</strong>，而非目标用户密码</li>
+<li>通过 <code>/etc/sudoers</code> 控制权限</li>
+</ul>
+<p><strong>sudo 指令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> [-b] [-u 新用户] 指令</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-b</code></td>
+<td>将指令放到后台执行</td>
+</tr>
+<tr>
+<td><code>-u</code></td>
+<td>以指定用户身份执行（默认 root）</td>
+</tr>
+</tbody></table>
+<p><strong>visudo：编辑 &#x2F;etc&#x2F;sudoers</strong></p>
+<p>语法检查、锁定文件，是唯一安全的编辑方式。</p>
+<p><strong>&#x2F;etc&#x2F;sudoers 设置格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户/群组 主机=(可切换身份) 指令</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>root ALL=(ALL) ALL</code></td>
+<td>root 任何指令</td>
+</tr>
+<tr>
+<td><code>vbird1 ALL=(ALL) ALL</code></td>
+<td>vbird1 可执行任何指令</td>
+</tr>
+<tr>
+<td><code>%wheel ALL=(ALL) ALL</code></td>
+<td>wheel 群组成员可执行任何指令</td>
+</tr>
+<tr>
+<td><code>%wheel ALL=(ALL) NOPASSWD: ALL</code></td>
+<td>免密码 sudo</td>
+</tr>
+<tr>
+<td><code>myuser1 ALL=(root) /usr/bin/passwd</code></td>
+<td>仅能执行 passwd</td>
+</tr>
+<tr>
+<td><code>myuser1 ALL=(root) !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd root</code></td>
+<td>限制 passwd 参数</td>
+</tr>
+</tbody></table>
+<p><strong>别名设置</strong>（须全大写）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User_Alias ADMPW = pro1, pro2, pro3</span><br><span class="line">Cmnd_Alias ADMPWCOM = /usr/bin/passwd [A-Za-z]*</span><br><span class="line">ADMPW ALL=(root) ADMPWCOM</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间间隔</strong>：两次 sudo 操作在 5 分钟内无需重复输入密码。</p>
+<p><strong>sudo 配合 su</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User_Alias ADMINS = pro1, pro2, pro3</span><br><span class="line">ADMINS ALL=(root) /bin/su -</span><br></pre></td></tr></table></figure>
+
+<p>用户执行 <code>sudo su -</code> 输入自己密码即可变成 root。</p>
+<h2 id="5-用户的特殊-shell-与-PAM-模块"><a href="#5-用户的特殊-shell-与-PAM-模块" class="headerlink" title="5. 用户的特殊 shell 与 PAM 模块"></a>5. 用户的特殊 shell 与 PAM 模块</h2><h3 id="5-1-特殊的-shell：-sbin-nologin"><a href="#5-1-特殊的-shell：-sbin-nologin" class="headerlink" title="5.1 特殊的 shell：&#x2F;sbin&#x2F;nologin"></a>5.1 特殊的 shell：&#x2F;sbin&#x2F;nologin</h3><ul>
+<li>使用此 shell 的用户<strong>无法登录系统</strong></li>
+<li>但<strong>仍可使用其他系统资源</strong>（如邮件、服务进程）</li>
+<li>可创建 <code>/etc/nologin.txt</code> 自定义拒绝登录时的提示信息</li>
+</ul>
+<h3 id="5-2-PAM-模块简介"><a href="#5-2-PAM-模块简介" class="headerlink" title="5.2 PAM 模块简介"></a>5.2 PAM 模块简介</h3><p><strong>PAM (Pluggable Authentication Modules)</strong>：嵌入式认证模块，提供统一的验证机制。</p>
+<ul>
+<li>验证配置文件位于 <code>/etc/pam.d/</code>，与程序同名</li>
+<li>例如 <code>pam_cracklib.so</code> 模块用于检查密码是否在字典中</li>
+</ul>
+<h3 id="5-3-PAM-模块设置语法"><a href="#5-3-PAM-模块设置语法" class="headerlink" title="5.3 PAM 模块设置语法"></a>5.3 PAM 模块设置语法</h3><p>配置文件格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">验证类别 控制标准 模块 参数</span><br></pre></td></tr></table></figure>
+
+<p><strong>验证类别（type）</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>auth</code></td>
+<td>身份认证</td>
+</tr>
+<tr>
+<td><code>account</code></td>
+<td>账号有效性</td>
+</tr>
+<tr>
+<td><code>session</code></td>
+<td>会话管理</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>密码管理</td>
+</tr>
+</tbody></table>
+<p><strong>控制标准（flag）</strong></p>
+<table>
+<thead>
+<tr>
+<th>标准</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>required</code></td>
+<td>必须成功，失败后继续检查</td>
+</tr>
+<tr>
+<td><code>requisite</code></td>
+<td>必须成功，失败立即返回</td>
+</tr>
+<tr>
+<td><code>sufficient</code></td>
+<td>成功则立即通过</td>
+</tr>
+<tr>
+<td><code>optional</code></td>
+<td>可选，仅用于日志</td>
+</tr>
+</tbody></table>
+<h3 id="5-4-常用模块简介"><a href="#5-4-常用模块简介" class="headerlink" title="5.4 常用模块简介"></a>5.4 常用模块简介</h3><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pam_securetty.so</code></td>
+<td>限制 root 登录的终端（&#x2F;etc&#x2F;securetty）</td>
+</tr>
+<tr>
+<td><code>pam_nologin.so</code></td>
+<td>检查 &#x2F;etc&#x2F;nologin，禁止非 root 登录</td>
+</tr>
+<tr>
+<td><code>pam_pwquality.so</code></td>
+<td>密码强度检查</td>
+</tr>
+<tr>
+<td><code>pam_unix.so</code></td>
+<td>传统的密码验证</td>
+</tr>
+<tr>
+<td><code>pam_env.so</code></td>
+<td>设置环境变量</td>
+</tr>
+<tr>
+<td><code>pam_limits.so</code></td>
+<td>限制用户资源使用</td>
+</tr>
+</tbody></table>
+<h3 id="5-5-其他相关文件：limits-conf"><a href="#5-5-其他相关文件：limits-conf" class="headerlink" title="5.5 其他相关文件：limits.conf"></a>5.5 其他相关文件：limits.conf</h3><p><strong>&#x2F;etc&#x2F;security&#x2F;limits.conf</strong>：限制用户的系统资源使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式： domain type item value</span></span><br><span class="line">username soft core 0</span><br><span class="line">@group hard <span class="built_in">nproc</span> 50</span><br><span class="line">* hard nofile 4096</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>domain</td>
+<td>用户、群组（@group）或 *（所有人）</td>
+</tr>
+<tr>
+<td>type</td>
+<td>soft（软限制）、hard（硬限制）</td>
+</tr>
+<tr>
+<td>item</td>
+<td>core（核心文件）、nproc（进程数）、nofile（打开文件数）等</td>
+</tr>
+</tbody></table>
+<h2 id="6-Linux-主机上的用户消息传递"><a href="#6-Linux-主机上的用户消息传递" class="headerlink" title="6. Linux 主机上的用户消息传递"></a>6. Linux 主机上的用户消息传递</h2><h3 id="6-1-查找用户"><a href="#6-1-查找用户" class="headerlink" title="6.1 查找用户"></a>6.1 查找用户</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>w</code></td>
+<td>查看当前登录用户及正在执行的操作</td>
+</tr>
+<tr>
+<td><code>who</code></td>
+<td>查看当前登录用户</td>
+</tr>
+<tr>
+<td><code>last</code></td>
+<td>查看最近登录记录（&#x2F;var&#x2F;log&#x2F;wtmp）</td>
+</tr>
+<tr>
+<td><code>lastlog</code></td>
+<td>查看每个用户最近一次登录时间</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-用户对谈"><a href="#6-2-用户对谈" class="headerlink" title="6.2 用户对谈"></a>6.2 用户对谈</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>write 用户</code></td>
+<td>向指定用户发送消息</td>
+</tr>
+<tr>
+<td><code>mesg [y/n]</code></td>
+<td>设置是否接收消息（y&#x3D;接收，n&#x3D;拒绝）</td>
+</tr>
+<tr>
+<td><code>wall &quot;消息&quot;</code></td>
+<td>向所有用户广播消息</td>
+</tr>
+</tbody></table>
+<h3 id="6-3-用户邮件信箱：mail"><a href="#6-3-用户邮件信箱：mail" class="headerlink" title="6.3 用户邮件信箱：mail"></a>6.3 用户邮件信箱：mail</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mail -s <span class="string">&quot;邮件主题&quot;</span> 用户 &lt; 文件    <span class="comment"># 发送邮件</span></span><br><span class="line">mail                              <span class="comment"># 查看邮件（输入编号阅读，q退出）</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="7-CentOS-7-环境下大量建置帐号的方法"><a href="#7-CentOS-7-环境下大量建置帐号的方法" class="headerlink" title="7. CentOS 7 环境下大量建置帐号的方法"></a>7. CentOS 7 环境下大量建置帐号的方法</h2><h3 id="7-1-帐号相关的检查工具"><a href="#7-1-帐号相关的检查工具" class="headerlink" title="7.1 帐号相关的检查工具"></a>7.1 帐号相关的检查工具</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pwck</code></td>
+<td>检查 &#x2F;etc&#x2F;passwd 和 &#x2F;etc&#x2F;shadow 的一致性</td>
+</tr>
+<tr>
+<td><code>pwconv</code></td>
+<td>将 &#x2F;etc&#x2F;passwd 中的密码迁移到 &#x2F;etc&#x2F;shadow</td>
+</tr>
+<tr>
+<td><code>pwunconv</code></td>
+<td>将密码从 &#x2F;etc&#x2F;shadow 写回 &#x2F;etc&#x2F;passwd</td>
+</tr>
+<tr>
+<td><code>chpasswd</code></td>
+<td>批量更新密码，格式：&#96;echo “username:password”</td>
+</tr>
+</tbody></table>
+<h3 id="7-2-大量建置帐号范本（适用-passwd-–stdin-选项）"><a href="#7-2-大量建置帐号范本（适用-passwd-–stdin-选项）" class="headerlink" title="7.2 大量建置帐号范本（适用 passwd –stdin 选项）"></a>7.2 大量建置帐号范本（适用 passwd –stdin 选项）</h3><p><strong>步骤</strong>：</p>
+<ol>
+<li>创建账号列表文件 <code>user.txt</code>，每行格式：<code>username:password</code></li>
+<li>使用脚本批量建置</li>
+</ol>
+<p><strong>示例脚本</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> username <span class="keyword">in</span> $(<span class="built_in">cut</span> -d: -f1 user.txt)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    useradd <span class="variable">$username</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">chpasswd &lt; user.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li><code>passwd --stdin</code> 选项并非所有发行版都支持</li>
+<li>批量建置前可用 <code>pwck</code> 检查系统帐号状态</li>
+<li>可用 <code>useradd -s /sbin/nologin</code> 创建纯邮件账号</li>
+</ul>
+<h2 id="8-本章重点命令速查"><a href="#8-本章重点命令速查" class="headerlink" title="8. 本章重点命令速查"></a>8. 本章重点命令速查</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>useradd</code></td>
+<td>新增用户</td>
+<td><code>useradd -g users -G wheel john</code></td>
+</tr>
+<tr>
+<td><code>passwd</code></td>
+<td>设置密码</td>
+<td><code>passwd john</code></td>
+</tr>
+<tr>
+<td><code>chage</code></td>
+<td>密码参数</td>
+<td><code>chage -l john</code></td>
+</tr>
+<tr>
+<td><code>usermod</code></td>
+<td>修改用户</td>
+<td><code>usermod -a -G wheel john</code></td>
+</tr>
+<tr>
+<td><code>userdel</code></td>
+<td>删除用户</td>
+<td><code>userdel -r john</code></td>
+</tr>
+<tr>
+<td><code>groupadd</code></td>
+<td>新增群组</td>
+<td><code>groupadd project</code></td>
+</tr>
+<tr>
+<td><code>groupmod</code></td>
+<td>修改群组</td>
+<td><code>groupmod -n newname oldname</code></td>
+</tr>
+<tr>
+<td><code>groupdel</code></td>
+<td>删除群组</td>
+<td><code>groupdel project</code></td>
+</tr>
+<tr>
+<td><code>gpasswd</code></td>
+<td>群组管理</td>
+<td><code>gpasswd -M john project</code></td>
+</tr>
+<tr>
+<td><code>su</code></td>
+<td>切换用户</td>
+<td><code>su - john</code></td>
+</tr>
+<tr>
+<td><code>sudo</code></td>
+<td>以其他身份执行</td>
+<td><code>sudo -u john ls</code></td>
+</tr>
+<tr>
+<td><code>visudo</code></td>
+<td>编辑 &#x2F;etc&#x2F;sudoers</td>
+<td><code>visudo</code></td>
+</tr>
+<tr>
+<td><code>setfacl</code></td>
+<td>设置 ACL</td>
+<td><code>setfacl -m u:john:rx file</code></td>
+</tr>
+<tr>
+<td><code>getfacl</code></td>
+<td>查看 ACL</td>
+<td><code>getfacl file</code></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>显示身份信息</td>
+<td><code>id john</code></td>
+</tr>
+<tr>
+<td><code>groups</code></td>
+<td>显示所属群组</td>
+<td><code>groups</code></td>
+</tr>
+<tr>
+<td><code>chsh</code></td>
+<td>修改 shell</td>
+<td><code>chsh -s /bin/bash</code></td>
+</tr>
+<tr>
+<td><code>w</code> &#x2F; <code>who</code></td>
+<td>查看登录用户</td>
+<td><code>w</code></td>
+</tr>
+<tr>
+<td><code>last</code> &#x2F; <code>lastlog</code></td>
+<td>查看登录记录</td>
+<td><code>lastlog</code></td>
+</tr>
+<tr>
+<td><code>write</code> &#x2F; <code>wall</code></td>
+<td>消息传递</td>
+<td><code>wall &quot;message&quot;</code></td>
+</tr>
+<tr>
+<td><code>mail</code></td>
+<td>邮件收发</td>
+<td><code>mail -s &quot;hi&quot; john</code></td>
+</tr>
+<tr>
+<td><code>pwck</code></td>
+<td>检查帐号文件</td>
+<td><code>pwck</code></td>
+</tr>
+<tr>
+<td><code>chpasswd</code></td>
+<td>批量设置密码</td>
+<td><code>echo &quot;u:p&quot; | chpasswd</code></td>
+</tr>
+<tr>
+<td><code>authconfig-tui</code></td>
+<td>外部身份认证配置</td>
+<td><code>authconfig-tui</code></td>
+</tr>
+</tbody></table>
+<h2 id="9-核心要点"><a href="#9-核心要点" class="headerlink" title="9. 核心要点"></a>9. 核心要点</h2><ol>
+<li>系统通过 <strong>UID&#x2F;GID</strong> 识别用户和群组，账号名称是给人看的</li>
+<li>账号核心文件：<code>/etc/passwd</code> + <code>/etc/shadow</code>，群组核心文件：<code>/etc/group</code> + <code>/etc/gshadow</code></li>
+<li><code>useradd</code> 创建用户后，<strong>必须用 <code>passwd</code> 设置密码</strong>才能登录</li>
+<li><code>su -</code> 比 <code>su</code> 更推荐，因为会完全切换环境变量</li>
+<li><code>sudo</code> 执行时输入<strong>自己的密码</strong>，更安全，多人管理时推荐使用</li>
+<li><strong>ACL</strong> 突破了传统权限的三组限制，可针对单一用户或群组单独设置权限</li>
+<li><code>visudo</code> 是唯一安全的 sudoers 编辑方式，会进行语法检查</li>
+<li><code>/sbin/nologin</code> 用于创建无法登录但可使用其他服务的账号</li>
+<li><code>newgrp</code> 可切换有效群组，但会新建一个 shell，需用 <code>exit</code> 返回</li>
+<li><strong>PAM</strong> 提供统一的认证机制，配置文件位于 <code>/etc/pam.d/</code></li>
+<li>大量建置账号可用循环脚本配合 <code>useradd</code> 和 <code>chpasswd</code></li>
+<li><code>last</code>、<code>write</code>、<code>wall</code>、<code>mail</code> 等命令用于用户消息传递</li>
+</ol>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Linux-%E7%9A%84%E5%B8%90%E5%8F%B7%E4%B8%8E%E7%BE%A4%E7%BB%84"><span class="toc-number">1.</span> <span class="toc-text">1. Linux 的帐号与群组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%94%A8%E6%88%B7%E8%AF%86%E5%88%AB%E7%A0%81%EF%BC%9AUID-%E4%B8%8E-GID"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 用户识别码：UID 与 GID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%94%A8%E6%88%B7%E5%B8%90%E5%8F%B7"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 用户帐号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%85%B3%E4%BA%8E%E7%BE%A4%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 关于群组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%90%E5%8F%B7%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. 帐号管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%B7%BB%E5%8A%A0%E4%B8%8E%E7%A7%BB%E9%99%A4%E7%94%A8%E6%88%B7"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 添加与移除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%A8%E6%88%B7%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 用户功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%B7%BB%E5%8A%A0%E4%B8%8E%E7%A7%BB%E9%99%A4%E7%BE%A4%E7%BB%84"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 添加与移除群组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%B8%90%E5%8F%B7%E7%AE%A1%E7%90%86%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 帐号管理实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 使用外部身份认证系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BB%E6%9C%BA%E7%9A%84%E7%BB%86%E9%83%A8%E6%9D%83%E9%99%90%E8%A7%84%E5%88%92%EF%BC%9AACL-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">3. 主机的细部权限规划：ACL 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BB%80%E4%B9%88%E6%98%AF-ACL-%E4%B8%8E%E5%A6%82%E4%BD%95%E6%94%AF%E6%8C%81%E5%90%AF%E5%8A%A8-ACL"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 什么是 ACL 与如何支持启动 ACL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-ACL-%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 ACL 的设置技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E5%88%87%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">4. 用户身份切换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-su"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 su</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-sudo"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 sudo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%94%A8%E6%88%B7%E7%9A%84%E7%89%B9%E6%AE%8A-shell-%E4%B8%8E-PAM-%E6%A8%A1%E5%9D%97"><span class="toc-number">5.</span> <span class="toc-text">5. 用户的特殊 shell 与 PAM 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%89%B9%E6%AE%8A%E7%9A%84-shell%EF%BC%9A-sbin-nologin"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 特殊的 shell：&#x2F;sbin&#x2F;nologin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-PAM-%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 PAM 模块简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-PAM-%E6%A8%A1%E5%9D%97%E8%AE%BE%E7%BD%AE%E8%AF%AD%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 PAM 模块设置语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 常用模块简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%EF%BC%9Alimits-conf"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 其他相关文件：limits.conf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Linux-%E4%B8%BB%E6%9C%BA%E4%B8%8A%E7%9A%84%E7%94%A8%E6%88%B7%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92"><span class="toc-number">6.</span> <span class="toc-text">6. Linux 主机上的用户消息传递</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%9F%A5%E6%89%BE%E7%94%A8%E6%88%B7"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 查找用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%94%A8%E6%88%B7%E5%AF%B9%E8%B0%88"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 用户对谈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E7%94%A8%E6%88%B7%E9%82%AE%E4%BB%B6%E4%BF%A1%E7%AE%B1%EF%BC%9Amail"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 用户邮件信箱：mail</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-CentOS-7-%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A4%A7%E9%87%8F%E5%BB%BA%E7%BD%AE%E5%B8%90%E5%8F%B7%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">7. CentOS 7 环境下大量建置帐号的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%B8%90%E5%8F%B7%E7%9B%B8%E5%85%B3%E7%9A%84%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 帐号相关的检查工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%A4%A7%E9%87%8F%E5%BB%BA%E7%BD%AE%E5%B8%90%E5%8F%B7%E8%8C%83%E6%9C%AC%EF%BC%88%E9%80%82%E7%94%A8-passwd-%E2%80%93stdin-%E9%80%89%E9%A1%B9%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 大量建置帐号范本（适用 passwd –stdin 选项）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">8.</span> <span class="toc-text">8. 本章重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">9.</span> <span class="toc-text">9. 核心要点</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter13/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&text=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&is_video=false&description=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter13/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&title=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&name=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter13/&t=Linux学习日志(10) Linux 帐号管理与 ACL 权限设置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

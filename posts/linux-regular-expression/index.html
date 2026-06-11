@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="正则表达式是处理文本的强大工具，它可以通过特定的规则来匹配、查找、替换文本，在 Linux 的文本处理工具中非常常用。在 Linux 中，正则表达式依照严谨度分为两类：基础正则表达式（BRE）和扩展正则表达式（ERE），两者的功能和支持的符号有所区别，下面我们就来详细梳理。 一、基础正则表达式（BRE）基础正则表达式是最基础的正则语法，grep、sed 这类工具默认支持的就是基础正则，它提供了最核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;笔记&gt; Linux正则表达式总结">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-regular-expression/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="正则表达式是处理文本的强大工具，它可以通过特定的规则来匹配、查找、替换文本，在 Linux 的文本处理工具中非常常用。在 Linux 中，正则表达式依照严谨度分为两类：基础正则表达式（BRE）和扩展正则表达式（ERE），两者的功能和支持的符号有所区别，下面我们就来详细梳理。 一、基础正则表达式（BRE）基础正则表达式是最基础的正则语法，grep、sed 这类工具默认支持的就是基础正则，它提供了最核">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-04-17T04:53:11.000Z">
+<meta property="article:modified_time" content="2026-04-17T04:55:02.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="regular expression">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>&lt;笔记&gt; Linux正则表达式总结</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter08/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-bash-pipe-commands/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-regular-expression/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-regular-expression/&text=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-regular-expression/&is_video=false&description=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; Linux正则表达式总结&body=Check out this article: https://blog.webrelay.cn/posts/linux-regular-expression/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-regular-expression/&name=&lt;笔记&gt; Linux正则表达式总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-regular-expression/&t=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88BRE%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、基础正则表达式（BRE）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">常用元字符说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.</span> <span class="toc-text">实操示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88ERE%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、扩展正则表达式（ERE）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E8%AF%B4%E6%98%8E-1"><span class="toc-number">2.1.</span> <span class="toc-text">常用元字符说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">2.2.</span> <span class="toc-text">实操示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%B8%B8%E8%A7%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">三、常见注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">正则与通配符的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E7%9A%84%E9%BB%98%E8%AE%A4%E6%94%AF%E6%8C%81"><span class="toc-number">3.2.</span> <span class="toc-text">工具的默认支持</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        &lt;笔记&gt; Linux正则表达式总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-04-17T04:53:11.000Z" class="dt-published" itemprop="datePublished">Apr 17 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/bash/" rel="tag">bash</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/re/" rel="tag">re</a>, <a class="p-category" href="/tags/regular-expression/" rel="tag">regular expression</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>正则表达式是处理文本的强大工具，它可以通过特定的规则来匹配、查找、替换文本，在 Linux 的文本处理工具中非常常用。在 Linux 中，正则表达式依照严谨度分为两类：基础正则表达式（BRE）和扩展正则表达式（ERE），两者的功能和支持的符号有所区别，下面我们就来详细梳理。</p>
+<h2 id="一、基础正则表达式（BRE）"><a href="#一、基础正则表达式（BRE）" class="headerlink" title="一、基础正则表达式（BRE）"></a>一、基础正则表达式（BRE）</h2><p>基础正则表达式是最基础的正则语法，grep、sed 这类工具默认支持的就是基础正则，它提供了最核心的文本匹配能力。</p>
+<h3 id="常用元字符说明"><a href="#常用元字符说明" class="headerlink" title="常用元字符说明"></a>常用元字符说明</h3><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>^</code></td>
+<td>匹配行的开头，比如 <code>^root</code> 代表匹配以 root 开头的行</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>匹配行的结尾，比如 <code>bash$</code> 代表匹配以 bash 结尾的行</td>
+</tr>
+<tr>
+<td><code>\.</code></td>
+<td>匹配任意一个字符（不包括空行）</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>转义字符，去掉特殊字符的原本含义</td>
+</tr>
+<tr>
+<td><code>\*</code></td>
+<td>匹配前面的字符 0 次或多次</td>
+</tr>
+<tr>
+<td><code>\[\]</code></td>
+<td>匹配括号内的任意一个字符，比如 <code>\[abc\]</code> 代表匹配 a、b、c 中的任意一个</td>
+</tr>
+<tr>
+<td><code>\[^\]</code></td>
+<td>反向选择，匹配不在括号内的任意一个字符，比如 <code>\[^a\-z\]</code> 代表匹配非小写字母的字符</td>
+</tr>
+<tr>
+<td><code>\{n,m\}</code></td>
+<td>匹配前面的字符 n 到 m 次，比如 <code>o\{2\}</code> 代表匹配连续 2 个 o</td>
+</tr>
+</tbody></table>
+<h3 id="实操示例"><a href="#实操示例" class="headerlink" title="实操示例"></a>实操示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例1：查找passwd中以root开头的行</span></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | grep <span class="string">&#x27;^root&#x27;</span></span><br><span class="line">     1  root:x:0:0:root:/root:/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例2：查找以bash结尾的行</span></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | grep <span class="string">&#x27;bash$&#x27;</span></span><br><span class="line">     1  root:x:0:0:root:/root:/bin/bash</span><br><span class="line">    25  dmtsai:x:1000:1000:dmtsai:/home/dmtsai:/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例3：查找包含go或者gl的行</span></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | grep <span class="string">&#x27;g[ol]&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例4：查找非小写字母开头的行</span></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | grep <span class="string">&#x27;^[^a-z]&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例5：查找包含连续两个o的行</span></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | grep <span class="string">&#x27;o\&#123;2\&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例6：删除配置文件中的空行和注释行</span></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">cat</span> /etc/man_db.conf | grep -v <span class="string">&#x27;^$&#x27;</span> | grep -v <span class="string">&#x27;^#&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、扩展正则表达式（ERE）"><a href="#二、扩展正则表达式（ERE）" class="headerlink" title="二、扩展正则表达式（ERE）"></a>二、扩展正则表达式（ERE）</h2><p>扩展正则表达式在基础正则的基础上，增加了更多的语法支持，不需要对部分符号进行转义，使用起来更方便，我们可以通过 <code>grep \-E</code> 或者 <code>egrep</code> 来启用扩展正则的支持。</p>
+<h3 id="常用元字符说明-1"><a href="#常用元字符说明-1" class="headerlink" title="常用元字符说明"></a>常用元字符说明</h3><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>作用说明</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\+</code></td>
+<td>匹配前面的字符 1 次或多次</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配前面的字符 0 次或 1 次</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&#96;</td>
+<td>&#96;</td>
+<td>或的方式，同时匹配多个字符串，比如 &#96;gd</td>
+<td>good&#96; 代表匹配 gd 或者 good</td>
+</tr>
+<tr>
+<td><code>\(\)</code></td>
+<td>分组，将多个字符作为一个整体来处理，比如 &#96;(gd</td>
+<td>good)dog&#96;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>\{n,m\}</code></td>
+<td>匹配前面的字符 n 到 m 次，和基础正则不同，这里不需要加转义符</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="实操示例-1"><a href="#实操示例-1" class="headerlink" title="实操示例"></a>实操示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例1：同时查找包含god或者good的行</span></span><br><span class="line">[dmtsai@study ~]$ egrep <span class="string">&#x27;god|good&#x27;</span> test.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例2：查找包含一个或多个o的行</span></span><br><span class="line">[dmtsai@study ~]$ egrep <span class="string">&#x27;go+d&#x27;</span> test.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例3：查找包含0个或1个o的行</span></span><br><span class="line">[dmtsai@study ~]$ egrep <span class="string">&#x27;go?d&#x27;</span> test.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例4：分组匹配，查找gd或者good后面接dog的行</span></span><br><span class="line">[dmtsai@study ~]$ egrep <span class="string">&#x27;(gd|good)dog&#x27;</span> test.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、常见注意事项"><a href="#三、常见注意事项" class="headerlink" title="三、常见注意事项"></a>三、常见注意事项</h2><h3 id="正则与通配符的区别"><a href="#正则与通配符的区别" class="headerlink" title="正则与通配符的区别"></a>正则与通配符的区别</h3><p>很多新手会混淆正则表达式和通配符，两者的含义完全不同：</p>
+<ul>
+<li><p>通配符是用来匹配文件名的，其中 <code>\*</code> 代表的是<strong>任意长度的任意字符</strong></p>
+</li>
+<li><p>正则表达式是用来匹配文本内容的，其中 <code>\*</code> 代表的是<strong>重复前面的字符 0 次或多次</strong></p>
+</li>
+</ul>
+<h3 id="工具的默认支持"><a href="#工具的默认支持" class="headerlink" title="工具的默认支持"></a>工具的默认支持</h3><p>不同的工具对正则的支持有所区别：</p>
+<ul>
+<li><p>默认情况下，grep、sed 使用的是基础正则表达式</p>
+</li>
+<li><p>如果要使用扩展正则，需要加上 <code>\-r</code>（sed）或者 <code>\-E</code>（grep）参数，或者直接使用 egrep</p>
+</li>
+<li><p>部分工具如 awk 默认就支持扩展正则表达式</p>
+</li>
+</ul>
+<hr>
+<p>正则表达式是 Linux 文本处理的核心能力，灵活搭配之前的管线命令，就可以完成非常复杂的文本处理任务，极大提升我们的工作效率。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88BRE%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、基础正则表达式（BRE）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">常用元字符说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.</span> <span class="toc-text">实操示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88ERE%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、扩展正则表达式（ERE）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E8%AF%B4%E6%98%8E-1"><span class="toc-number">2.1.</span> <span class="toc-text">常用元字符说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">2.2.</span> <span class="toc-text">实操示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%B8%B8%E8%A7%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">三、常见注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">正则与通配符的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E7%9A%84%E9%BB%98%E8%AE%A4%E6%94%AF%E6%8C%81"><span class="toc-number">3.2.</span> <span class="toc-text">工具的默认支持</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-regular-expression/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-regular-expression/&text=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-regular-expression/&is_video=false&description=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; Linux正则表达式总结&body=Check out this article: https://blog.webrelay.cn/posts/linux-regular-expression/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-regular-expression/&title=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-regular-expression/&name=&lt;笔记&gt; Linux正则表达式总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-regular-expression/&t=&lt;笔记&gt; Linux正则表达式总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

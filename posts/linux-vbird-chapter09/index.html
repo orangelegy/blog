@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考资料：鳥哥私房菜 - 第九章、vim 程式編輯器  1. vim 概述1.1 什么是 vim vi：Unix-like系统中内建的标准文本编辑器 vim：Vi IMproved，vi的进阶版本，增加了颜色显示、语法检查等功能 几乎所有Linux发行版都会内置vi&#x2F;vim，很多软件的编辑界面也会主动调用vi（如crontab、visudo等）  1.2 为什么要学习 vim 所有Un">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(6) vim程序编辑器">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter09/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="参考资料：鳥哥私房菜 - 第九章、vim 程式編輯器  1. vim 概述1.1 什么是 vim vi：Unix-like系统中内建的标准文本编辑器 vim：Vi IMproved，vi的进阶版本，增加了颜色显示、语法检查等功能 几乎所有Linux发行版都会内置vi&#x2F;vim，很多软件的编辑界面也会主动调用vi（如crontab、visudo等）  1.2 为什么要学习 vim 所有Un">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-04-17T09:45:16.000Z">
+<meta property="article:modified_time" content="2026-04-17T09:47:06.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="vi">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(6) vim程序编辑器</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter10/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter08/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&text=Linux学习日志(6) vim程序编辑器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&is_video=false&description=Linux学习日志(6) vim程序编辑器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(6) vim程序编辑器&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&name=Linux学习日志(6) vim程序编辑器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&t=Linux学习日志(6) vim程序编辑器"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-vim-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">1. vim 概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-vim"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是 vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0-vim"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 为什么要学习 vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-vim-%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 vim 的主要功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-vim-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. vim 的三种模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%80%E8%88%AC%E6%8C%87%E4%BB%A4%E6%A8%A1%E5%BC%8F%EF%BC%88Normal-Mode%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 一般指令模式（Normal Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F%EF%BC%88Insert-Mode%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 编辑模式（Insert Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%8C%87%E4%BB%A4%E5%88%97%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%EF%BC%88Command-line-Mode%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 指令列命令模式（Command-line Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%87%E6%8D%A2%E5%85%B3%E7%B3%BB"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 三种模式的切换关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%80%E8%88%AC%E6%8C%87%E4%BB%A4%E6%A8%A1%E5%BC%8F%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">3. 一般指令模式常用操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 光标移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%90%9C%E7%B4%A2%E4%B8%8E%E6%9B%BF%E6%8D%A2"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 搜索与替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 删除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%A4%8D%E5%88%B6%E4%B8%8E%E7%B2%98%E8%B4%B4"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 复制与粘贴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%92%A4%E9%94%80%E4%B8%8E%E9%87%8D%E5%81%9A"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 撤销与重做</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E5%8C%BA%E5%9D%97%E9%80%89%E6%8B%A9%EF%BC%88Visual-Mode%EF%BC%89"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 区块选择（Visual Mode）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BF%9B%E5%85%A5%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%8C%89%E9%94%AE"><span class="toc-number">4.</span> <span class="toc-text">4. 进入编辑模式的按键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8C%87%E4%BB%A4%E5%88%97%E6%A8%A1%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">5. 指令列模式常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 文件操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 外部命令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%A4%9A%E6%96%87%E4%BB%B6%E4%B8%8E%E5%A4%9A%E7%AA%97%E5%8F%A3%E7%BC%96%E8%BE%91"><span class="toc-number">6.</span> <span class="toc-text">6. 多文件与多窗口编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%A4%9A%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 多文件编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%A4%9A%E7%AA%97%E5%8F%A3%E7%BC%96%E8%BE%91"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 多窗口编辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-vim-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">7. vim 环境设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-vimrc-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 vimrc 配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%B8%B8%E7%94%A8-vimrc-%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 常用 vimrc 设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-vim-%E6%9A%82%E5%AD%98%E7%9B%98%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-number">8.</span> <span class="toc-text">8. vim 暂存盘与恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E6%9A%82%E5%AD%98%E7%9B%98%E6%9C%BA%E5%88%B6"><span class="toc-number">8.1.</span> <span class="toc-text">8.1 暂存盘机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E6%9A%82%E5%AD%98%E7%9B%98%E7%8A%B6%E6%80%81"><span class="toc-number">8.2.</span> <span class="toc-text">8.2 暂存盘状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%85%B6%E4%BB%96%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.</span> <span class="toc-text">9. 其他实用功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">9.1.</span> <span class="toc-text">9.1 文件编码转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E6%8D%A2%E8%A1%8C%E7%AC%A6%E8%BD%AC%E6%8D%A2"><span class="toc-number">9.2.</span> <span class="toc-text">9.2 换行符转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E4%BB%A3%E7%A0%81%E8%A1%A5%E5%85%A8"><span class="toc-number">9.3.</span> <span class="toc-text">9.3 代码补全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">10.</span> <span class="toc-text">10. 本章重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">11.</span> <span class="toc-text">11. 核心要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-vim-%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.1.</span> <span class="toc-text">11.1 vim 学习建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E9%87%8D%E7%82%B9%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">11.2.</span> <span class="toc-text">11.2 重点快捷键</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(6) vim程序编辑器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-04-17T09:45:16.000Z" class="dt-published" itemprop="datePublished">Apr 17 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/vi/" rel="tag">vi</a>, <a class="p-category" href="/tags/vim/" rel="tag">vim</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/centos7/0310vi.php">鳥哥私房菜 - 第九章、vim 程式編輯器</a></p>
+</blockquote>
+<h2 id="1-vim-概述"><a href="#1-vim-概述" class="headerlink" title="1. vim 概述"></a>1. vim 概述</h2><h3 id="1-1-什么是-vim"><a href="#1-1-什么是-vim" class="headerlink" title="1.1 什么是 vim"></a>1.1 什么是 vim</h3><ul>
+<li><strong>vi</strong>：Unix-like系统中内建的标准文本编辑器</li>
+<li><strong>vim</strong>：Vi IMproved，vi的进阶版本，增加了颜色显示、语法检查等功能</li>
+<li>几乎所有Linux发行版都会内置vi&#x2F;vim，很多软件的编辑界面也会主动调用vi（如crontab、visudo等）</li>
+</ul>
+<h3 id="1-2-为什么要学习-vim"><a href="#1-2-为什么要学习-vim" class="headerlink" title="1.2 为什么要学习 vim"></a>1.2 为什么要学习 vim</h3><ul>
+<li>所有Unix Like系统都会内建vi编辑器，其他编辑器不一定存在</li>
+<li>很多Linux指令默认使用vi作为编辑界面</li>
+<li>vim具有程序编辑能力，能以颜色辨别语法正确性</li>
+<li>编辑速度快，功能强大</li>
+</ul>
+<h3 id="1-3-vim-的主要功能"><a href="#1-3-vim-的主要功能" class="headerlink" title="1.3 vim 的主要功能"></a>1.3 vim 的主要功能</h3><ul>
+<li>语法高亮显示</li>
+<li>支持正则表达式的搜索</li>
+<li>多文件编辑</li>
+<li>区块复制&#x2F;粘贴</li>
+<li>多窗口功能</li>
+</ul>
+<h2 id="2-vim-的三种模式"><a href="#2-vim-的三种模式" class="headerlink" title="2. vim 的三种模式"></a>2. vim 的三种模式</h2><p>vim共有三种模式，这三种模式的相互切换是vim操作的核心：</p>
+<h3 id="2-1-一般指令模式（Normal-Mode）"><a href="#2-1-一般指令模式（Normal-Mode）" class="headerlink" title="2.1 一般指令模式（Normal Mode）"></a>2.1 一般指令模式（Normal Mode）</h3><ul>
+<li>用<code>vim filename</code>打开文件后即进入此模式</li>
+<li>可以使用上下左右键移动光标</li>
+<li>可以进行删除字符、删除整行、复制、粘贴等操作</li>
+</ul>
+<h3 id="2-2-编辑模式（Insert-Mode）"><a href="#2-2-编辑模式（Insert-Mode）" class="headerlink" title="2.2 编辑模式（Insert Mode）"></a>2.2 编辑模式（Insert Mode）</h3><ul>
+<li>在一般指令模式下，按<code>i</code>、<code>I</code>、<code>a</code>、<code>A</code>、<code>o</code>、<code>O</code>、<code>r</code>、<code>R</code>任意键进入</li>
+<li>左下角会出现<code>-- INSERT --</code>字样</li>
+<li>可进行文字输入</li>
+<li>按<code>ESC</code>键退出编辑模式，返回一般指令模式</li>
+</ul>
+<h3 id="2-3-指令列命令模式（Command-line-Mode）"><a href="#2-3-指令列命令模式（Command-line-Mode）" class="headerlink" title="2.3 指令列命令模式（Command-line Mode）"></a>2.3 指令列命令模式（Command-line Mode）</h3><ul>
+<li>在一般指令模式下，按<code>:</code>、<code>/</code>、<code>?</code>任意键进入</li>
+<li>可执行保存、退出、搜索、替换等操作</li>
+<li>按<code>ESC</code>键退出</li>
+</ul>
+<h3 id="2-4-三种模式的切换关系"><a href="#2-4-三种模式的切换关系" class="headerlink" title="2.4 三种模式的切换关系"></a>2.4 三种模式的切换关系</h3><ul>
+<li>一般指令模式 ⇄ 编辑模式（按ESC返回）</li>
+<li>一般指令模式 ⇄ 指令列模式</li>
+<li>编辑模式与指令列模式之间<strong>不能直接切换</strong></li>
+</ul>
+<h2 id="3-一般指令模式常用操作"><a href="#3-一般指令模式常用操作" class="headerlink" title="3. 一般指令模式常用操作"></a>3. 一般指令模式常用操作</h2><h3 id="3-1-光标移动"><a href="#3-1-光标移动" class="headerlink" title="3.1 光标移动"></a>3.1 光标移动</h3><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>h</code> 或 <code>←</code></td>
+<td>向左移动一个字符</td>
+</tr>
+<tr>
+<td><code>j</code> 或 <code>↓</code></td>
+<td>向下移动一行</td>
+</tr>
+<tr>
+<td><code>k</code> 或 <code>↑</code></td>
+<td>向上移动一行</td>
+</tr>
+<tr>
+<td><code>l</code> 或 <code>→</code></td>
+<td>向右移动一个字符</td>
+</tr>
+<tr>
+<td><code>Ctrl + f</code></td>
+<td>向下翻一页</td>
+</tr>
+<tr>
+<td><code>Ctrl + b</code></td>
+<td>向上翻一页</td>
+</tr>
+<tr>
+<td><code>Ctrl + d</code></td>
+<td>向下翻半页</td>
+</tr>
+<tr>
+<td><code>Ctrl + u</code></td>
+<td>向上翻半页</td>
+</tr>
+<tr>
+<td><code>0</code> 或 <code>Home</code></td>
+<td>移动到当前行首</td>
+</tr>
+<tr>
+<td><code>$</code> 或 <code>End</code></td>
+<td>移动到当前行尾</td>
+</tr>
+<tr>
+<td><code>G</code></td>
+<td>移动到文件最后一行</td>
+</tr>
+<tr>
+<td><code>gg</code></td>
+<td>移动到文件第一行</td>
+</tr>
+<tr>
+<td><code>nG</code></td>
+<td>移动到第n行</td>
+</tr>
+<tr>
+<td><code>n + Enter</code></td>
+<td>向下移动n行</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-搜索与替换"><a href="#3-2-搜索与替换" class="headerlink" title="3.2 搜索与替换"></a>3.2 搜索与替换</h3><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/word</code></td>
+<td>向下搜索word</td>
+</tr>
+<tr>
+<td><code>?word</code></td>
+<td>向上搜索word</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>继续下一个搜索匹配</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>上一个搜索匹配</td>
+</tr>
+<tr>
+<td><code>:n1,n2s/word1/word2/g</code></td>
+<td>将n1到n2行的word1替换为word2</td>
+</tr>
+<tr>
+<td><code>:1,$s/word1/word2/g</code></td>
+<td>全局替换</td>
+</tr>
+<tr>
+<td><code>:1,$s/word1/word2/gc</code></td>
+<td>全局替换（逐个确认）</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-删除操作"><a href="#3-3-删除操作" class="headerlink" title="3.3 删除操作"></a>3.3 删除操作</h3><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x</code> 或 <code>Del</code></td>
+<td>向后删除一个字符</td>
+</tr>
+<tr>
+<td><code>X</code> 或 <code>Backspace</code></td>
+<td>向前删除一个字符</td>
+</tr>
+<tr>
+<td><code>nx</code></td>
+<td>向后删除n个字符</td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>删除光标所在整行</td>
+</tr>
+<tr>
+<td><code>ndd</code></td>
+<td>向下删除n行</td>
+</tr>
+<tr>
+<td><code>dG</code></td>
+<td>删除光标所在行到文件末尾</td>
+</tr>
+<tr>
+<td><code>d0</code></td>
+<td>删除光标处到行首</td>
+</tr>
+<tr>
+<td><code>d$</code></td>
+<td>删除光标处到行尾</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-复制与粘贴"><a href="#3-4-复制与粘贴" class="headerlink" title="3.4 复制与粘贴"></a>3.4 复制与粘贴</h3><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>yy</code></td>
+<td>复制光标所在整行</td>
+</tr>
+<tr>
+<td><code>nyy</code></td>
+<td>向下复制n行</td>
+</tr>
+<tr>
+<td><code>yG</code></td>
+<td>复制光标所在行到文件末尾</td>
+</tr>
+<tr>
+<td><code>y0</code></td>
+<td>复制光标处到行首</td>
+</tr>
+<tr>
+<td><code>y$</code></td>
+<td>复制光标处到行尾</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>在光标下一行粘贴</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>在光标上一行粘贴</td>
+</tr>
+</tbody></table>
+<h3 id="3-5-撤销与重做"><a href="#3-5-撤销与重做" class="headerlink" title="3.5 撤销与重做"></a>3.5 撤销与重做</h3><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>u</code></td>
+<td>撤销上一个操作</td>
+</tr>
+<tr>
+<td><code>Ctrl + r</code></td>
+<td>重做上一个操作</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>重复上一个操作</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-区块选择（Visual-Mode）"><a href="#3-6-区块选择（Visual-Mode）" class="headerlink" title="3.6 区块选择（Visual Mode）"></a>3.6 区块选择（Visual Mode）</h3><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>v</code></td>
+<td>字符选择模式</td>
+</tr>
+<tr>
+<td><code>V</code></td>
+<td>行选择模式</td>
+</tr>
+<tr>
+<td><code>Ctrl + v</code></td>
+<td>区块选择模式（矩形选择）</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>复制所选区块</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>删除所选区块</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>粘贴所选区块</td>
+</tr>
+</tbody></table>
+<h2 id="4-进入编辑模式的按键"><a href="#4-进入编辑模式的按键" class="headerlink" title="4. 进入编辑模式的按键"></a>4. 进入编辑模式的按键</h2><table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>i</code></td>
+<td>从光标所在处<strong>前</strong>开始插入</td>
+</tr>
+<tr>
+<td><code>I</code></td>
+<td>从光标所在行<strong>行首</strong>开始插入</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>从光标所在处<strong>后</strong>开始插入</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>从光标所在行<strong>行尾</strong>开始插入</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td>在光标所在行<strong>下方</strong>插入新行</td>
+</tr>
+<tr>
+<td><code>O</code></td>
+<td>在光标所在行<strong>上方</strong>插入新行</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>替换光标处字符一次（不进入插入模式）</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>进入替换模式，连续替换直到按ESC</td>
+</tr>
+<tr>
+<td><code>ESC</code></td>
+<td>退出编辑模式，返回一般指令模式</td>
+</tr>
+</tbody></table>
+<h2 id="5-指令列模式常用命令"><a href="#5-指令列模式常用命令" class="headerlink" title="5. 指令列模式常用命令"></a>5. 指令列模式常用命令</h2><h3 id="5-1-文件操作"><a href="#5-1-文件操作" class="headerlink" title="5.1 文件操作"></a>5.1 文件操作</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:w</code></td>
+<td>保存文件</td>
+</tr>
+<tr>
+<td><code>:w!</code></td>
+<td>强制保存</td>
+</tr>
+<tr>
+<td><code>:q</code></td>
+<td>退出vim</td>
+</tr>
+<tr>
+<td><code>:q!</code></td>
+<td>强制退出（不保存修改）</td>
+</tr>
+<tr>
+<td><code>:wq</code></td>
+<td>保存并退出</td>
+</tr>
+<tr>
+<td><code>:x</code></td>
+<td>保存并退出（同:wq）</td>
+</tr>
+<tr>
+<td><code>ZZ</code></td>
+<td>保存并退出（快捷键，等同于:wq）</td>
+</tr>
+<tr>
+<td><code>:w [file]</code></td>
+<td>另存为file</td>
+</tr>
+<tr>
+<td><code>:r [file]</code></td>
+<td>将file内容读入光标下一行</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-环境设置"><a href="#5-2-环境设置" class="headerlink" title="5.2 环境设置"></a>5.2 环境设置</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:set nu</code></td>
+<td>显示行号</td>
+</tr>
+<tr>
+<td><code>:set nonu</code></td>
+<td>取消行号</td>
+</tr>
+<tr>
+<td><code>:set readonly</code></td>
+<td>设为只读模式</td>
+</tr>
+<tr>
+<td><code>:set noexec</code></td>
+<td>禁止执行</td>
+</tr>
+<tr>
+<td><code>:set all</code></td>
+<td>查看所有设定值</td>
+</tr>
+</tbody></table>
+<h3 id="5-3-外部命令执行"><a href="#5-3-外部命令执行" class="headerlink" title="5.3 外部命令执行"></a>5.3 外部命令执行</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:! command</code></td>
+<td>暂时离开vim执行外部命令</td>
+</tr>
+</tbody></table>
+<h2 id="6-多文件与多窗口编辑"><a href="#6-多文件与多窗口编辑" class="headerlink" title="6. 多文件与多窗口编辑"></a>6. 多文件与多窗口编辑</h2><h3 id="6-1-多文件编辑"><a href="#6-1-多文件编辑" class="headerlink" title="6.1 多文件编辑"></a>6.1 多文件编辑</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>vim file1 file2</code></td>
+<td>同时打开多个文件</td>
+</tr>
+<tr>
+<td><code>:n</code></td>
+<td>编辑下一个文件</td>
+</tr>
+<tr>
+<td><code>:N</code></td>
+<td>编辑上一个文件</td>
+</tr>
+<tr>
+<td><code>:files</code></td>
+<td>列出当前vim打开的所有文件</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-多窗口编辑"><a href="#6-2-多窗口编辑" class="headerlink" title="6.2 多窗口编辑"></a>6.2 多窗口编辑</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:sp [filename]</code></td>
+<td>水平分割窗口</td>
+</tr>
+<tr>
+<td><code>:vsp [filename]</code></td>
+<td>垂直分割窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl + w + j</code> 或 <code>Ctrl + w + ↓</code></td>
+<td>移动到下方窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl + w + k</code> 或 <code>Ctrl + w + ↑</code></td>
+<td>移动到上方窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl + w + q</code></td>
+<td>退出当前窗口</td>
+</tr>
+</tbody></table>
+<h2 id="7-vim-环境设置"><a href="#7-vim-环境设置" class="headerlink" title="7. vim 环境设置"></a>7. vim 环境设置</h2><h3 id="7-1-vimrc-配置文件"><a href="#7-1-vimrc-配置文件" class="headerlink" title="7.1 vimrc 配置文件"></a>7.1 vimrc 配置文件</h3><ul>
+<li>系统配置文件：<code>/etc/vim/vimrc</code></li>
+<li>个人配置文件：<code>~/.vimrc</code></li>
+<li>通过配置文件可永久保存vim设定</li>
+</ul>
+<h3 id="7-2-常用-vimrc-设置"><a href="#7-2-常用-vimrc-设置" class="headerlink" title="7.2 常用 vimrc 设置"></a>7.2 常用 vimrc 设置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set nu          &quot; 显示行号</span><br><span class="line">set autoindent  &quot; 自动缩进</span><br><span class="line">set tabstop=4   &quot; Tab键宽度4空格</span><br><span class="line">set expandtab   &quot; 将Tab转换为空格</span><br><span class="line">set hlsearch    &quot; 高亮搜索结果</span><br><span class="line">syntax on       &quot; 语法高亮</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-vim-暂存盘与恢复"><a href="#8-vim-暂存盘与恢复" class="headerlink" title="8. vim 暂存盘与恢复"></a>8. vim 暂存盘与恢复</h2><h3 id="8-1-暂存盘机制"><a href="#8-1-暂存盘机制" class="headerlink" title="8.1 暂存盘机制"></a>8.1 暂存盘机制</h3><ul>
+<li>vim编辑文件时会自动创建暂存盘（swap file）</li>
+<li>文件名格式：<code>.filename.swp</code></li>
+<li>用于系统崩溃时的文件恢复</li>
+</ul>
+<h3 id="8-2-暂存盘状态"><a href="#8-2-暂存盘状态" class="headerlink" title="8.2 暂存盘状态"></a>8.2 暂存盘状态</h3><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[O]</code></td>
+<td>只读打开</td>
+</tr>
+<tr>
+<td><code>[E]</code></td>
+<td>直接编辑</td>
+</tr>
+<tr>
+<td><code>[R]</code></td>
+<td>恢复文件</td>
+</tr>
+<tr>
+<td><code>[D]</code></td>
+<td>删除暂存盘</td>
+</tr>
+<tr>
+<td><code>[Q]</code></td>
+<td>退出</td>
+</tr>
+</tbody></table>
+<h2 id="9-其他实用功能"><a href="#9-其他实用功能" class="headerlink" title="9. 其他实用功能"></a>9. 其他实用功能</h2><h3 id="9-1-文件编码转换"><a href="#9-1-文件编码转换" class="headerlink" title="9.1 文件编码转换"></a>9.1 文件编码转换</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iconv -f 原编码 -t 新编码 文件名 -o 新文件名</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-2-换行符转换"><a href="#9-2-换行符转换" class="headerlink" title="9.2 换行符转换"></a>9.2 换行符转换</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dos2unix 文件名    <span class="comment"># Windows格式 → Unix格式</span></span><br><span class="line">unix2dos 文件名    <span class="comment"># Unix格式 → Windows格式</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="9-3-代码补全"><a href="#9-3-代码补全" class="headerlink" title="9.3 代码补全"></a>9.3 代码补全</h3><p>在编辑模式（插入模式）下：</p>
+<ul>
+<li><code>Ctrl + x</code> → <code>Ctrl + o</code>：代码补全</li>
+</ul>
+<h2 id="10-本章重点命令速查"><a href="#10-本章重点命令速查" class="headerlink" title="10. 本章重点命令速查"></a>10. 本章重点命令速查</h2><table>
+<thead>
+<tr>
+<th>命令&#x2F;按键</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>vim file</code></td>
+<td>打开&#x2F;创建文件</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>进入编辑模式</td>
+</tr>
+<tr>
+<td><code>ESC</code></td>
+<td>退出编辑模式</td>
+</tr>
+<tr>
+<td><code>:w</code></td>
+<td>保存</td>
+</tr>
+<tr>
+<td><code>:q</code></td>
+<td>退出</td>
+</tr>
+<tr>
+<td><code>:wq</code> &#x2F; <code>ZZ</code></td>
+<td>保存并退出</td>
+</tr>
+<tr>
+<td><code>:q!</code></td>
+<td>强制退出不保存</td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>删除整行</td>
+</tr>
+<tr>
+<td><code>yy</code></td>
+<td>复制整行</td>
+</tr>
+<tr>
+<td><code>p</code> &#x2F; <code>P</code></td>
+<td>粘贴</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>撤销</td>
+</tr>
+<tr>
+<td><code>Ctrl + r</code></td>
+<td>重做</td>
+</tr>
+<tr>
+<td><code>/word</code></td>
+<td>搜索</td>
+</tr>
+<tr>
+<td><code>:n1,n2s/old/new/g</code></td>
+<td>替换</td>
+</tr>
+<tr>
+<td><code>:set nu</code></td>
+<td>显示行号</td>
+</tr>
+<tr>
+<td><code>:sp</code></td>
+<td>水平分窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl + v</code></td>
+<td>区块选择</td>
+</tr>
+<tr>
+<td><code>:! command</code></td>
+<td>执行外部命令</td>
+</tr>
+</tbody></table>
+<h2 id="11-核心要点"><a href="#11-核心要点" class="headerlink" title="11. 核心要点"></a>11. 核心要点</h2><h3 id="11-1-vim-学习建议"><a href="#11-1-vim-学习建议" class="headerlink" title="11.1 vim 学习建议"></a>11.1 vim 学习建议</h3><ul>
+<li>记住三种模式的切换方法是使用vim的基础</li>
+<li>常用按键只需记住：<code>i</code>（进入编辑）、<code>ESC</code>（退出编辑）、<code>:wq</code>（保存退出）即可开始使用</li>
+<li>数字有重复操作的意义，如<code>5yy</code>表示复制5行</li>
+<li>小数点<code>.</code>可重复上一次操作，非常实用</li>
+<li><code>G</code>移动到文件尾、<code>gg</code>移动到文件头，这两个快捷键使用频率最高</li>
+</ul>
+<h3 id="11-2-重点快捷键"><a href="#11-2-重点快捷键" class="headerlink" title="11.2 重点快捷键"></a>11.2 重点快捷键</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>复制行</td>
+<td><code>yy</code></td>
+</tr>
+<tr>
+<td>删除行</td>
+<td><code>dd</code></td>
+</tr>
+<tr>
+<td>粘贴</td>
+<td><code>p</code> &#x2F; <code>P</code></td>
+</tr>
+<tr>
+<td>撤销</td>
+<td><code>u</code></td>
+</tr>
+<tr>
+<td>搜索</td>
+<td><code>/word</code></td>
+</tr>
+<tr>
+<td>替换</td>
+<td><code>:s/old/new/g</code></td>
+</tr>
+<tr>
+<td>保存退出</td>
+<td><code>ZZ</code></td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-vim-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">1. vim 概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-vim"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是 vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0-vim"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 为什么要学习 vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-vim-%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 vim 的主要功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-vim-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. vim 的三种模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%80%E8%88%AC%E6%8C%87%E4%BB%A4%E6%A8%A1%E5%BC%8F%EF%BC%88Normal-Mode%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 一般指令模式（Normal Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F%EF%BC%88Insert-Mode%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 编辑模式（Insert Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%8C%87%E4%BB%A4%E5%88%97%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%EF%BC%88Command-line-Mode%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 指令列命令模式（Command-line Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%87%E6%8D%A2%E5%85%B3%E7%B3%BB"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 三种模式的切换关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%80%E8%88%AC%E6%8C%87%E4%BB%A4%E6%A8%A1%E5%BC%8F%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">3. 一般指令模式常用操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 光标移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%90%9C%E7%B4%A2%E4%B8%8E%E6%9B%BF%E6%8D%A2"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 搜索与替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 删除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%A4%8D%E5%88%B6%E4%B8%8E%E7%B2%98%E8%B4%B4"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 复制与粘贴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%92%A4%E9%94%80%E4%B8%8E%E9%87%8D%E5%81%9A"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 撤销与重做</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E5%8C%BA%E5%9D%97%E9%80%89%E6%8B%A9%EF%BC%88Visual-Mode%EF%BC%89"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 区块选择（Visual Mode）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BF%9B%E5%85%A5%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%8C%89%E9%94%AE"><span class="toc-number">4.</span> <span class="toc-text">4. 进入编辑模式的按键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8C%87%E4%BB%A4%E5%88%97%E6%A8%A1%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">5. 指令列模式常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 文件操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 外部命令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%A4%9A%E6%96%87%E4%BB%B6%E4%B8%8E%E5%A4%9A%E7%AA%97%E5%8F%A3%E7%BC%96%E8%BE%91"><span class="toc-number">6.</span> <span class="toc-text">6. 多文件与多窗口编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%A4%9A%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 多文件编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%A4%9A%E7%AA%97%E5%8F%A3%E7%BC%96%E8%BE%91"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 多窗口编辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-vim-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">7. vim 环境设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-vimrc-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 vimrc 配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%B8%B8%E7%94%A8-vimrc-%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 常用 vimrc 设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-vim-%E6%9A%82%E5%AD%98%E7%9B%98%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-number">8.</span> <span class="toc-text">8. vim 暂存盘与恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E6%9A%82%E5%AD%98%E7%9B%98%E6%9C%BA%E5%88%B6"><span class="toc-number">8.1.</span> <span class="toc-text">8.1 暂存盘机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E6%9A%82%E5%AD%98%E7%9B%98%E7%8A%B6%E6%80%81"><span class="toc-number">8.2.</span> <span class="toc-text">8.2 暂存盘状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%85%B6%E4%BB%96%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.</span> <span class="toc-text">9. 其他实用功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">9.1.</span> <span class="toc-text">9.1 文件编码转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E6%8D%A2%E8%A1%8C%E7%AC%A6%E8%BD%AC%E6%8D%A2"><span class="toc-number">9.2.</span> <span class="toc-text">9.2 换行符转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E4%BB%A3%E7%A0%81%E8%A1%A5%E5%85%A8"><span class="toc-number">9.3.</span> <span class="toc-text">9.3 代码补全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">10.</span> <span class="toc-text">10. 本章重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">11.</span> <span class="toc-text">11. 核心要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-vim-%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.1.</span> <span class="toc-text">11.1 vim 学习建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E9%87%8D%E7%82%B9%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">11.2.</span> <span class="toc-text">11.2 重点快捷键</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&text=Linux学习日志(6) vim程序编辑器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&is_video=false&description=Linux学习日志(6) vim程序编辑器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(6) vim程序编辑器&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&name=Linux学习日志(6) vim程序编辑器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&t=Linux学习日志(6) vim程序编辑器"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

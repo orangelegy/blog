@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考资料：鳥哥私房菜 - 第十章、認識與學習BASH  1. 认识 BASH 这个 Shell1.1 什么是 Shell 管理计算机硬件的其实是操作系统的核心（Kernel），这个核心需要被保护 我们只能通过 Shell 将输入的指令与 Kernel 沟通，让 Kernel 控制硬件来正确无误地工作 Shell 是用户与操作系统核心之间的接口程序  1.2 硬件、核心与 Shell 的关系 当你">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(7) 认识与学习BASH">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter10/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="参考资料：鳥哥私房菜 - 第十章、認識與學習BASH  1. 认识 BASH 这个 Shell1.1 什么是 Shell 管理计算机硬件的其实是操作系统的核心（Kernel），这个核心需要被保护 我们只能通过 Shell 将输入的指令与 Kernel 沟通，让 Kernel 控制硬件来正确无误地工作 Shell 是用户与操作系统核心之间的接口程序  1.2 硬件、核心与 Shell 的关系 当你">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-04-17T09:51:19.000Z">
+<meta property="article:modified_time" content="2026-04-17T14:15:00.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(7) 认识与学习BASH</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter11/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter09/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter10/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&text=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&is_video=false&description=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(7) 认识与学习BASH&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter10/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&name=Linux学习日志(7) 认识与学习BASH&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&t=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%86-BASH-%E8%BF%99%E4%B8%AA-Shell"><span class="toc-number">1.</span> <span class="toc-text">1. 认识 BASH 这个 Shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-Shell"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是 Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%A1%AC%E4%BB%B6%E3%80%81%E6%A0%B8%E5%BF%83%E4%B8%8E-Shell-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 硬件、核心与 Shell 的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%BA%E4%BD%95%E8%A6%81%E5%AD%A6%E4%B9%A0%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84-Shell"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 为何要学习命令行的 Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E7%B3%BB%E7%BB%9F%E5%90%88%E6%B3%95%E7%9A%84-Shell-%E4%B8%8E-etc-shells-%E5%8A%9F%E8%83%BD"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 系统合法的 Shell 与 &#x2F;etc&#x2F;shells 功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Shell-%E7%9A%84%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">2. Shell 的变量功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%98%E9%87%8F"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 什么是变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8F%98%E9%87%8F%E7%9A%84%E6%98%BE%E7%A4%BA%E4%B8%8E%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 变量的显示与设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE%E8%A7%84%E5%88%99"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 变量设置规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-export%EF%BC%9A%E5%B0%86%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E8%BD%AC%E6%88%90%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 export：将自定义变量转成环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-read%EF%BC%9A%E8%AF%BB%E5%8F%96%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5"><span class="toc-number">2.6.</span> <span class="toc-text">2.6 read：读取用户输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-declare-typeset%EF%BC%9A%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.7.</span> <span class="toc-text">2.7 declare &#x2F; typeset：声明变量类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-ulimit%EF%BC%9A%E9%99%90%E5%88%B6%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90"><span class="toc-number">2.8.</span> <span class="toc-text">2.8 ulimit：限制用户系统资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E7%9A%84%E5%88%A0%E9%99%A4%E3%80%81%E6%9B%BF%E6%8D%A2%E4%B8%8E%E5%8F%96%E4%BB%A3"><span class="toc-number">2.9.</span> <span class="toc-text">2.9 变量内容的删除、替换与取代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D%E4%B8%8E%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">3. 命令别名与历史命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 命令别名设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 历史命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Bash-Shell-%E7%9A%84%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">4.</span> <span class="toc-text">4. Bash Shell 的操作环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 命令执行的优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-type%EF%BC%9A%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 type：查看命令类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 终端环境设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.</span> <span class="toc-text">5. 数据流重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 标准输入输出代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6%E5%8F%B7"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 重定向符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 输入重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-dev-null%EF%BC%9A%E9%BB%91%E6%B4%9E%E8%A3%85%E7%BD%AE"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x2F;dev&#x2F;null：黑洞装置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E5%88%A4%E6%96%AD%E4%BE%9D%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">6. 命令执行的判断依据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%EF%BC%88Pipe%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">7. 管道命令（Pipe）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 管道命令的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E7%AE%A1%E7%BA%BF%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%87%8F%E5%8F%B7-%E7%9A%84%E7%94%A8%E9%80%94"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 管线命令与减号 - 的用途</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%B8%B8%E7%94%A8%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-number">8.</span> <span class="toc-text">8. 常用管道命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-cut%EF%BC%9A%E9%80%89%E5%8F%96%E5%91%BD%E4%BB%A4"><span class="toc-number">8.1.</span> <span class="toc-text">8.1 cut：选取命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-grep%EF%BC%9A%E5%88%86%E6%9E%90%E5%91%BD%E4%BB%A4"><span class="toc-number">8.2.</span> <span class="toc-text">8.2 grep：分析命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-sort%EF%BC%9A%E6%8E%92%E5%BA%8F%E5%91%BD%E4%BB%A4"><span class="toc-number">8.3.</span> <span class="toc-text">8.3 sort：排序命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-uniq%EF%BC%9A%E5%8E%BB%E9%87%8D%E5%91%BD%E4%BB%A4"><span class="toc-number">8.4.</span> <span class="toc-text">8.4 uniq：去重命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-wc%EF%BC%9A%E7%BB%9F%E8%AE%A1%E5%91%BD%E4%BB%A4"><span class="toc-number">8.5.</span> <span class="toc-text">8.5 wc：统计命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-tee%EF%BC%9A%E5%8F%8C%E5%90%91%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">8.6.</span> <span class="toc-text">8.6 tee：双向重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-tr%EF%BC%9A%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E5%91%BD%E4%BB%A4"><span class="toc-number">8.7.</span> <span class="toc-text">8.7 tr：字符转换命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-8-col%EF%BC%9A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%91%BD%E4%BB%A4"><span class="toc-number">8.8.</span> <span class="toc-text">8.8 col：格式化命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-9-join%EF%BC%9A%E6%96%87%E4%BB%B6%E8%BF%9E%E6%8E%A5%E5%91%BD%E4%BB%A4"><span class="toc-number">8.9.</span> <span class="toc-text">8.9 join：文件连接命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-10-paste%EF%BC%9A%E6%96%87%E4%BB%B6%E7%B2%98%E8%B4%B4%E5%91%BD%E4%BB%A4"><span class="toc-number">8.10.</span> <span class="toc-text">8.10 paste：文件粘贴命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-11-expand%EF%BC%9Atab%E8%BD%AC%E7%A9%BA%E6%A0%BC"><span class="toc-number">8.11.</span> <span class="toc-text">8.11 expand：tab转空格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-12-split%EF%BC%9A%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">8.12.</span> <span class="toc-text">8.12 split：文件切割命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-13-xargs%EF%BC%9A%E5%8F%82%E6%95%B0%E4%BB%A3%E6%8D%A2%E5%91%BD%E4%BB%A4"><span class="toc-number">8.13.</span> <span class="toc-text">8.13 xargs：参数代换命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">9. 重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">10.</span> <span class="toc-text">10. 核心要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-BASH-%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">10.1.</span> <span class="toc-text">10.1 BASH 的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%8F%98%E9%87%8F%E6%A0%B8%E5%BF%83%E8%A7%84%E5%88%99"><span class="toc-number">10.2.</span> <span class="toc-text">10.2 变量核心规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91%E8%A6%81%E7%82%B9"><span class="toc-number">10.3.</span> <span class="toc-text">10.3 数据流重定向要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">10.4.</span> <span class="toc-text">10.4 管道命令使用建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-5-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">10.5.</span> <span class="toc-text">10.5 环境配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-6-%E7%BB%88%E7%AB%AF%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">10.6.</span> <span class="toc-text">10.6 终端快捷键</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(7) 认识与学习BASH
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-04-17T09:51:19.000Z" class="dt-published" itemprop="datePublished">Apr 17 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/bash/" rel="tag">bash</a>, <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/centos7/0320bash.php">鳥哥私房菜 - 第十章、認識與學習BASH</a></p>
+</blockquote>
+<h2 id="1-认识-BASH-这个-Shell"><a href="#1-认识-BASH-这个-Shell" class="headerlink" title="1. 认识 BASH 这个 Shell"></a>1. 认识 BASH 这个 Shell</h2><h3 id="1-1-什么是-Shell"><a href="#1-1-什么是-Shell" class="headerlink" title="1.1 什么是 Shell"></a>1.1 什么是 Shell</h3><ul>
+<li>管理计算机硬件的其实是操作系统的核心（Kernel），这个核心需要被保护</li>
+<li>我们只能通过 Shell 将输入的指令与 Kernel 沟通，让 Kernel 控制硬件来正确无误地工作</li>
+<li>Shell 是用户与操作系统核心之间的接口程序</li>
+</ul>
+<h3 id="1-2-硬件、核心与-Shell-的关系"><a href="#1-2-硬件、核心与-Shell-的关系" class="headerlink" title="1.2 硬件、核心与 Shell 的关系"></a>1.2 硬件、核心与 Shell 的关系</h3><ul>
+<li>当你要计算机输出声音时：需要硬件（声卡）→ 核心管理（驱动支持）→ 应用程序（输入指令）</li>
+<li>Shell 的功能是提供用户操作系统的接口，可以调用其他软件</li>
+<li>狭义的壳程序指命令行方面的软件（如 bash）</li>
+<li>广义的壳程序包括图形接口的软件（GUI）</li>
+</ul>
+<h3 id="1-3-为何要学习命令行的-Shell"><a href="#1-3-为何要学习命令行的-Shell" class="headerlink" title="1.3 为何要学习命令行的 Shell"></a>1.3 为何要学习命令行的 Shell</h3><p><strong>① 命令行 Shell 在各 distribution 都一样</strong></p>
+<ul>
+<li>X Window 和 Web 接口工具在不同发行版中各不相同</li>
+<li>命令行 Shell（bash）在各家 distributions 几乎相同</li>
+<li>学会后可轻松切换不同的 Linux 发行版</li>
+</ul>
+<p><strong>② 远端管理时命令行速度更快</strong></p>
+<ul>
+<li>远程连接时命令行传输速度快</li>
+<li>不易出现断线或信息外流问题</li>
+</ul>
+<p><strong>③ Shell 是 Linux 的“任督二脉”</strong></p>
+<ul>
+<li>良好的 Shell 程序编写是系统管理的关键</li>
+<li>通过 Shell 脚本可高效分析日志、自动化管理任务</li>
+<li>很多面试岗位要求有 Shell 脚本编写经验</li>
+</ul>
+<h3 id="1-4-系统合法的-Shell-与-etc-shells-功能"><a href="#1-4-系统合法的-Shell-与-etc-shells-功能" class="headerlink" title="1.4 系统合法的 Shell 与 &#x2F;etc&#x2F;shells 功能"></a>1.4 系统合法的 Shell 与 &#x2F;etc&#x2F;shells 功能</h3><p><strong>常见的 Shell 类型：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Shell</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>/bin/sh</code></td>
+<td align="left">Bourne Shell，已被 bash 取代</td>
+</tr>
+<tr>
+<td align="left"><code>/bin/bash</code></td>
+<td align="left">Bourne Again SHell，Linux 默认 Shell</td>
+</tr>
+<tr>
+<td align="left"><code>/bin/tcsh</code></td>
+<td align="left">整合 C Shell，提供更多功能</td>
+</tr>
+<tr>
+<td align="left"><code>/bin/csh</code></td>
+<td align="left">C Shell，已被 tcsh 取代</td>
+</tr>
+</tbody></table>
+<p><strong>&#x2F;etc&#x2F;shells 的作用：</strong></p>
+<ul>
+<li>记录系统合法可用的 Shell</li>
+<li>系统服务会通过此文件检查用户可使用的 Shell</li>
+<li>如 <code>/sbin/nologin</code> 是一种“怪怪的 shell”，用于限制用户登录</li>
+</ul>
+<p><strong>默认 Shell 记录位置：</strong></p>
+<ul>
+<li>用户登录后取得的默认 Shell 记录在 <code>/etc/passwd</code> 的最后一个字段</li>
+<li>root 用户默认使用 <code>/bin/bash</code>，系统账号通常使用 <code>/sbin/nologin</code></li>
+</ul>
+<h2 id="2-Shell-的变量功能"><a href="#2-Shell-的变量功能" class="headerlink" title="2. Shell 的变量功能"></a>2. Shell 的变量功能</h2><h3 id="2-1-什么是变量"><a href="#2-1-什么是变量" class="headerlink" title="2.1 什么是变量"></a>2.1 什么是变量</h3><ul>
+<li>变量是以一组文字或符号来取代一些设置或一串保留的数据</li>
+<li>变量分为环境变量（全局变量）与自定义变量（局部变量）</li>
+</ul>
+<h3 id="2-2-变量的显示与设置"><a href="#2-2-变量的显示与设置" class="headerlink" title="2.2 变量的显示与设置"></a>2.2 变量的显示与设置</h3><p><strong>显示变量：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> $变量名</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;变量名&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>设置变量：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量名=变量值</span><br></pre></td></tr></table></figure>
+
+<p><strong>取消变量：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> 变量名</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-变量设置规则"><a href="#2-3-变量设置规则" class="headerlink" title="2.3 变量设置规则"></a>2.3 变量设置规则</h3><table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>变量=变量值</code></td>
+<td>等号两边不能直接接空格</td>
+</tr>
+<tr>
+<td>变量名只能是字母和数字</td>
+<td>开头字符不能是数字</td>
+</tr>
+<tr>
+<td>双引号 <code>&quot; &quot;</code></td>
+<td>内的特殊字符（如 <code>$</code>）可保有原本特性</td>
+</tr>
+<tr>
+<td>单引号 <code>&#39; &#39;</code></td>
+<td>内的特殊字符仅为一般字符（纯文本）</td>
+</tr>
+<tr>
+<td>转义符 <code>\</code></td>
+<td>可将特殊符号变成一般字符</td>
+</tr>
+<tr>
+<td>反引号 <code>`命令`</code> 或 <code>$(命令)</code></td>
+<td>先执行命令，结果作为外部的输入信号</td>
+</tr>
+</tbody></table>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name=<span class="string">&quot;John Doe&quot;</span></span><br><span class="line">version=$(<span class="built_in">uname</span> -r)          <span class="comment"># 等价于 version=`uname -r`</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;My name is <span class="variable">$name</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-环境变量"><a href="#2-4-环境变量" class="headerlink" title="2.4 环境变量"></a>2.4 环境变量</h3><p><strong>查看环境变量：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">env</span>          <span class="comment"># 查看所有环境变量</span></span><br><span class="line"><span class="built_in">export</span>       <span class="comment"># 查看环境变量（同 env）</span></span><br><span class="line"><span class="built_in">set</span>          <span class="comment"># 查看所有变量（含环境变量和自定义变量）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>常见环境变量：</strong></p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PATH</code></td>
+<td>命令搜索路径</td>
+</tr>
+<tr>
+<td><code>HOME</code></td>
+<td>用户家目录</td>
+</tr>
+<tr>
+<td><code>SHELL</code></td>
+<td>当前使用的 Shell</td>
+</tr>
+<tr>
+<td><code>USER</code></td>
+<td>当前用户名</td>
+</tr>
+<tr>
+<td><code>LANG</code></td>
+<td>语系数据</td>
+</tr>
+<tr>
+<td><code>$?</code></td>
+<td>前一个指令执行后的回传值（0 代表成功）</td>
+</tr>
+</tbody></table>
+<h3 id="2-5-export：将自定义变量转成环境变量"><a href="#2-5-export：将自定义变量转成环境变量" class="headerlink" title="2.5 export：将自定义变量转成环境变量"></a>2.5 export：将自定义变量转成环境变量</h3><ul>
+<li>子进程仅会继承父进程的环境变量，不会继承自定义变量</li>
+<li>使用 <code>export</code> 可将自定义变量转换为环境变量，被子进程继承</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> 变量名</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-read：读取用户输入"><a href="#2-6-read：读取用户输入" class="headerlink" title="2.6 read：读取用户输入"></a>2.6 read：读取用户输入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read</span> [-pt] 变量名</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-p</code>：后接提示符</li>
+<li><code>-t</code>：等待的秒数</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;请输入您的姓名：&quot;</span> name</span><br><span class="line"><span class="built_in">read</span> -t 10 -p <span class="string">&quot;请在10秒内输入：&quot;</span> answer</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-declare-typeset：声明变量类型"><a href="#2-7-declare-typeset：声明变量类型" class="headerlink" title="2.7 declare &#x2F; typeset：声明变量类型"></a>2.7 declare &#x2F; typeset：声明变量类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">declare</span> [-aixr] 变量名</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-i</code>：声明为整数类型</li>
+<li><code>-a</code>：声明为数组</li>
+<li><code>-x</code>：设置为环境变量</li>
+<li><code>-r</code>：设置为只读</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">declare</span> -i <span class="built_in">sum</span>=1+2+3    <span class="comment"># sum=6</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-8-ulimit：限制用户系统资源"><a href="#2-8-ulimit：限制用户系统资源" class="headerlink" title="2.8 ulimit：限制用户系统资源"></a>2.8 ulimit：限制用户系统资源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> [-SHacdflmnpstuv] [配额]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可限制：文件大小、CPU 时间、内存总量、打开文件数量等</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -f 10240    <span class="comment"># 限制只能创建 10MB 以下的文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-9-变量内容的删除、替换与取代"><a href="#2-9-变量内容的删除、替换与取代" class="headerlink" title="2.9 变量内容的删除、替换与取代"></a>2.9 变量内容的删除、替换与取代</h3><p><strong>常用模式：</strong></p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>${var#pattern}</code></td>
+<td>从变量<strong>开头</strong>删除最短匹配</td>
+</tr>
+<tr>
+<td><code>${var##pattern}</code></td>
+<td>从变量<strong>开头</strong>删除最长匹配</td>
+</tr>
+<tr>
+<td><code>${var%pattern}</code></td>
+<td>从变量<strong>结尾</strong>删除最短匹配</td>
+</tr>
+<tr>
+<td><code>${var%%pattern}</code></td>
+<td>从变量<strong>结尾</strong>删除最长匹配</td>
+</tr>
+<tr>
+<td><code>${var/old/new}</code></td>
+<td>替换第一个匹配的字符串</td>
+</tr>
+<tr>
+<td><code>${var//old/new}</code></td>
+<td>替换所有匹配的字符串</td>
+</tr>
+</tbody></table>
+<h2 id="3-命令别名与历史命令"><a href="#3-命令别名与历史命令" class="headerlink" title="3. 命令别名与历史命令"></a>3. 命令别名与历史命令</h2><h3 id="3-1-命令别名设置"><a href="#3-1-命令别名设置" class="headerlink" title="3.1 命令别名设置"></a>3.1 命令别名设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> 别名=<span class="string">&#x27;命令&#x27;</span></span><br><span class="line"><span class="built_in">unalias</span> 别名</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> lm=<span class="string">&#x27;ls -l | more&#x27;</span>    <span class="comment"># 设置别名</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">rm</span>=<span class="string">&#x27;rm -i&#x27;</span>           <span class="comment"># 防止误删</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-历史命令"><a href="#3-2-历史命令" class="headerlink" title="3.2 历史命令"></a>3.2 历史命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">history</span> [n]</span><br><span class="line"><span class="built_in">history</span> -c    <span class="comment"># 清除历史记录</span></span><br><span class="line"><span class="built_in">history</span> -w    <span class="comment"># 将当前历史写入文件</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>常用操作：</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>!!</code></td>
+<td>执行上一个命令</td>
+</tr>
+<tr>
+<td><code>!number</code></td>
+<td>执行第 number 个命令</td>
+</tr>
+<tr>
+<td><code>!command</code></td>
+<td>执行最近以 command 开头的命令</td>
+</tr>
+<tr>
+<td><code>Ctrl + r</code></td>
+<td>搜索历史命令</td>
+</tr>
+</tbody></table>
+<h2 id="4-Bash-Shell-的操作环境"><a href="#4-Bash-Shell-的操作环境" class="headerlink" title="4. Bash Shell 的操作环境"></a>4. Bash Shell 的操作环境</h2><h3 id="4-1-命令执行的优先级"><a href="#4-1-命令执行的优先级" class="headerlink" title="4.1 命令执行的优先级"></a>4.1 命令执行的优先级</h3><ol>
+<li><strong>alias</strong>（命令别名）</li>
+<li><strong>shell builtin</strong>（Shell 内置命令）</li>
+<li><strong>$PATH</strong>（按 PATH 路径查找外部命令）</li>
+</ol>
+<h3 id="4-2-type：查看命令类型"><a href="#4-2-type：查看命令类型" class="headerlink" title="4.2 type：查看命令类型"></a>4.2 type：查看命令类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> [-tpa] 命令名</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可判断命令是 alias、builtin 还是外部命令</li>
+</ul>
+<h3 id="4-3-配置文件"><a href="#4-3-配置文件" class="headerlink" title="4.3 配置文件"></a>4.3 配置文件</h3><p><strong>Login Shell（登录后取得）读取顺序：</strong></p>
+<ol>
+<li><code>/etc/profile</code>（系统整体设置）</li>
+<li><code>~/.bash_profile</code> 或 <code>~/.bash_login</code> 或 <code>~/.profile</code></li>
+</ol>
+<p><strong>Non-login Shell（如终端中启动 bash）读取：</strong></p>
+<ul>
+<li><code>~/.bashrc</code></li>
+</ul>
+<p><strong>source：读取配置文件使其立即生效</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">. ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-终端环境设置"><a href="#4-4-终端环境设置" class="headerlink" title="4.4 终端环境设置"></a>4.4 终端环境设置</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>stty -a</code></td>
+<td>查看所有终端设置</td>
+</tr>
+<tr>
+<td><code>set</code></td>
+<td>查看所有变量</td>
+</tr>
+<tr>
+<td><code>Ctrl + s</code></td>
+<td>冻结屏幕（画面停止）</td>
+</tr>
+<tr>
+<td><code>Ctrl + q</code></td>
+<td>解除冻结</td>
+</tr>
+</tbody></table>
+<h2 id="5-数据流重定向"><a href="#5-数据流重定向" class="headerlink" title="5. 数据流重定向"></a>5. 数据流重定向</h2><h3 id="5-1-标准输入输出代码"><a href="#5-1-标准输入输出代码" class="headerlink" title="5.1 标准输入输出代码"></a>5.1 标准输入输出代码</h3><table>
+<thead>
+<tr>
+<th>代码</th>
+<th>名称</th>
+<th>代号</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>标准输入（stdin）</td>
+<td>STDIN</td>
+<td><code>&lt;</code> 或 <code>&lt;&lt;</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td>标准输出（stdout）</td>
+<td>STDOUT</td>
+<td><code>&gt;</code> 或 <code>&gt;&gt;</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>标准错误输出（stderr）</td>
+<td>STDERR</td>
+<td><code>2&gt;</code> 或 <code>2&gt;&gt;</code></td>
+</tr>
+</tbody></table>
+<h3 id="5-2-重定向符号"><a href="#5-2-重定向符号" class="headerlink" title="5.2 重定向符号"></a>5.2 重定向符号</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出重定向</span></span><br><span class="line"><span class="built_in">command</span> &gt; file       <span class="comment"># 覆盖写入</span></span><br><span class="line"><span class="built_in">command</span> &gt;&gt; file      <span class="comment"># 追加写入</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误输出重定向</span></span><br><span class="line"><span class="built_in">command</span> 2&gt; file      <span class="comment"># 错误信息写入文件</span></span><br><span class="line"><span class="built_in">command</span> 2&gt; /dev/null <span class="comment"># 丢弃错误信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时处理标准输出和错误输出</span></span><br><span class="line"><span class="built_in">command</span> &amp;&gt; file      <span class="comment"># 两者都写入文件</span></span><br><span class="line"><span class="built_in">command</span> &gt; file 2&gt;&amp;1  <span class="comment"># 标准输出和错误输出都写入同一文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-输入重定向"><a href="#5-3-输入重定向" class="headerlink" title="5.3 输入重定向"></a>5.3 输入重定向</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件输入</span></span><br><span class="line"><span class="built_in">command</span> &lt; file</span><br><span class="line"></span><br><span class="line"><span class="comment"># Here Document（多行输入）</span></span><br><span class="line"><span class="built_in">cat</span> &gt; file &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">line 1</span></span><br><span class="line"><span class="string">line 2</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-dev-null：黑洞装置"><a href="#5-4-dev-null：黑洞装置" class="headerlink" title="5.4 &#x2F;dev&#x2F;null：黑洞装置"></a>5.4 &#x2F;dev&#x2F;null：黑洞装置</h3><ul>
+<li>任何写入 <code>/dev/null</code> 的数据都会被丢弃</li>
+<li>常用于丢弃不需要的输出信息</li>
+</ul>
+<h2 id="6-命令执行的判断依据"><a href="#6-命令执行的判断依据" class="headerlink" title="6. 命令执行的判断依据"></a>6. 命令执行的判断依据</h2><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>;</code></td>
+<td>顺序执行，不管前一个命令是否成功</td>
+<td><code>sync; sync; shutdown -h now</code></td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td>前一个命令成功才执行后一个</td>
+<td><code>make &amp;&amp; make install</code></td>
+</tr>
+<tr>
+<td><code>||</code></td>
+<td>前一个命令失败才执行后一个</td>
+<td><code>command || echo &quot;失败&quot;</code></td>
+</tr>
+</tbody></table>
+<h2 id="7-管道命令（Pipe）"><a href="#7-管道命令（Pipe）" class="headerlink" title="7. 管道命令（Pipe）"></a>7. 管道命令（Pipe）</h2><h3 id="7-1-管道命令的特性"><a href="#7-1-管道命令的特性" class="headerlink" title="7.1 管道命令的特性"></a>7.1 管道命令的特性</h3><ul>
+<li><strong>仅处理标准输出（stdout）</strong>：对于标准错误输出会忽略</li>
+<li><strong>必须能接收标准输入</strong>：管道命令必须能够接受前一个命令的数据作为标准输入继续处理</li>
+</ul>
+<h3 id="7-2-管线命令与减号-的用途"><a href="#7-2-管线命令与减号-的用途" class="headerlink" title="7.2 管线命令与减号 - 的用途"></a>7.2 管线命令与减号 <code>-</code> 的用途</h3><ul>
+<li>某些指令需要文件名来处理（如 <code>tar</code>）</li>
+<li>使用 <code>-</code> 可以替代 <code>stdout</code> 或 <code>stdin</code></li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf - /home | tar -xvf - -C /tmp/homeback</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-常用管道命令详解"><a href="#8-常用管道命令详解" class="headerlink" title="8. 常用管道命令详解"></a>8. 常用管道命令详解</h2><h3 id="8-1-cut：选取命令"><a href="#8-1-cut：选取命令" class="headerlink" title="8.1 cut：选取命令"></a>8.1 cut：选取命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cut</span> -d <span class="string">&#x27;分隔字符&#x27;</span> -f fields</span><br><span class="line"><span class="built_in">cut</span> -c 字符范围</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-d</code>：后接分隔字符（与 -f 一起使用）</li>
+<li><code>-f</code>：根据 -d 的分隔取出第几段</li>
+<li><code>-c</code>：以字符为单位取出</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;姓名:年龄:城市&quot;</span> | <span class="built_in">cut</span> -d <span class="string">&#x27;:&#x27;</span> -f 1,3    <span class="comment"># 取第1和第3段</span></span><br><span class="line"><span class="built_in">ls</span> -l | <span class="built_in">cut</span> -d <span class="string">&#x27; &#x27;</span> -f 1,3                   <span class="comment"># 取权限和所有者</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-2-grep：分析命令"><a href="#8-2-grep：分析命令" class="headerlink" title="8.2 grep：分析命令"></a>8.2 grep：分析命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [-acinv] <span class="string">&#x27;搜索字符串&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-c</code>：打印匹配的行数</li>
+<li><code>-i</code>：忽略大小写</li>
+<li><code>-n</code>：显示行号</li>
+<li><code>-v</code>：反向查找（显示不匹配的行）</li>
+<li><code>-w</code>：匹配整个单词</li>
+<li><code>-E</code>：支持扩展正则表达式（过滤多个参数）</li>
+<li><code>-A n</code>：显示匹配行及其后 n 行（after）</li>
+<li><code>-B n</code>：显示匹配行及其前 n 行（before）</li>
+<li><code>-C n</code>：显示匹配行及其前后各 n 行（context）</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep -n <span class="string">&#x27;error&#x27;</span> /var/log/messages</span><br><span class="line">ps aux | grep -v <span class="string">&#x27;grep&#x27;</span> | grep <span class="string">&#x27;nginx&#x27;</span>    <span class="comment"># 过滤掉 grep 自身</span></span><br><span class="line">grep -A5 <span class="string">&#x27;ERROR&#x27;</span> logfile                  <span class="comment"># 显示错误行及之后5行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-sort：排序命令"><a href="#8-3-sort：排序命令" class="headerlink" title="8.3 sort：排序命令"></a>8.3 sort：排序命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span> [-fbMnrtuk] [file or stdin]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-f</code>：忽略大小写差异</li>
+<li><code>-b</code>：忽略最前面的空格符</li>
+<li><code>-M</code>：以月份名字排序（如 JAN, DEC）</li>
+<li><code>-n</code>：使用纯数字排序</li>
+<li><code>-r</code>：反向排序</li>
+<li><code>-u</code>：去重（相当于 uniq）</li>
+<li><code>-t</code>：指定分隔符</li>
+<li><code>-k</code>：以哪个字段排序</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/passwd | <span class="built_in">sort</span> -t <span class="string">&#x27;:&#x27;</span> -k 3 -n    <span class="comment"># 按第3字段（UID）数字排序</span></span><br><span class="line">last | <span class="built_in">cut</span> -d <span class="string">&#x27; &#x27;</span> -f1 | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c   <span class="comment"># 统计登录次数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-4-uniq：去重命令"><a href="#8-4-uniq：去重命令" class="headerlink" title="8.4 uniq：去重命令"></a>8.4 uniq：去重命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">uniq</span> [-ic]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-i</code>：忽略大小写</li>
+<li><code>-c</code>：进行计数</li>
+</ul>
+<p><strong>注意：</strong> uniq 统计的是相邻行的信息，所以统计前需要先 sort</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | <span class="built_in">cut</span> -d <span class="string">&#x27; &#x27;</span> -f1 | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-5-wc：统计命令"><a href="#8-5-wc：统计命令" class="headerlink" title="8.5 wc：统计命令"></a>8.5 wc：统计命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wc</span> [-lwm]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-l</code>：仅列出行数</li>
+<li><code>-w</code>：仅列出列数（单词数）</li>
+<li><code>-m</code>：字符数</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wc</span> -l /etc/passwd        <span class="comment"># 统计文件行数</span></span><br><span class="line"><span class="built_in">ls</span> -l | <span class="built_in">wc</span> -l            <span class="comment"># 统计当前目录文件数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-6-tee：双向重定向"><a href="#8-6-tee：双向重定向" class="headerlink" title="8.6 tee：双向重定向"></a>8.6 tee：双向重定向</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tee</span> [-a] file</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-a</code>：以追加方式写入</li>
+<li>功能：同时将数据流分送到文件与屏幕</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l | <span class="built_in">tee</span> output.txt | grep <span class="string">&#x27;txt&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-7-tr：字符转换命令"><a href="#8-7-tr：字符转换命令" class="headerlink" title="8.7 tr：字符转换命令"></a>8.7 tr：字符转换命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tr</span> [-ds] SET1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-d</code>：删除信息中的指定字符</li>
+<li><code>-s</code>：替换重复字符</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">last | <span class="built_in">tr</span> <span class="string">&#x27;[a-z]&#x27;</span> <span class="string">&#x27;[A-Z]&#x27;</span>           <span class="comment"># 小写转大写</span></span><br><span class="line"><span class="built_in">cat</span> /etc/passwd | <span class="built_in">tr</span> -d <span class="string">&#x27;:&#x27;</span>         <span class="comment"># 删除冒号</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello   world&quot;</span> | <span class="built_in">tr</span> -s <span class="string">&#x27; &#x27;</span>    <span class="comment"># 压缩多个空格为一个</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-8-col：格式化命令"><a href="#8-8-col：格式化命令" class="headerlink" title="8.8 col：格式化命令"></a>8.8 col：格式化命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">col [-x]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-x</code>：将 tab 键转换为对等的空格键</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man <span class="built_in">ls</span> | col -x | <span class="built_in">cat</span> -A    <span class="comment"># 将 man page 中的 tab 转为空格</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-9-join：文件连接命令"><a href="#8-9-join：文件连接命令" class="headerlink" title="8.9 join：文件连接命令"></a>8.9 join：文件连接命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">join</span> [-ti12] file1 file2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将两个文件中具有相同数据的那一行加在一起</li>
+</ul>
+<h3 id="8-10-paste：文件粘贴命令"><a href="#8-10-paste：文件粘贴命令" class="headerlink" title="8.10 paste：文件粘贴命令"></a>8.10 paste：文件粘贴命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">paste</span> [-d] file1 file2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>直接将两行贴在一起，中间用 tab 键隔开</li>
+</ul>
+<h3 id="8-11-expand：tab转空格"><a href="#8-11-expand：tab转空格" class="headerlink" title="8.11 expand：tab转空格"></a>8.11 expand：tab转空格</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">expand</span> [-t] file</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-t n</code>：指定 tab 转换为 n 个空格（默认 8 个）</li>
+</ul>
+<h3 id="8-12-split：文件切割命令"><a href="#8-12-split：文件切割命令" class="headerlink" title="8.12 split：文件切割命令"></a>8.12 split：文件切割命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">split</span> [-bl] file PREFIX</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-b</code>：按文件大小切割（可加单位 b, k, m）</li>
+<li><code>-l</code>：按行数切割</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">split</span> -b 300k /etc/services services    <span class="comment"># 每300k一个文件，前缀为services</span></span><br><span class="line"><span class="built_in">split</span> -l 1000 bigfile.txt part_         <span class="comment"># 每1000行切割为一个文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并</span></span><br><span class="line"><span class="built_in">cat</span> part_* &gt; original_file</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-13-xargs：参数代换命令"><a href="#8-13-xargs：参数代换命令" class="headerlink" title="8.13 xargs：参数代换命令"></a>8.13 xargs：参数代换命令</h3><p><strong>功能：</strong> xargs 可以读入 stdin 的数据，并以空格符或断行字符作为分辨，将 stdin 的数据分隔成为 arguments</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xargs [-0epn] <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> 某些指令需要文件名来处理时，该 stdin 与 stdout 可以利用减号 <code>-</code> 来替代</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find /usr/sbin -perm 700 | xargs <span class="built_in">ls</span> -l    <span class="comment"># 将 find 结果作为 ls 的参数</span></span><br><span class="line"><span class="built_in">cat</span> file.txt | xargs -n 3 <span class="built_in">echo</span>            <span class="comment"># 每3个参数执行一次 echo</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="9-重点命令速查"><a href="#9-重点命令速查" class="headerlink" title="9. 重点命令速查"></a>9. 重点命令速查</h2><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>变量</strong></td>
+<td><code>echo</code></td>
+<td>显示变量内容</td>
+</tr>
+<tr>
+<td></td>
+<td><code>env</code> &#x2F; <code>export</code></td>
+<td>查看环境变量</td>
+</tr>
+<tr>
+<td></td>
+<td><code>set</code></td>
+<td>查看所有变量</td>
+</tr>
+<tr>
+<td></td>
+<td><code>unset</code></td>
+<td>取消变量</td>
+</tr>
+<tr>
+<td></td>
+<td><code>read</code></td>
+<td>读取用户输入</td>
+</tr>
+<tr>
+<td></td>
+<td><code>declare</code></td>
+<td>声明变量类型</td>
+</tr>
+<tr>
+<td></td>
+<td><code>ulimit</code></td>
+<td>限制系统资源</td>
+</tr>
+<tr>
+<td><strong>别名与历史</strong></td>
+<td><code>alias</code></td>
+<td>设置命令别名</td>
+</tr>
+<tr>
+<td></td>
+<td><code>history</code></td>
+<td>查看历史命令</td>
+</tr>
+<tr>
+<td></td>
+<td><code>type</code></td>
+<td>查看命令类型</td>
+</tr>
+<tr>
+<td><strong>数据流重定向</strong></td>
+<td><code>&gt;</code> &#x2F; <code>&gt;&gt;</code></td>
+<td>输出重定向</td>
+</tr>
+<tr>
+<td></td>
+<td><code>2&gt;</code> &#x2F; <code>2&gt;&gt;</code></td>
+<td>错误输出重定向</td>
+</tr>
+<tr>
+<td></td>
+<td><code>&lt;</code> &#x2F; <code>&lt;&lt;</code></td>
+<td>输入重定向</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/dev/null</code></td>
+<td>丢弃数据</td>
+</tr>
+<tr>
+<td><strong>管道命令</strong></td>
+<td><code>cut</code></td>
+<td>切割字段</td>
+</tr>
+<tr>
+<td></td>
+<td><code>grep</code></td>
+<td>搜索文本</td>
+</tr>
+<tr>
+<td></td>
+<td><code>sort</code></td>
+<td>排序</td>
+</tr>
+<tr>
+<td></td>
+<td><code>uniq</code></td>
+<td>去重</td>
+</tr>
+<tr>
+<td></td>
+<td><code>wc</code></td>
+<td>统计</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tee</code></td>
+<td>双向重定向</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tr</code></td>
+<td>字符转换</td>
+</tr>
+<tr>
+<td></td>
+<td><code>split</code></td>
+<td>切割文件</td>
+</tr>
+<tr>
+<td></td>
+<td><code>xargs</code></td>
+<td>参数代换</td>
+</tr>
+</tbody></table>
+<h2 id="10-核心要点"><a href="#10-核心要点" class="headerlink" title="10. 核心要点"></a>10. 核心要点</h2><h3 id="10-1-BASH-的重要性"><a href="#10-1-BASH-的重要性" class="headerlink" title="10.1 BASH 的重要性"></a>10.1 BASH 的重要性</h3><ul>
+<li>Shell 是用户与核心沟通的接口，bash 是 Linux 默认的 Shell</li>
+<li>学习 Shell 的原因：各 distribution 通用、远程管理速度快、是系统管理的核心技能</li>
+<li>鸟哥用“打通任督二脉”来形容 Shell 的重要性</li>
+</ul>
+<h3 id="10-2-变量核心规则"><a href="#10-2-变量核心规则" class="headerlink" title="10.2 变量核心规则"></a>10.2 变量核心规则</h3><ul>
+<li>等号两边不能有空格，变量名开头不能是数字</li>
+<li>双引号可解析变量，单引号视为纯文本</li>
+<li><code>export</code> 使局部变量变成全局变量（环境变量）</li>
+<li><code>$?</code> 检查上一个命令是否成功（0 代表成功）</li>
+</ul>
+<h3 id="10-3-数据流重定向要点"><a href="#10-3-数据流重定向要点" class="headerlink" title="10.3 数据流重定向要点"></a>10.3 数据流重定向要点</h3><ul>
+<li><code>1&gt;</code> 是标准输出，<code>2&gt;</code> 是标准错误输出</li>
+<li>管道命令 <code>|</code> 只处理标准输出，忽略标准错误</li>
+<li><code>/dev/null</code> 是“黑洞”，用于丢弃不需要的输出</li>
+</ul>
+<h3 id="10-4-管道命令使用建议"><a href="#10-4-管道命令使用建议" class="headerlink" title="10.4 管道命令使用建议"></a>10.4 管道命令使用建议</h3><ul>
+<li>管道命令必须能接收标准输入</li>
+<li>常用组合：<code>grep</code> 搜索 → <code>sort</code> 排序 → <code>uniq</code> 去重 → <code>wc</code> 统计</li>
+<li><code>xargs</code> 用于将管道输出转为其他命令的参数</li>
+</ul>
+<h3 id="10-5-环境配置文件"><a href="#10-5-环境配置文件" class="headerlink" title="10.5 环境配置文件"></a>10.5 环境配置文件</h3><ul>
+<li><code>/etc/profile</code>：系统级配置（login shell 读取）</li>
+<li><code>~/.bashrc</code>：用户级配置（non-login shell 读取）</li>
+<li>修改后执行 <code>source ~/.bashrc</code> 立即生效</li>
+</ul>
+<h3 id="10-6-终端快捷键"><a href="#10-6-终端快捷键" class="headerlink" title="10.6 终端快捷键"></a>10.6 终端快捷键</h3><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + c</code></td>
+<td>中断当前命令</td>
+</tr>
+<tr>
+<td><code>Ctrl + d</code></td>
+<td>退出终端（EOF）</td>
+</tr>
+<tr>
+<td><code>Ctrl + s</code></td>
+<td>冻结屏幕</td>
+</tr>
+<tr>
+<td><code>Ctrl + q</code></td>
+<td>解除冻结</td>
+</tr>
+<tr>
+<td><code>Ctrl + r</code></td>
+<td>搜索历史命令</td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>命令&#x2F;文件补全</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%86-BASH-%E8%BF%99%E4%B8%AA-Shell"><span class="toc-number">1.</span> <span class="toc-text">1. 认识 BASH 这个 Shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-Shell"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是 Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%A1%AC%E4%BB%B6%E3%80%81%E6%A0%B8%E5%BF%83%E4%B8%8E-Shell-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 硬件、核心与 Shell 的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%BA%E4%BD%95%E8%A6%81%E5%AD%A6%E4%B9%A0%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84-Shell"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 为何要学习命令行的 Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E7%B3%BB%E7%BB%9F%E5%90%88%E6%B3%95%E7%9A%84-Shell-%E4%B8%8E-etc-shells-%E5%8A%9F%E8%83%BD"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 系统合法的 Shell 与 &#x2F;etc&#x2F;shells 功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Shell-%E7%9A%84%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">2. Shell 的变量功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%98%E9%87%8F"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 什么是变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8F%98%E9%87%8F%E7%9A%84%E6%98%BE%E7%A4%BA%E4%B8%8E%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 变量的显示与设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE%E8%A7%84%E5%88%99"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 变量设置规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-export%EF%BC%9A%E5%B0%86%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E8%BD%AC%E6%88%90%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 export：将自定义变量转成环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-read%EF%BC%9A%E8%AF%BB%E5%8F%96%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5"><span class="toc-number">2.6.</span> <span class="toc-text">2.6 read：读取用户输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-declare-typeset%EF%BC%9A%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.7.</span> <span class="toc-text">2.7 declare &#x2F; typeset：声明变量类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-ulimit%EF%BC%9A%E9%99%90%E5%88%B6%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90"><span class="toc-number">2.8.</span> <span class="toc-text">2.8 ulimit：限制用户系统资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E7%9A%84%E5%88%A0%E9%99%A4%E3%80%81%E6%9B%BF%E6%8D%A2%E4%B8%8E%E5%8F%96%E4%BB%A3"><span class="toc-number">2.9.</span> <span class="toc-text">2.9 变量内容的删除、替换与取代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D%E4%B8%8E%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">3. 命令别名与历史命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 命令别名设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 历史命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Bash-Shell-%E7%9A%84%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">4.</span> <span class="toc-text">4. Bash Shell 的操作环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 命令执行的优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-type%EF%BC%9A%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 type：查看命令类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 终端环境设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.</span> <span class="toc-text">5. 数据流重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 标准输入输出代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6%E5%8F%B7"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 重定向符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 输入重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-dev-null%EF%BC%9A%E9%BB%91%E6%B4%9E%E8%A3%85%E7%BD%AE"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x2F;dev&#x2F;null：黑洞装置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E5%88%A4%E6%96%AD%E4%BE%9D%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">6. 命令执行的判断依据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%EF%BC%88Pipe%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">7. 管道命令（Pipe）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 管道命令的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E7%AE%A1%E7%BA%BF%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%87%8F%E5%8F%B7-%E7%9A%84%E7%94%A8%E9%80%94"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 管线命令与减号 - 的用途</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%B8%B8%E7%94%A8%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-number">8.</span> <span class="toc-text">8. 常用管道命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-cut%EF%BC%9A%E9%80%89%E5%8F%96%E5%91%BD%E4%BB%A4"><span class="toc-number">8.1.</span> <span class="toc-text">8.1 cut：选取命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-grep%EF%BC%9A%E5%88%86%E6%9E%90%E5%91%BD%E4%BB%A4"><span class="toc-number">8.2.</span> <span class="toc-text">8.2 grep：分析命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-sort%EF%BC%9A%E6%8E%92%E5%BA%8F%E5%91%BD%E4%BB%A4"><span class="toc-number">8.3.</span> <span class="toc-text">8.3 sort：排序命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-uniq%EF%BC%9A%E5%8E%BB%E9%87%8D%E5%91%BD%E4%BB%A4"><span class="toc-number">8.4.</span> <span class="toc-text">8.4 uniq：去重命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-wc%EF%BC%9A%E7%BB%9F%E8%AE%A1%E5%91%BD%E4%BB%A4"><span class="toc-number">8.5.</span> <span class="toc-text">8.5 wc：统计命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-tee%EF%BC%9A%E5%8F%8C%E5%90%91%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">8.6.</span> <span class="toc-text">8.6 tee：双向重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-tr%EF%BC%9A%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E5%91%BD%E4%BB%A4"><span class="toc-number">8.7.</span> <span class="toc-text">8.7 tr：字符转换命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-8-col%EF%BC%9A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%91%BD%E4%BB%A4"><span class="toc-number">8.8.</span> <span class="toc-text">8.8 col：格式化命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-9-join%EF%BC%9A%E6%96%87%E4%BB%B6%E8%BF%9E%E6%8E%A5%E5%91%BD%E4%BB%A4"><span class="toc-number">8.9.</span> <span class="toc-text">8.9 join：文件连接命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-10-paste%EF%BC%9A%E6%96%87%E4%BB%B6%E7%B2%98%E8%B4%B4%E5%91%BD%E4%BB%A4"><span class="toc-number">8.10.</span> <span class="toc-text">8.10 paste：文件粘贴命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-11-expand%EF%BC%9Atab%E8%BD%AC%E7%A9%BA%E6%A0%BC"><span class="toc-number">8.11.</span> <span class="toc-text">8.11 expand：tab转空格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-12-split%EF%BC%9A%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">8.12.</span> <span class="toc-text">8.12 split：文件切割命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-13-xargs%EF%BC%9A%E5%8F%82%E6%95%B0%E4%BB%A3%E6%8D%A2%E5%91%BD%E4%BB%A4"><span class="toc-number">8.13.</span> <span class="toc-text">8.13 xargs：参数代换命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">9. 重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">10.</span> <span class="toc-text">10. 核心要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-BASH-%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">10.1.</span> <span class="toc-text">10.1 BASH 的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%8F%98%E9%87%8F%E6%A0%B8%E5%BF%83%E8%A7%84%E5%88%99"><span class="toc-number">10.2.</span> <span class="toc-text">10.2 变量核心规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91%E8%A6%81%E7%82%B9"><span class="toc-number">10.3.</span> <span class="toc-text">10.3 数据流重定向要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">10.4.</span> <span class="toc-text">10.4 管道命令使用建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-5-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">10.5.</span> <span class="toc-text">10.5 环境配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-6-%E7%BB%88%E7%AB%AF%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">10.6.</span> <span class="toc-text">10.6 终端快捷键</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter10/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&text=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&is_video=false&description=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(7) 认识与学习BASH&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter10/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&name=Linux学习日志(7) 认识与学习BASH&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter10/&t=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

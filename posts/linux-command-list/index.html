@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="分类 命令：功能说明    线上查询及帮助命令 (2 个) man：查看命令帮助，命令的词典。help：查看 Linux 内置命令的帮助，如 cd。    -   文件和目录操作命令 (18 个) ls：列出目录的内容及其属性信息。cd：切换到指定工作目录。cp：复制文件或目录。find：查找目录及目录下的文件。mkdir：创建目录。mv：移动或重命名文件。pwd：显示当前工作目录的绝对路径">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;实用&gt; Linux常用命令索引">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-command-list/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="分类 命令：功能说明    线上查询及帮助命令 (2 个) man：查看命令帮助，命令的词典。help：查看 Linux 内置命令的帮助，如 cd。    -   文件和目录操作命令 (18 个) ls：列出目录的内容及其属性信息。cd：切换到指定工作目录。cp：复制文件或目录。find：查找目录及目录下的文件。mkdir：创建目录。mv：移动或重命名文件。pwd：显示当前工作目录的绝对路径">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-05-05T13:35:31.000Z">
+<meta property="article:modified_time" content="2026-05-05T14:09:00.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>&lt;实用&gt; Linux常用命令索引</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter13/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter12/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-command-list/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-command-list/&text=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-command-list/&is_video=false&description=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;实用&gt; Linux常用命令索引&body=Check out this article: https://blog.webrelay.cn/posts/linux-command-list/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-command-list/&name=&lt;实用&gt; Linux常用命令索引&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-command-list/&t=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        &lt;实用&gt; Linux常用命令索引
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-05-05T13:35:31.000Z" class="dt-published" itemprop="datePublished">May 05 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <table>
+<thead>
+<tr>
+<th align="left">分类</th>
+<th align="left">命令：功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>线上查询及帮助命令 (2 个)</strong></td>
+<td align="left"><code>man</code>：查看命令帮助，命令的词典。<br><code>help</code>：查看 Linux 内置命令的帮助，如 <code>cd</code>。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>文件和目录操作命令 (18 个)</strong></td>
+<td align="left"><code>ls</code>：列出目录的内容及其属性信息。<br><code>cd</code>：切换到指定工作目录。<br><code>cp</code>：复制文件或目录。<br><code>find</code>：查找目录及目录下的文件。<br><code>mkdir</code>：创建目录。<br><code>mv</code>：移动或重命名文件。<br><code>pwd</code>：显示当前工作目录的绝对路径。<br><code>rename</code>：重命名文件。<br><code>rm</code>：删除文件或目录。<br><code>rmdir</code>：删除空目录。<br><code>touch</code>：创建空文件或改变文件时间戳。<br><code>tree</code>：以树形结构显示目录内容。<br><code>basename</code>：显示文件名或目录名。<br><code>dirname</code>：显示文件或目录路径。<br><code>chattr</code>：改变文件的扩展属性。<br><code>lsattr</code>：查看文件扩展属性。<br><code>file</code>：显示文件类型。<br><code>md5sum</code>：计算和校验文件的 MD5 值。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>查看文件及内容处理命令 (21 个)</strong></td>
+<td align="left"><code>cat</code>：连接文件并打印到屏幕或重定向。<br><code>tac</code>：反向显示文件内容。<br><code>more</code>：分页显示文件内容。<br><code>less</code>：分页显示文件内容（more 的增强版）。<br><code>head</code>：显示文件头部内容。<br><code>tail</code>：显示文件尾部内容。<br><code>cut</code>：按指定分隔符分割每行并输出。<br><code>split</code>：将文件分割为多个小片段。<br><code>paste</code>：按行合并文件内容。<br><code>sort</code>：对文件文本内容排序。<br><code>uniq</code>：去除重复行。<br><code>wc</code>：统计行数、单词数或字节数。<br><code>iconv</code>：转换文件编码格式。<br><code>dos2unix</code>：将 DOS 格式文件转为 UNIX 格式。<br><code>diff</code>：比较文件差异。<br><code>vimdiff</code>：可视化文件比较工具。<br><code>rev</code>：反向输出文件内容。<br><code>grep/egrep</code>：过滤字符串（文本三剑客之一）。<br><code>join</code>：按相同字段合并两个文件。<br><code>tr</code>：替换或删除字符。<br><code>vi/vim</code>：命令行文本编辑器。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>文件压缩及解压缩命令 (4 个)</strong></td>
+<td align="left"><code>tar</code>：打包压缩。<br><code>unzip</code>：解压 <code>.zip</code> 文件。<br><code>gzip</code>：gzip 压缩工具。<br><code>zip</code>：zip 压缩工具。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>信息显示命令 (11 个)</strong></td>
+<td align="left"><code>uname</code>：显示操作系统相关信息。<br><code>hostname</code>：显示或设置主机名。<br><code>dmesg</code>：显示开机信息，诊断系统故障。<br><code>uptime</code>：显示系统运行时间及负载。<br><code>stat</code>：显示文件或文件系统状态。<br><code>du</code>：计算磁盘空间使用情况。<br><code>df</code>：报告文件系统磁盘空间使用情况。<br><code>top</code>：实时显示系统资源使用情况。<br><code>free</code>：查看系统内存。<br><code>date</code>：显示或设置系统时间。<br><code>cal</code>：查看日历等时间信息。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>搜索文件命令 (4 个)</strong></td>
+<td align="left"><code>which</code>：按 PATH 路径查找二进制命令。<br><code>find</code>：从磁盘遍历查找文件或目录。<br><code>whereis</code>：按 PATH 路径查找二进制命令。<br><code>locate</code>：从数据库查找命令（需 <code>updatedb</code> 更新库）。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>用户管理命令 (10 个)</strong></td>
+<td align="left"><code>useradd</code>：添加用户。<br><code>usermod</code>：修改用户属性。<br><code>userdel</code>：删除用户。<br><code>groupadd</code>：添加用户组。<br><code>passwd</code>：修改用户密码。<br><code>chage</code>：修改密码有效期限。<br><code>id</code>：查看用户 UID、GID 及归属组。<br><code>su</code>：切换用户身份。<br><code>visudo</code>：编辑 <code>/etc/sudoers</code> 文件。<br><code>sudo</code>：以其他用户身份执行命令。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>基础网络操作命令 (11 个)</strong></td>
+<td align="left"><code>telnet</code>：使用 TELNET 协议远程登录。<br><code>ssh</code>：使用 SSH 协议远程登录。<br><code>scp</code>：不同主机之间安全复制文件。<br><code>wget</code>：命令行下载文件。<br><code>ping</code>：测试网络连通性。<br><code>route</code>：显示和设置路由表。<br><code>ifconfig</code>：查看、配置网络接口。<br><code>ifup</code>：启动网卡。<br><code>ifdown</code>：关闭网卡。<br><code>netstat</code>：查看网络状态。<br><code>ss</code>：查看网络状态（更高效）。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>深入网络操作命令 (9 个)</strong></td>
+<td align="left"><code>nmap</code>：网络扫描命令。<br><code>lsof</code>：列举已打开的文件。<br><code>mail</code>：发送和接收邮件。<br><code>mutt</code>：邮件管理命令。<br><code>nslookup</code>：交互式查询 DNS。<br><code>dig</code>：查找 DNS 解析过程。<br><code>host</code>：查询 DNS。<br><code>traceroute</code>：追踪数据传输路由。<br><code>tcpdump</code>：命令行抓包工具。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>有关磁盘与文件系统的命令 (16 个)</strong></td>
+<td align="left"><code>mount</code>：挂载文件系统。<br><code>umount</code>：卸载文件系统。<br><code>fsck</code>：检查并修复文件系统。<br><code>dd</code>：转换或复制文件。<br><code>dumpe2fs</code>：导出 ext2&#x2F;3&#x2F;4 文件系统信息。<br><code>dump</code>：ext2&#x2F;3&#x2F;4 文件系统备份工具。<br><code>fdisk</code>：磁盘分区（适用于 2TB 以下）。<br><code>parted</code>：磁盘分区（无大小限制）。<br><code>mkfs</code>：格式化创建 Linux 文件系统。<br><code>partprobe</code>：更新内核分区表信息。<br><code>e2fsck</code>：检查 ext2&#x2F;3&#x2F;4 文件系统。<br><code>mkswap</code>：创建 Linux 交换分区。<br><code>swapon</code>：启用交换分区。<br><code>swapoff</code>：关闭交换分区。<br><code>sync</code>：将内存缓冲区数据写入磁盘。<br><code>resize2fs</code>：调整 ext2&#x2F;3&#x2F;4 文件系统大小。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>系统权限及用户授权相关命令 (4 个)</strong></td>
+<td align="left"><code>chmod</code>：改变文件或目录权限。<br><code>chown</code>：改变文件属主和属组。<br><code>chgrp</code>：更改文件用户组。<br><code>umask</code>：显示或设置权限掩码。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>查看系统用户登陆信息的命令 (7 个)</strong></td>
+<td align="left"><code>whoami</code>：显示当前有效用户名。<br><code>who</code>：显示登录系统的用户信息。<br><code>w</code>：显示登录用户及其正在执行的指令。<br><code>last</code>：显示登入系统的用户记录。<br><code>lastlog</code>：显示所有用户最近一次登录信息。<br><code>users</code>：显示当前登录系统的用户列表。<br><code>finger</code>：查找并显示用户信息。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>内置命令及其它 (19 个)</strong></td>
+<td align="left"><code>echo</code>：打印变量或字符串。<br><code>printf</code>：格式化输出结果。<br><code>rpm</code>：管理 RPM 包。<br><code>yum</code>：自动化管理 RPM 包。<br><code>watch</code>：周期执行命令并全屏显示。<br><code>alias</code>：设置系统别名。<br><code>unalias</code>：取消系统别名。<br><code>date</code>：查看或设置系统时间。<br><code>clear</code>：清屏。<br><code>history</code>：查看命令历史纪录。<br><code>eject</code>：弹出光驱。<br><code>time</code>：计算命令执行时间。<br><code>nc</code>：功能强大的网络工具。<br><code>xargs</code>：将标准输入转为命令行参数。<br><code>exec</code>：调用并执行指令。<br><code>export</code>：设置或显示环境变量。<br><code>unset</code>：删除变量或函数。<br><code>type</code>：判断命令是否为内置命令。<br><code>bc</code>：命令行科学计算器。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>系统管理与性能监视命令 (9 个)</strong></td>
+<td align="left"><code>chkconfig</code>：管理系统开机启动项。<br><code>vmstat</code>：虚拟内存统计。<br><code>mpstat</code>：显示各 CPU 状态统计。<br><code>iostat</code>：统计系统 I&#x2F;O。<br><code>sar</code>：全面获取系统性能数据。<br><code>ipcs</code>：报告进程间通信设施状态。<br><code>ipcrm</code>：删除消息队列、信号量等。<br><code>strace</code>：跟踪进程系统调用和信号。<br><code>ltrace</code>：跟踪进程库函数调用。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>关机&#x2F;重启&#x2F;注销和查看系统信息的命令 (6 个)</strong></td>
+<td align="left"><code>shutdown</code>：关机。<br><code>halt</code>：关机。<br><code>poweroff</code>：关闭电源。<br><code>logout</code>：退出当前登录的 Shell。<br><code>exit</code>：退出当前登录的 Shell。<br><code>Ctrl+d</code>：退出当前 Shell 的快捷键。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>进程管理相关命令 (15 个)</strong></td>
+<td align="left"><code>bg</code>：将后台暂停的命令继续在后台执行。<br><code>fg</code>：将后台命令调至前台运行。<br><code>jobs</code>：查看后台运行的任务。<br><code>kill</code>：终止进程。<br><code>killall</code>：通过进程名终止进程。<br><code>pkill</code>：通过进程名终止进程。<br><code>crontab</code>：定时任务命令。<br><code>ps</code>：显示进程快照。<br><code>pstree</code>：树形显示进程。<br><code>nice/renice</code>：调整程序运行优先级。<br><code>nohup</code>：忽略挂起信号运行命令。<br><code>pgrep</code>：查找匹配条件的进程。<br><code>runlevel</code>：查看当前运行级别。<br><code>init</code>：切换运行级别。<br><code>service</code>：管理系统服务。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/452895041/answer/1995175373">Linux大神都是怎么记住这么多命令的？ - 十四君的回答 - 知乎</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-command-list/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-command-list/&text=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-command-list/&is_video=false&description=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;实用&gt; Linux常用命令索引&body=Check out this article: https://blog.webrelay.cn/posts/linux-command-list/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-command-list/&title=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-command-list/&name=&lt;实用&gt; Linux常用命令索引&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-command-list/&t=&lt;实用&gt; Linux常用命令索引"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

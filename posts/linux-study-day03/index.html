@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="今日学习目标 ✅ 理解Linux用户和组的概念 ✅ 掌握用户&#x2F;组的增删改查 ✅ 彻底搞懂文件权限（rwx） ✅ 学会使用sudo提升权限  第一部分：用户管理基础1. 了解用户信息12345678910111213141516171819cd ~&#x2F;linux-learning&#x2F;day3mkdir user-managementcd user-management# 查看当前用户whoam">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux运维实践(3) 用户和权限管理实战">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-study-day03/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="今日学习目标 ✅ 理解Linux用户和组的概念 ✅ 掌握用户&#x2F;组的增删改查 ✅ 彻底搞懂文件权限（rwx） ✅ 学会使用sudo提升权限  第一部分：用户管理基础1. 了解用户信息12345678910111213141516171819cd ~&#x2F;linux-learning&#x2F;day3mkdir user-managementcd user-management# 查看当前用户whoam">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-12T02:05:28.000Z">
+<meta property="article:modified_time" content="2026-04-17T09:42:44.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="group">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="user">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux运维实践(3) 用户和权限管理实战</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/suid-sgid-stickybit/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-study-day02/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-study-day03/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-study-day03/&text=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-study-day03/&is_video=false&description=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux运维实践(3) 用户和权限管理实战&body=Check out this article: https://blog.webrelay.cn/posts/linux-study-day03/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-study-day03/&name=Linux运维实践(3) 用户和权限管理实战&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-study-day03/&t=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">今日学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">第一部分：用户管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%86%E8%A7%A3%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text">1. 了解用户信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84"><span class="toc-number">2.2.</span> <span class="toc-text">2. 创建用户和组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86"><span class="toc-number">2.3.</span> <span class="toc-text">3. 用户信息管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E5%AE%9E%E6%88%98%E6%BC%94%E7%BB%83-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%9B%A2%E9%98%9F"><span class="toc-number">3.</span> <span class="toc-text">第二部分：实战演练 - 创建项目团队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">第三部分：文件权限深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3%E6%9D%83%E9%99%90%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">1. 理解权限表示法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-chmod-%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">4.2.</span> <span class="toc-text">2. chmod - 修改权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-chown-chgrp-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E8%80%85%E5%92%8C%E7%BB%84"><span class="toc-number">4.3.</span> <span class="toc-text">3. chown&#x2F;chgrp - 修改所有者和组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%9A%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E5%92%8Csudo"><span class="toc-number">5.</span> <span class="toc-text">第四部分：特殊权限和sudo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%EF%BC%88SUID%E3%80%81SGID%E3%80%81Sticky-Bit%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">1. 特殊权限（SUID、SGID、Sticky Bit）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-sudo%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE"><span class="toc-number">5.2.</span> <span class="toc-text">2. sudo权限配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86%EF%BC%9A%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98-%E4%BC%81%E4%B8%9A%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1"><span class="toc-number">6.</span> <span class="toc-text">第五部分：综合实战 - 企业权限模型设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86%EF%BC%9A%E4%BB%8A%E6%97%A5%E6%8C%91%E6%88%98%E4%BB%BB%E5%8A%A1"><span class="toc-number">7.</span> <span class="toc-text">第六部分：今日挑战任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">8.</span> <span class="toc-text">常用的整数比较运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E9%83%A8%E5%88%86%EF%BC%9A%E4%BB%8A%E6%97%A5%E6%80%BB%E7%BB%93%E5%92%8C%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">第七部分：今日总结和面试题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text"></span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux运维实践(3) 用户和权限管理实战
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-03-12T02:05:28.000Z" class="dt-published" itemprop="datePublished">Mar 12 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/group/" rel="tag">group</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/root/" rel="tag">root</a>, <a class="p-category" href="/tags/user/" rel="tag">user</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="今日学习目标"><a href="#今日学习目标" class="headerlink" title="今日学习目标"></a><strong>今日学习目标</strong></h2><ul>
+<li>✅ 理解Linux用户和组的概念</li>
+<li>✅ 掌握用户&#x2F;组的增删改查</li>
+<li>✅ 彻底搞懂文件权限（rwx）</li>
+<li>✅ 学会使用sudo提升权限</li>
+</ul>
+<h2 id="第一部分：用户管理基础"><a href="#第一部分：用户管理基础" class="headerlink" title="第一部分：用户管理基础"></a><strong>第一部分：用户管理基础</strong></h2><h3 id="1-了解用户信息"><a href="#1-了解用户信息" class="headerlink" title="1. 了解用户信息"></a><strong>1. 了解用户信息</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/linux-learning/day3</span><br><span class="line"><span class="built_in">mkdir</span> user-management</span><br><span class="line"><span class="built_in">cd</span> user-management</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前用户</span></span><br><span class="line"><span class="built_in">whoami</span>                    <span class="comment"># 我是谁</span></span><br><span class="line"><span class="built_in">id</span>                        <span class="comment"># 查看用户ID、组ID信息</span></span><br><span class="line"><span class="built_in">who</span>                       <span class="comment"># 谁登录了系统</span></span><br><span class="line">w                         <span class="comment"># 更详细的登录信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有用户</span></span><br><span class="line"><span class="built_in">cat</span> /etc/passwd | <span class="built_in">head</span> -5  <span class="comment"># 前5个用户</span></span><br><span class="line"><span class="comment"># 格式：用户名:密码:x:UID:GID:描述:家目录:shell</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> /etc/shadow | <span class="built_in">head</span> -5  <span class="comment"># 查看密码信息（需要root）</span></span><br><span class="line"><span class="comment"># 格式：用户名:加密密码:上次修改:最小天数:最大天数:警告:失效:过期:保留</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有组</span></span><br><span class="line"><span class="built_in">cat</span> /etc/group | <span class="built_in">head</span> -5   <span class="comment"># 前5个组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建用户和组"><a href="#2-创建用户和组" class="headerlink" title="2. 创建用户和组"></a><strong>2. 创建用户和组</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到root（或者使用sudo）</span></span><br><span class="line">su - root</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建组</span></span><br><span class="line">groupadd developers        <span class="comment"># 创建开发组</span></span><br><span class="line">groupadd devops            <span class="comment"># 创建运维组</span></span><br><span class="line">groupadd testers           <span class="comment"># 创建测试组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看创建的组</span></span><br><span class="line"><span class="built_in">tail</span> -3 /etc/group</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建用户</span></span><br><span class="line">useradd john              <span class="comment"># 创建用户john（默认创建同名组）</span></span><br><span class="line">useradd -m jane           <span class="comment"># -m 确保创建家目录</span></span><br><span class="line">useradd -d /home/tom -m tom  <span class="comment"># 指定家目录</span></span><br><span class="line">useradd -g developers mike   <span class="comment"># 指定主组为developers</span></span><br><span class="line">useradd -G devops,testers lisa  <span class="comment"># 指定附加组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置密码</span></span><br><span class="line">passwd john               <span class="comment"># 设置john的密码（输入两次）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;123456&quot;</span> | passwd --stdin jane  <span class="comment"># 非交互式设置密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看用户信息</span></span><br><span class="line"><span class="built_in">id</span> john</span><br><span class="line"><span class="built_in">id</span> jane</span><br><span class="line"><span class="built_in">id</span> mike</span><br><span class="line"><span class="built_in">id</span> lisa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看用户的家目录</span></span><br><span class="line"><span class="built_in">ls</span> -la /home/</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-用户信息管理"><a href="#3-用户信息管理" class="headerlink" title="3. 用户信息管理"></a><strong>3. 用户信息管理</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改用户信息</span></span><br><span class="line">usermod -l john_new john    <span class="comment"># 修改用户名（john -&gt; john_new）</span></span><br><span class="line">usermod -d /home/newhome -m john_new  <span class="comment"># 修改家目录并移动文件</span></span><br><span class="line">usermod -g testers john_new  <span class="comment"># 修改主组</span></span><br><span class="line">usermod -G devops,developers john_new  <span class="comment"># 修改附加组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 锁定和解锁用户</span></span><br><span class="line">passwd -l john_new         <span class="comment"># 锁定用户（不能登录）</span></span><br><span class="line">passwd -u john_new         <span class="comment"># 解锁用户</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看用户状态</span></span><br><span class="line">passwd -S john_new         <span class="comment"># 查看密码状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除用户</span></span><br><span class="line">userdel john_new           <span class="comment"># 删除用户但保留家目录</span></span><br><span class="line">userdel -r jane            <span class="comment"># 删除用户及其家目录</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第二部分：实战演练-创建项目团队"><a href="#第二部分：实战演练-创建项目团队" class="headerlink" title="第二部分：实战演练 - 创建项目团队"></a><strong>第二部分：实战演练 - 创建项目团队</strong></h2><p>现在我们来模拟一个真实场景：为一个项目团队创建用户环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建项目团队环境</span></span><br><span class="line"><span class="built_in">cd</span> ~/linux-learning/day3/user-management</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目组</span></span><br><span class="line">groupadd project_alpha</span><br><span class="line">groupadd project_beta</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目经理、开发人员、测试人员</span></span><br><span class="line"><span class="comment"># 项目经理</span></span><br><span class="line">useradd -m -G project_alpha pm_wang</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;pm@123&quot;</span> | passwd --stdin pm_wang</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开发团队</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;01..03&#125;; <span class="keyword">do</span></span><br><span class="line">    useradd -m -G project_alpha,project_beta dev_zhang<span class="variable">$i</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;dev@123&quot;</span> | passwd --stdin dev_zhang<span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试团队</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;01..02&#125;; <span class="keyword">do</span></span><br><span class="line">    useradd -m -G project_beta tester_li<span class="variable">$i</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;test@123&quot;</span> | passwd --stdin tester_li<span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /projects/&#123;alpha,beta,shared&#125;</span><br><span class="line"><span class="built_in">mkdir</span> -p /projects/alpha/&#123;src,doc,bin,logs&#125;</span><br><span class="line"><span class="built_in">mkdir</span> -p /projects/beta/&#123;src,doc,bin,logs&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置目录权限（稍后会详细讲解）</span></span><br><span class="line"><span class="built_in">chown</span> -R pm_wang:project_alpha /projects/alpha</span><br><span class="line"><span class="built_in">chown</span> -R pm_wang:project_beta /projects/beta</span><br><span class="line"><span class="built_in">chmod</span> 770 /projects/alpha</span><br><span class="line"><span class="built_in">chmod</span> 770 /projects/beta</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看创建结果</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=== 项目组成员 ===&quot;</span></span><br><span class="line">getent group project_alpha</span><br><span class="line">getent group project_beta</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=== 项目目录 ===&quot;</span></span><br><span class="line"><span class="built_in">ls</span> -la /projects/</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三部分：文件权限深度解析"><a href="#第三部分：文件权限深度解析" class="headerlink" title="第三部分：文件权限深度解析"></a><strong>第三部分：文件权限深度解析</strong></h2><h3 id="1-理解权限表示法"><a href="#1-理解权限表示法" class="headerlink" title="1. 理解权限表示法"></a><strong>1. 理解权限表示法</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个练习文件</span></span><br><span class="line"><span class="built_in">touch</span> permissions.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Permission Practice&quot;</span> &gt; permissions.txt</span><br><span class="line"><span class="built_in">mkdir</span> permissions_dir</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看权限</span></span><br><span class="line"><span class="built_in">ls</span> -l permissions.txt</span><br><span class="line"><span class="comment"># 输出：-rw-rw-r-- 1 user group 20 Mar 12 10:00 permissions.txt</span></span><br><span class="line"><span class="comment">#      ^^^^^^^^^^^</span></span><br><span class="line"><span class="comment">#      文件类型 + 权限</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 权限位解析</span></span><br><span class="line"><span class="comment"># 第1位：文件类型（-普通文件 d目录 l链接）</span></span><br><span class="line"><span class="comment"># 第2-4位：所有者权限（rwx）</span></span><br><span class="line"><span class="comment"># 第5-7位：所属组权限（rwx）</span></span><br><span class="line"><span class="comment"># 第8-10位：其他用户权限（rwx）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 权限数字表示法（重要！）</span></span><br><span class="line"><span class="comment"># r = 4, w = 2, x = 1</span></span><br><span class="line"><span class="comment"># rw- = 4+2+0 = 6</span></span><br><span class="line"><span class="comment"># r-x = 4+0+1 = 5</span></span><br><span class="line"><span class="comment"># r-- = 4+0+0 = 4</span></span><br><span class="line"><span class="comment"># --- = 0</span></span><br><span class="line"><span class="comment"># rwx = 4+2+1 = 7</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-chmod-修改权限"><a href="#2-chmod-修改权限" class="headerlink" title="2. chmod - 修改权限"></a><strong>2. chmod - 修改权限</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 符号方式修改权限</span></span><br><span class="line"><span class="built_in">touch</span> <span class="built_in">test</span>&#123;1..5&#125;.txt</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> u+x test1.txt        <span class="comment"># 给所有者加执行权限</span></span><br><span class="line"><span class="built_in">chmod</span> g-w test2.txt        <span class="comment"># 给所属组去掉写权限</span></span><br><span class="line"><span class="built_in">chmod</span> o=r test3.txt        <span class="comment"># 其他人设为只读</span></span><br><span class="line"><span class="built_in">chmod</span> a+rw test4.txt       <span class="comment"># 所有人添加读写权限</span></span><br><span class="line"><span class="built_in">chmod</span> u=rwx,g=rx,o=r test5.txt  <span class="comment"># 分别设置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数字方式修改权限（最常用）</span></span><br><span class="line"><span class="built_in">chmod</span> 755 test1.txt        <span class="comment"># rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 644 test2.txt        <span class="comment"># rw-r--r--</span></span><br><span class="line"><span class="built_in">chmod</span> 700 test3.txt        <span class="comment"># rwx------</span></span><br><span class="line"><span class="built_in">chmod</span> 777 test4.txt        <span class="comment"># rwxrwxrwx（危险！）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归修改目录权限</span></span><br><span class="line"><span class="built_in">mkdir</span> -p dir1/dir2/dir3</span><br><span class="line"><span class="built_in">touch</span> dir1/dir2/file.txt</span><br><span class="line"><span class="built_in">chmod</span> -R 755 dir1/         <span class="comment"># 递归修改目录下所有文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习：猜猜这些权限的含义</span></span><br><span class="line"><span class="built_in">chmod</span> 755 file    <span class="comment"># 答案：rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 644 file    <span class="comment"># 答案：rw-r--r--</span></span><br><span class="line"><span class="built_in">chmod</span> 750 file    <span class="comment"># 答案：rwxr-x---</span></span><br><span class="line"><span class="built_in">chmod</span> 600 file    <span class="comment"># 答案：rw-------</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-chown-chgrp-修改所有者和组"><a href="#3-chown-chgrp-修改所有者和组" class="headerlink" title="3. chown&#x2F;chgrp - 修改所有者和组"></a><strong>3. chown&#x2F;chgrp - 修改所有者和组</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建练习文件</span></span><br><span class="line"><span class="built_in">touch</span> ownership.txt</span><br><span class="line"><span class="built_in">mkdir</span> ownership_dir</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改所有者</span></span><br><span class="line"><span class="built_in">chown</span> john ownership.txt          <span class="comment"># 改为john所有</span></span><br><span class="line"><span class="built_in">chown</span> john:developers ownership.txt  <span class="comment"># 同时修改所有者和组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改所属组</span></span><br><span class="line"><span class="built_in">chgrp</span> developers ownership.txt    <span class="comment"># 只修改组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归修改</span></span><br><span class="line"><span class="built_in">chown</span> -R john:developers ownership_dir/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实战：设置共享目录</span></span><br><span class="line"><span class="built_in">mkdir</span> shared_folder</span><br><span class="line"><span class="built_in">chmod</span> 770 shared_folder            <span class="comment"># 所有者和组有完全权限</span></span><br><span class="line"><span class="built_in">chgrp</span> developers shared_folder      <span class="comment"># 组改为developers</span></span><br><span class="line"><span class="comment"># 现在所有developers组的成员都可以读写这个目录</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第四部分：特殊权限和sudo"><a href="#第四部分：特殊权限和sudo" class="headerlink" title="第四部分：特殊权限和sudo"></a><strong>第四部分：特殊权限和sudo</strong></h2><h3 id="1-特殊权限（SUID、SGID、Sticky-Bit）"><a href="#1-特殊权限（SUID、SGID、Sticky-Bit）" class="headerlink" title="1. 特殊权限（SUID、SGID、Sticky Bit）"></a><strong>1. 特殊权限（SUID、SGID、Sticky Bit）</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SUID (4) - 以文件所有者身份执行</span></span><br><span class="line"><span class="built_in">chmod</span> u+s /usr/bin/passwd    <span class="comment"># passwd命令有SUID权限</span></span><br><span class="line"><span class="built_in">ls</span> -l /usr/bin/passwd        <span class="comment"># 可以看到rwsr-xr-x</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SGID (2) - 以文件所属组身份执行，或目录中新建文件继承组</span></span><br><span class="line"><span class="built_in">chmod</span> g+s shared_folder       <span class="comment"># 目录设置SGID</span></span><br><span class="line"><span class="built_in">ls</span> -ld shared_folder          <span class="comment"># 看到drwxrws---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Sticky Bit (1) - 只有文件所有者才能删除</span></span><br><span class="line"><span class="built_in">chmod</span> +t /tmp                 <span class="comment"># /tmp目录有Sticky Bit</span></span><br><span class="line"><span class="built_in">ls</span> -ld /tmp                   <span class="comment"># 看到drwxrwxrwt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数字方式设置</span></span><br><span class="line"><span class="built_in">chmod</span> 4755 file    <span class="comment"># SUID + rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 2755 <span class="built_in">dir</span>     <span class="comment"># SGID + rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 1777 <span class="built_in">dir</span>     <span class="comment"># Sticky + rwxrwxrwx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-sudo权限配置"><a href="#2-sudo权限配置" class="headerlink" title="2. sudo权限配置"></a><strong>2. sudo权限配置</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前用户sudo权限</span></span><br><span class="line"><span class="built_in">sudo</span> -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置sudo（需要root）</span></span><br><span class="line">visudo  <span class="comment"># 或 vim /etc/sudoers</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sudoers文件常用配置</span></span><br><span class="line"><span class="comment"># 允许用户执行所有命令</span></span><br><span class="line">john    ALL=(ALL)       ALL</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许组执行所有命令</span></span><br><span class="line">%wheel  ALL=(ALL)       ALL</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许用户执行特定命令，不需要密码</span></span><br><span class="line">jane    ALL=(ALL)       NOPASSWD: /usr/bin/systemctl, /usr/bin/dnf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许用户以特定用户身份执行命令</span></span><br><span class="line">mike    ALL=(webuser)   /usr/bin/php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实战练习：给自己配置sudo权限</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;你的用户名 ALL=(ALL) ALL&quot;</span> &gt;&gt; /etc/sudoers.d/yourname</span><br><span class="line"><span class="comment"># 然后测试：sudo whoami  # 应该输出root</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第五部分：综合实战-企业权限模型设计"><a href="#第五部分：综合实战-企业权限模型设计" class="headerlink" title="第五部分：综合实战 - 企业权限模型设计"></a><strong>第五部分：综合实战 - 企业权限模型设计</strong></h2><p>现在我们来做一个企业级的权限设计项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/linux-learning/day3</span><br><span class="line"><span class="built_in">mkdir</span> enterprise-permissions</span><br><span class="line"><span class="built_in">cd</span> enterprise-permissions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 场景：某公司有开发、运维、测试三个部门，共享一台服务器</span></span><br><span class="line"><span class="comment"># 需要实现：</span></span><br><span class="line"><span class="comment"># 1. 各部门有自己的工作目录</span></span><br><span class="line"><span class="comment"># 2. 有公共共享目录</span></span><br><span class="line"><span class="comment"># 3. 日志目录运维组可写，其他人只读</span></span><br><span class="line"><span class="comment"># 4. 发布目录只有运维组可写</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; setup_enterprise_permissions.sh &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 企业服务器权限配置脚本</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建组</span></span><br><span class="line">groupadd dev_team</span><br><span class="line">groupadd ops_team</span><br><span class="line">groupadd qa_team</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建用户并分配到组</span></span><br><span class="line"><span class="comment"># 开发部</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> dev_&#123;wang,li,zhang&#125;; <span class="keyword">do</span></span><br><span class="line">    useradd -m -G dev_team <span class="variable">$i</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;dev@123&quot;</span> | passwd --stdin <span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运维部</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ops_&#123;zhao,qian,sun&#125;; <span class="keyword">do</span></span><br><span class="line">    useradd -m -G ops_team <span class="variable">$i</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;ops@123&quot;</span> | passwd --stdin <span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试部</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> qa_&#123;zhou,wu,zheng&#125;; <span class="keyword">do</span></span><br><span class="line">    useradd -m -G qa_team <span class="variable">$i</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;qa@123&quot;</span> | passwd --stdin <span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建目录结构</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /company/&#123;dev,ops,qa,shared,logs,releases&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开发目录 - 开发组读写，其他组只读</span></span><br><span class="line"><span class="built_in">chown</span> -R root:dev_team /company/dev</span><br><span class="line"><span class="built_in">chmod</span> -R 750 /company/dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运维目录 - 运维组完全控制</span></span><br><span class="line"><span class="built_in">chown</span> -R root:ops_team /company/ops</span><br><span class="line"><span class="built_in">chmod</span> -R 770 /company/ops</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试目录 - 测试组读写</span></span><br><span class="line"><span class="built_in">chown</span> -R root:qa_team /company/qa</span><br><span class="line"><span class="built_in">chmod</span> -R 750 /company/qa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享目录 - 所有人都可读，但只有各自文件所有者可删</span></span><br><span class="line"><span class="built_in">chown</span> root:dev_team /company/shared</span><br><span class="line"><span class="built_in">chmod</span> 1777 /company/shared    <span class="comment"># 1777 = rwxrwxrwt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志目录 - 运维组可写，其他人只读</span></span><br><span class="line"><span class="built_in">chown</span> root:ops_team /company/logs</span><br><span class="line"><span class="built_in">chmod</span> 750 /company/logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布目录 - 只有运维组可写，开发组可读</span></span><br><span class="line"><span class="built_in">chown</span> root:ops_team /company/releases</span><br><span class="line"><span class="built_in">chmod</span> 750 /company/releases</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置SGID，使新文件继承组</span></span><br><span class="line"><span class="built_in">chmod</span> g+s /company/dev</span><br><span class="line"><span class="built_in">chmod</span> g+s /company/ops</span><br><span class="line"><span class="built_in">chmod</span> g+s /company/qa</span><br><span class="line"><span class="built_in">chmod</span> g+s /company/releases</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=== 权限配置完成 ===&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;目录权限检查：&quot;</span></span><br><span class="line"><span class="built_in">ls</span> -la /company/</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x setup_enterprise_permissions.sh</span><br><span class="line"><span class="comment"># 需要用root执行</span></span><br><span class="line"><span class="built_in">sudo</span> ./setup_enterprise_permissions.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="第六部分：今日挑战任务"><a href="#第六部分：今日挑战任务" class="headerlink" title="第六部分：今日挑战任务"></a><strong>第六部分：今日挑战任务</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挑战1：权限猜谜</span></span><br><span class="line"><span class="comment"># 解释以下权限的含义</span></span><br><span class="line">-rwsr-xr-x  1 root root     <span class="comment"># 这是什么权限？</span></span><br><span class="line">drwxrws---  2 dev team      <span class="comment"># 这是什么目录？</span></span><br><span class="line">-rw-r--r--  1 user <span class="built_in">users</span>    <span class="comment"># 普通文件的默认权限？</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 挑战2：创建特殊权限文件</span></span><br><span class="line"><span class="comment"># 创建一个文件，要求：</span></span><br><span class="line"><span class="comment"># 1. 所有者可读写执行</span></span><br><span class="line"><span class="comment"># 2. 所属组可读执行</span></span><br><span class="line"><span class="comment"># 3. 其他用户没有任何权限</span></span><br><span class="line"><span class="comment"># 4. 设置SUID</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 答案（尝试自己写）：</span></span><br><span class="line"><span class="built_in">touch</span> challenge2</span><br><span class="line"><span class="built_in">chmod</span> 4750 challenge2   <span class="comment"># 或 chmod u+s,g+rx,o-rwx challenge2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 挑战3：用户批量管理脚本</span></span><br><span class="line"><span class="comment"># 编写脚本，从文件中读取用户名并批量创建</span></span><br><span class="line"><span class="built_in">cat</span> &gt; users.txt &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">alice:developers:alice@123</span><br><span class="line">bob:ops:bob@123</span><br><span class="line">charlie:qa:charlie@123</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建批量用户脚本</span></span><br><span class="line"><span class="built_in">cat</span> &gt; batch_create_users.sh &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 批量创建用户脚本</span></span><br><span class="line"></span><br><span class="line">INPUT_FILE=<span class="string">&quot;users.txt&quot;</span></span><br><span class="line">LOG_FILE=<span class="string">&quot;user_creation.log&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;开始创建用户: <span class="subst">$(date)</span>&quot;</span> &gt; <span class="variable">$LOG_FILE</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> IFS=: <span class="built_in">read</span> -r username group password; <span class="keyword">do</span>    <span class="comment"># 内部字段分隔符设为冒号 :</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;正在创建用户: <span class="variable">$username</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查组是否存在</span></span><br><span class="line">    <span class="keyword">if</span> ! grep -q <span class="string">&quot;^<span class="variable">$group</span>:&quot;</span> /etc/group; <span class="keyword">then</span></span><br><span class="line">        groupadd <span class="variable">$group</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;  创建组: <span class="variable">$group</span>&quot;</span> &gt;&gt; <span class="variable">$LOG_FILE</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建用户</span></span><br><span class="line">    useradd -m -G <span class="variable">$group</span> <span class="variable">$username</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$password</span>&quot;</span> | passwd --stdin <span class="variable">$username</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ]; <span class="keyword">then</span>    <span class="comment"># 如果上一条命令的退出状态码等于0（成功）</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;  ✅ 用户 <span class="variable">$username</span> 创建成功&quot;</span> &gt;&gt; <span class="variable">$LOG_FILE</span>  <span class="comment"># 记录成功日志</span></span><br><span class="line">    <span class="keyword">else</span>                     <span class="comment"># 否则（上一条命令失败）</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;  ❌ 用户 <span class="variable">$username</span> 创建失败&quot;</span> &gt;&gt; <span class="variable">$LOG_FILE</span>  <span class="comment"># 记录失败日志</span></span><br><span class="line">    <span class="keyword">fi</span>                       <span class="comment"># 结束 if 语句</span></span><br><span class="line"><span class="keyword">done</span> &lt; <span class="variable">$INPUT_FILE</span>    <span class="comment"># 将文件内容重定向为循环的输入</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;用户创建完成: <span class="subst">$(date)</span>&quot;</span> &gt;&gt; <span class="variable">$LOG_FILE</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;查看日志: <span class="variable">$LOG_FILE</span>&quot;</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x batch_create_users.sh</span><br><span class="line">./batch_create_users.sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h2 id="常用的整数比较运算符"><a href="#常用的整数比较运算符" class="headerlink" title="常用的整数比较运算符"></a><strong>常用的整数比较运算符</strong></h2><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>含义</th>
+<th>英文</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-eq</code></td>
+<td>等于</td>
+<td><strong>eq</strong>ual</td>
+<td><code>[ $a -eq $b ]</code></td>
+</tr>
+<tr>
+<td><code>-ne</code></td>
+<td>不等于</td>
+<td><strong>n</strong>ot <strong>e</strong>qual</td>
+<td><code>[ $a -ne $b ]</code></td>
+</tr>
+<tr>
+<td><code>-gt</code></td>
+<td>大于</td>
+<td><strong>g</strong>reater <strong>t</strong>han</td>
+<td><code>[ $a -gt $b ]</code></td>
+</tr>
+<tr>
+<td><code>-lt</code></td>
+<td>小于</td>
+<td><strong>l</strong>ess <strong>t</strong>han</td>
+<td><code>[ $a -lt $b ]</code></td>
+</tr>
+<tr>
+<td><code>-ge</code></td>
+<td>大于等于</td>
+<td><strong>g</strong>reater or <strong>e</strong>qual</td>
+<td><code>[ $a -ge $b ]</code></td>
+</tr>
+<tr>
+<td><code>-le</code></td>
+<td>小于等于</td>
+<td><strong>l</strong>ess or <strong>e</strong>qual</td>
+<td><code>[ $a -le $b ]</code></td>
+</tr>
+</tbody></table>
+</blockquote>
+<h2 id="第七部分：今日总结和面试题"><a href="#第七部分：今日总结和面试题" class="headerlink" title="第七部分：今日总结和面试题"></a><strong>第七部分：今日总结和面试题</strong></h2><p><strong>重要知识点回顾：</strong></p>
+<ul>
+<li>✅ 用户管理：useradd, usermod, userdel, passwd</li>
+<li>✅ 组管理：groupadd, groupmod, groupdel</li>
+<li>✅ 权限管理：chmod, chown, chgrp</li>
+<li>✅ 特殊权限：SUID(4), SGID(2), Sticky(1)</li>
+<li>✅ sudo配置：&#x2F;etc&#x2F;sudoers</li>
+</ul>
+<p><strong>面试必考题：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 如何让普通用户执行root权限的命令？</span></span><br><span class="line">答：配置<span class="built_in">sudo</span>，如 <span class="string">&quot;username ALL=(ALL) ALL&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. rwx对文件和目录的区别？</span></span><br><span class="line">答：文件：r读内容，w修改内容，x执行</span><br><span class="line">    目录：r列文件名，w创建删除文件，x进入目录</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 如何让多个用户共同管理一个目录？</span></span><br><span class="line">答：创建共同组，<span class="built_in">chown</span> -R root:group /dir，<span class="built_in">chmod</span> 770 /dir</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. SUID和SGID的作用？</span></span><br><span class="line">答：SUID: 执行时以文件所有者身份运行</span><br><span class="line">    SGID: 目录中新文件继承目录的组</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 如何限制用户只能执行特定命令？</span></span><br><span class="line">答：在sudoers中配置，如 <span class="string">&quot;user ALL=(ALL) /usr/bin/systemctl&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p><strong>今日名言</strong>：”权限是Linux安全的基石，理解权限就是理解Linux的安全模型。”</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">今日学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">第一部分：用户管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%86%E8%A7%A3%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text">1. 了解用户信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84"><span class="toc-number">2.2.</span> <span class="toc-text">2. 创建用户和组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86"><span class="toc-number">2.3.</span> <span class="toc-text">3. 用户信息管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E5%AE%9E%E6%88%98%E6%BC%94%E7%BB%83-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%9B%A2%E9%98%9F"><span class="toc-number">3.</span> <span class="toc-text">第二部分：实战演练 - 创建项目团队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">第三部分：文件权限深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3%E6%9D%83%E9%99%90%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">1. 理解权限表示法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-chmod-%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">4.2.</span> <span class="toc-text">2. chmod - 修改权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-chown-chgrp-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E8%80%85%E5%92%8C%E7%BB%84"><span class="toc-number">4.3.</span> <span class="toc-text">3. chown&#x2F;chgrp - 修改所有者和组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%9A%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E5%92%8Csudo"><span class="toc-number">5.</span> <span class="toc-text">第四部分：特殊权限和sudo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%EF%BC%88SUID%E3%80%81SGID%E3%80%81Sticky-Bit%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">1. 特殊权限（SUID、SGID、Sticky Bit）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-sudo%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE"><span class="toc-number">5.2.</span> <span class="toc-text">2. sudo权限配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86%EF%BC%9A%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98-%E4%BC%81%E4%B8%9A%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1"><span class="toc-number">6.</span> <span class="toc-text">第五部分：综合实战 - 企业权限模型设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86%EF%BC%9A%E4%BB%8A%E6%97%A5%E6%8C%91%E6%88%98%E4%BB%BB%E5%8A%A1"><span class="toc-number">7.</span> <span class="toc-text">第六部分：今日挑战任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">8.</span> <span class="toc-text">常用的整数比较运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E9%83%A8%E5%88%86%EF%BC%9A%E4%BB%8A%E6%97%A5%E6%80%BB%E7%BB%93%E5%92%8C%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">第七部分：今日总结和面试题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text"></span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-study-day03/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-study-day03/&text=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-study-day03/&is_video=false&description=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux运维实践(3) 用户和权限管理实战&body=Check out this article: https://blog.webrelay.cn/posts/linux-study-day03/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-study-day03/&title=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-study-day03/&name=Linux运维实践(3) 用户和权限管理实战&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-study-day03/&t=Linux运维实践(3) 用户和权限管理实战"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

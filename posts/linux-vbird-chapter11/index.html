@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考资料：鳥哥私房菜 - 第十一章、正規表示法與文件格式化處理  1. 什么是正则表达式正则表达式（Regular Expression，简称RE）是一种处理字符串的方法，它以行为单位进行字符串的处理操作。通过一些特殊符号的辅助，可以轻松实现字符串的搜索、删除、替换。 1.1 正则表达式的重要性 系统管理员每天需要处理大量日志、分析系统状态、监控网络流量，这些任务都离不开正则表达式 只要掌握正则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(8) 正则表达式与文件格式化处理">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter11/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="参考资料：鳥哥私房菜 - 第十一章、正規表示法與文件格式化處理  1. 什么是正则表达式正则表达式（Regular Expression，简称RE）是一种处理字符串的方法，它以行为单位进行字符串的处理操作。通过一些特殊符号的辅助，可以轻松实现字符串的搜索、删除、替换。 1.1 正则表达式的重要性 系统管理员每天需要处理大量日志、分析系统状态、监控网络流量，这些任务都离不开正则表达式 只要掌握正则">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-04-18T13:54:21.000Z">
+<meta property="article:modified_time" content="2026-04-18T14:10:00.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="RE">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="regular expression">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(8) 正则表达式与文件格式化处理</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter12/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter10/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter11/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&text=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&is_video=false&description=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(8) 正则表达式与文件格式化处理&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter11/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&name=Linux学习日志(8) 正则表达式与文件格式化处理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&t=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 正则表达式的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 正则表达式与通配符的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 正则表达式的两种类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. 基础正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E5%AD%97%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基础正则表达式元字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%A1%8C%E9%A6%96%E4%B8%8E%E8%A1%8C%E5%B0%BE%E7%AC%A6%E5%8F%B7"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 行首与行尾符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BB%BB%E6%84%8F%E5%AD%97%E7%AC%A6%E4%B8%8E%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 任意字符与重复字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%99%90%E5%AE%9A%E8%BF%9E%E7%BB%ADRE%E5%AD%97%E7%AC%A6%E8%8C%83%E5%9B%B4"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 限定连续RE字符范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%BB%83%E4%B9%A0%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 基础正则表达式练习示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3. 扩展正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E5%AD%97%E7%AC%A6"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 扩展正则表达式元字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BD%BF%E7%94%A8%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 使用扩展正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-grep-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E6%B1%87%E6%80%BB"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 grep 常用选项汇总</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%EF%BC%9Ased"><span class="toc-number">4.</span> <span class="toc-text">4. 文件格式化处理工具：sed</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-sed-%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 sed 命令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-sed-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 sed 常用选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-sed-%E5%8A%A8%E4%BD%9C%E8%AF%B4%E6%98%8E%EF%BC%88function%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 sed 动作说明（function）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-sed-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 sed 使用示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">5. 文件的格式化与相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%89%93%E5%8D%B0%EF%BC%9Aprintf"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 格式化打印：printf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-awk%EF%BC%9A%E5%A5%BD%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 awk：好用的数据处理工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%96%87%E4%BB%B6%E6%AF%94%E5%AF%B9%E5%B7%A5%E5%85%B7"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 文件比对工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E6%96%87%E4%BB%B6%E6%89%93%E5%8D%B0%E5%87%86%E5%A4%87%EF%BC%9Apr"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 文件打印准备：pr</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">6. 本章重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">7.</span> <span class="toc-text">7. 核心要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 正则表达式的核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-vs-%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 基础正则表达式 vs 扩展正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-sed-vs-awk-%E5%AF%B9%E6%AF%94"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 sed vs awk 对比</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(8) 正则表达式与文件格式化处理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-04-18T13:54:21.000Z" class="dt-published" itemprop="datePublished">Apr 18 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/RE/" rel="tag">RE</a>, <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/regular-expression/" rel="tag">regular expression</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/centos7/0330regularex.php">鳥哥私房菜 - 第十一章、正規表示法與文件格式化處理</a></p>
+</blockquote>
+<h2 id="1-什么是正则表达式"><a href="#1-什么是正则表达式" class="headerlink" title="1. 什么是正则表达式"></a>1. 什么是正则表达式</h2><p><strong>正则表达式（Regular Expression，简称RE）<strong>是一种处理字符串的方法，它以行为单位进行字符串的处理操作。通过一些特殊符号的辅助，可以轻松实现字符串的</strong>搜索、删除、替换</strong>。</p>
+<h3 id="1-1-正则表达式的重要性"><a href="#1-1-正则表达式的重要性" class="headerlink" title="1.1 正则表达式的重要性"></a>1.1 正则表达式的重要性</h3><ul>
+<li>系统管理员每天需要处理大量日志、分析系统状态、监控网络流量，这些任务都离不开正则表达式</li>
+<li>只要掌握正则表达式，就能用简单的字符串处理来解决问题，而无需编写复杂的程序</li>
+<li>正则表达式是Shell Script的基础工具，也是许多Unix命令的核心功能</li>
+</ul>
+<h3 id="1-2-正则表达式与通配符的区别"><a href="#1-2-正则表达式与通配符的区别" class="headerlink" title="1.2 正则表达式与通配符的区别"></a>1.2 正则表达式与通配符的区别</h3><p><strong>重要概念</strong>：正则表达式的特殊字符与命令行中的通配符并不相同：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>通配符</th>
+<th>正则表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code> 含义</td>
+<td>0到无穷多个<strong>任意字符</strong></td>
+<td>重复前一个字符0到无穷多次</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>命令行文件名匹配</td>
+<td>字符串内容处理</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>ls *.txt</code></td>
+<td><code>grep &#39;o*&#39; file</code></td>
+</tr>
+</tbody></table>
+<h3 id="1-3-正则表达式的两种类型"><a href="#1-3-正则表达式的两种类型" class="headerlink" title="1.3 正则表达式的两种类型"></a>1.3 正则表达式的两种类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+<th>工具支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基础正则表达式</strong></td>
+<td>基本的字符匹配和重复功能</td>
+<td>grep, sed</td>
+</tr>
+<tr>
+<td><strong>扩展正则表达式</strong></td>
+<td>增加分组、选择等高级功能</td>
+<td>grep -E, egrep, awk</td>
+</tr>
+</tbody></table>
+<h2 id="2-基础正则表达式"><a href="#2-基础正则表达式" class="headerlink" title="2. 基础正则表达式"></a>2. 基础正则表达式</h2><h3 id="2-1-基础正则表达式元字符"><a href="#2-1-基础正则表达式元字符" class="headerlink" title="2.1 基础正则表达式元字符"></a>2.1 基础正则表达式元字符</h3><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>^</code></td>
+<td>行首定位符</td>
+<td><code>^the</code> 匹配以the开头的行</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>行尾定位符</td>
+<td><code>!$</code> 匹配以!结尾的行</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>匹配任意<strong>一个</strong>字符</td>
+<td><code>t.st</code> 匹配 tast、tost 等</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>重复前一个字符0到无穷多次</td>
+<td><code>o*</code> 匹配空、o、oo、ooo…</td>
+</tr>
+<tr>
+<td><code>[list]</code></td>
+<td>匹配list中的任意一个字符</td>
+<td><code>t[ae]st</code> 匹配 tast 或 test</td>
+</tr>
+<tr>
+<td><code>[n1-n2]</code></td>
+<td>匹配范围中的任意一个字符</td>
+<td><code>[0-9]</code> 匹配任意数字</td>
+</tr>
+<tr>
+<td><code>[^list]</code></td>
+<td>反向选择，匹配不在list中的字符</td>
+<td><code>[^a-z]</code> 匹配非小写字母</td>
+</tr>
+<tr>
+<td><code>\{n,m\}</code></td>
+<td>连续n到m个前一个字符</td>
+<td><code>o\{2,5\}</code> 匹配2-5个o</td>
+</tr>
+<tr>
+<td><code>\</code></td>
+<td>转义字符，将特殊符号变为普通字符</td>
+<td><code>\.</code> 匹配点号本身</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-行首与行尾符号"><a href="#2-2-行首与行尾符号" class="headerlink" title="2.2 行首与行尾符号"></a>2.2 行首与行尾符号</h3><p><strong>^ 符号的双重含义</strong>：<code>^</code> 在字符集合符号（括号 <code>[]</code>）之内与之外是不同的：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[]</code> 之外</td>
+<td>行首定位符</td>
+<td><code>^the</code> 匹配以the开头的行</td>
+</tr>
+<tr>
+<td><code>[]</code> 之内</td>
+<td>反向选择</td>
+<td><code>[^a-z]</code> 匹配非小写字母</td>
+</tr>
+</tbody></table>
+<p><strong>查找空白行</strong>：<code>^$</code> 表示没有字符的行，即空白行。</p>
+<h3 id="2-3-任意字符与重复字符"><a href="#2-3-任意字符与重复字符" class="headerlink" title="2.3 任意字符与重复字符"></a>2.3 任意字符与重复字符</h3><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.</code></td>
+<td>一定有一个任意字符</td>
+<td>占位符，匹配除换行符外的任一字符</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>重复前一个字符0到无穷多次</td>
+<td>是组合形态，需与前一个字符配合</td>
+</tr>
+<tr>
+<td><code>.*</code></td>
+<td>零个或多个任意字符</td>
+<td>最常用的组合，匹配任意内容</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-限定连续RE字符范围"><a href="#2-4-限定连续RE字符范围" class="headerlink" title="2.4 限定连续RE字符范围"></a>2.4 限定连续RE字符范围</h3><p>使用 <code>{}</code> 来限定连续字符的范围。<strong>注意</strong>：<code>{</code> 与 <code>}</code> 在Shell中有特殊意义，必须使用转义字符 <code>\</code> 来使其失去特殊意义。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -n <span class="string">&#x27;o\&#123;2\&#125;&#x27;</span> regular_express.txt    <span class="comment"># 查找连续两个o</span></span><br><span class="line">grep -n <span class="string">&#x27;o\&#123;2,5\&#125;&#x27;</span> regular_express.txt  <span class="comment"># 查找连续2-5个o</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-基础正则表达式练习示例"><a href="#2-5-基础正则表达式练习示例" class="headerlink" title="2.5 基础正则表达式练习示例"></a>2.5 基础正则表达式练习示例</h3><table>
+<thead>
+<tr>
+<th>任务</th>
+<th>正则表达式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>搜索特定字符串</td>
+<td><code>grep -n &#39;the&#39; file</code></td>
+<td>搜索包含”the”的行</td>
+</tr>
+<tr>
+<td>忽略大小写搜索</td>
+<td><code>grep -in &#39;the&#39; file</code></td>
+<td>-i 忽略大小写</td>
+</tr>
+<tr>
+<td>搜索test或tast</td>
+<td><code>grep -n &#39;t[ae]st&#39; file</code></td>
+<td>利用中括号</td>
+</tr>
+<tr>
+<td>搜索非a-z字符</td>
+<td><code>grep -n &#39;[^a-z]&#39; file</code></td>
+<td>反向选择</td>
+</tr>
+<tr>
+<td>搜索以the开头的行</td>
+<td><code>grep -n &#39;^the&#39; file</code></td>
+<td>行首定位符</td>
+</tr>
+<tr>
+<td>搜索以.结尾的行</td>
+<td><code>grep -n &#39;\.$&#39; file</code></td>
+<td>转义点号</td>
+</tr>
+</tbody></table>
+<h2 id="3-扩展正则表达式"><a href="#3-扩展正则表达式" class="headerlink" title="3. 扩展正则表达式"></a>3. 扩展正则表达式</h2><h3 id="3-1-扩展正则表达式元字符"><a href="#3-1-扩展正则表达式元字符" class="headerlink" title="3.1 扩展正则表达式元字符"></a>3.1 扩展正则表达式元字符</h3><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>+</code></td>
+<td>重复前一个字符<strong>一次或以上</strong></td>
+<td><code>go+</code> 匹配 go、goo、gooo</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>重复前一个字符<strong>零次或一次</strong></td>
+<td><code>go?</code> 匹配 g、go</td>
+</tr>
+<tr>
+<td><code>|</code></td>
+<td>或（or）</td>
+<td><code>good|nice</code> 匹配good或nice</td>
+</tr>
+<tr>
+<td><code>()</code></td>
+<td>分组</td>
+<td><code>g(la|oo)d</code> 匹配 glad 或 good</td>
+</tr>
+<tr>
+<td><code>()+</code></td>
+<td>分组重复</td>
+<td><code>A(xyz)+</code> 匹配 Axyz、Axyzxyz</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-使用扩展正则表达式"><a href="#3-2-使用扩展正则表达式" class="headerlink" title="3.2 使用扩展正则表达式"></a>3.2 使用扩展正则表达式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -E <span class="string">&#x27;good|nice&#x27;</span> file   <span class="comment"># 使用 -E 选项</span></span><br><span class="line">egrep <span class="string">&#x27;good|nice&#x27;</span> file      <span class="comment"># 或使用 egrep 命令</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-grep-常用选项汇总"><a href="#3-3-grep-常用选项汇总" class="headerlink" title="3.3 grep 常用选项汇总"></a>3.3 grep 常用选项汇总</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-c</code></td>
+<td>计算匹配的行数</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>忽略大小写</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>显示行号</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>反向选择（显示不匹配的行）</td>
+</tr>
+<tr>
+<td><code>-w</code></td>
+<td>匹配整个单词</td>
+</tr>
+<tr>
+<td><code>-E</code></td>
+<td>支持扩展正则表达式</td>
+</tr>
+<tr>
+<td><code>-A n</code></td>
+<td>显示匹配行及其后 n 行（after）</td>
+</tr>
+<tr>
+<td><code>-B n</code></td>
+<td>显示匹配行及其前 n 行（before）</td>
+</tr>
+<tr>
+<td><code>-C n</code></td>
+<td>显示匹配行及其前后各 n 行（context）</td>
+</tr>
+<tr>
+<td><code>--color=auto</code></td>
+<td>将匹配的关键字着色显示</td>
+</tr>
+</tbody></table>
+<h2 id="4-文件格式化处理工具：sed"><a href="#4-文件格式化处理工具：sed" class="headerlink" title="4. 文件格式化处理工具：sed"></a>4. 文件格式化处理工具：sed</h2><p><strong>sed</strong> 本身也是一个管道命令，可以对数据进行<strong>取代、删除、新增、撷取特定行</strong>等操作。</p>
+<h3 id="4-1-sed-命令格式"><a href="#4-1-sed-命令格式" class="headerlink" title="4.1 sed 命令格式"></a>4.1 sed 命令格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed [-nefr] [动作]</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-sed-常用选项"><a href="#4-2-sed-常用选项" class="headerlink" title="4.2 sed 常用选项"></a>4.2 sed 常用选项</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-n</code></td>
+<td>安静模式，只显示经过特殊处理的行</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>直接在命令行进行sed动作编辑</td>
+</tr>
+<tr>
+<td><code>-f</code></td>
+<td>将sed动作写入文件，执行文件内的sed动作</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>支持扩展正则表达式语法</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>直接修改文件内容（谨慎使用）</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-sed-动作说明（function）"><a href="#4-3-sed-动作说明（function）" class="headerlink" title="4.3 sed 动作说明（function）"></a>4.3 sed 动作说明（function）</h3><table>
+<thead>
+<tr>
+<th>动作</th>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>a</code></td>
+<td>新增</td>
+<td>在指定行的下一行添加字符串</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>取代</td>
+<td>替换指定行的内容</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>删除</td>
+<td>删除指定行</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>插入</td>
+<td>在指定行的上一行插入字符串</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>打印</td>
+<td>打印匹配的行（常与 -n 配合）</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>取代</td>
+<td>进行字符串替换，可搭配正则表达式</td>
+</tr>
+</tbody></table>
+<h3 id="4-4-sed-使用示例"><a href="#4-4-sed-使用示例" class="headerlink" title="4.4 sed 使用示例"></a>4.4 sed 使用示例</h3><p><strong>删除操作</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2,5d&#x27;</span>        <span class="comment"># 删除2-5行</span></span><br><span class="line"><span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2d&#x27;</span>          <span class="comment"># 删除第2行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>新增与插入</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2a drink tea&#x27;</span>   <span class="comment"># 第2行后添加</span></span><br><span class="line"><span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2i drink tea&#x27;</span>   <span class="comment"># 第2行前插入</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>取代操作</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2,5c No 2-5 number&#x27;</span>  <span class="comment"># 将2-5行替换</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>打印操作</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nl</span> /etc/passwd | sed -n <span class="string">&#x27;5,7p&#x27;</span>     <span class="comment"># 只打印5-7行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>字符串替换</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/old/new/g&#x27;</span> file             <span class="comment"># 全局替换</span></span><br><span class="line">sed <span class="string">&#x27;s/^.*addr://g&#x27;</span> file           <span class="comment"># 使用正则表达式</span></span><br><span class="line">sed -i <span class="string">&#x27;s/old/new/g&#x27;</span> file          <span class="comment"># 直接修改文件</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-文件的格式化与相关操作"><a href="#5-文件的格式化与相关操作" class="headerlink" title="5. 文件的格式化与相关操作"></a>5. 文件的格式化与相关操作</h2><h3 id="5-1-格式化打印：printf"><a href="#5-1-格式化打印：printf" class="headerlink" title="5.1 格式化打印：printf"></a>5.1 格式化打印：printf</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;%10s %5i %5.2f\n&#x27;</span> $(<span class="built_in">cat</span> file)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>%ns</code>：n个字符的字符串</li>
+<li><code>%ni</code>：n位整数</li>
+<li><code>%n.mf</code>：整数n位，小数m位的浮点数</li>
+</ul>
+<h3 id="5-2-awk：好用的数据处理工具"><a href="#5-2-awk：好用的数据处理工具" class="headerlink" title="5.2 awk：好用的数据处理工具"></a>5.2 awk：好用的数据处理工具</h3><p><strong>awk</strong> 相比于sed更倾向于将一行分成数个字段来处理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;条件类型1&#123;动作1&#125; 条件类型2&#123;动作2&#125; ...&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+
+<p><strong>awk内置变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NF</code></td>
+<td>每行拥有的字段总数</td>
+</tr>
+<tr>
+<td><code>NR</code></td>
+<td>当前处理的行号</td>
+</tr>
+<tr>
+<td><code>FS</code></td>
+<td>当前的分隔符，默认为空格</td>
+</tr>
+<tr>
+<td><code>$0</code></td>
+<td>整行数据</td>
+</tr>
+<tr>
+<td><code>$1</code></td>
+<td>第一个字段</td>
+</tr>
+<tr>
+<td><code>$2</code></td>
+<td>第二个字段</td>
+</tr>
+</tbody></table>
+<p><strong>awk使用示例</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">last -n 5 | awk <span class="string">&#x27;&#123;print $1 &quot;\t&quot; $3&#125;&#x27;</span>   <span class="comment"># 打印第1和第3字段</span></span><br><span class="line">awk <span class="string">&#x27;&#123;print NR &quot; &quot; NF &quot; &quot; $1&#125;&#x27;</span> file     <span class="comment"># 显示行号、字段数、第1字段</span></span><br><span class="line">awk <span class="string">&#x27;NR==1&#123;print $1&#125;&#x27;</span> file              <span class="comment"># 仅处理第1行</span></span><br><span class="line">awk <span class="string">&#x27;&#123;if(NR&lt;3) print $1&#125;&#x27;</span> file          <span class="comment"># 条件判断</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-文件比对工具"><a href="#5-3-文件比对工具" class="headerlink" title="5.3 文件比对工具"></a>5.3 文件比对工具</h3><p><strong>diff</strong>：比较文件的差异</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diff [-bBi] from-file to-file</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-b</code>：忽略一行中多个空白的差异</li>
+<li><code>-B</code>：忽略空白行的差异</li>
+<li><code>-i</code>：忽略大小写</li>
+</ul>
+<p><strong>cmp</strong>：以字节为单位比较文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmp file1 file2</span><br></pre></td></tr></table></figure>
+
+<p><strong>patch</strong>：使用diff生成的补丁文件更新文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">diff -Naur old new &gt; file.patch   <span class="comment"># 生成补丁</span></span><br><span class="line">patch -p0 &lt; file.patch            <span class="comment"># 打补丁</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-文件打印准备：pr"><a href="#5-4-文件打印准备：pr" class="headerlink" title="5.4 文件打印准备：pr"></a>5.4 文件打印准备：pr</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pr</span> file              <span class="comment"># 为文件添加页眉、页脚</span></span><br><span class="line"><span class="built_in">pr</span> -l 50 file        <span class="comment"># 每页50行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-本章重点命令速查"><a href="#6-本章重点命令速查" class="headerlink" title="6. 本章重点命令速查"></a>6. 本章重点命令速查</h2><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>命令&#x2F;工具</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>搜索</strong></td>
+<td><code>grep</code></td>
+<td>正则表达式搜索文本</td>
+</tr>
+<tr>
+<td></td>
+<td><code>egrep</code></td>
+<td>扩展正则表达式搜索</td>
+</tr>
+<tr>
+<td><strong>替换&#x2F;编辑</strong></td>
+<td><code>sed</code></td>
+<td>流编辑器，替换、删除、新增</td>
+</tr>
+<tr>
+<td><strong>数据处理</strong></td>
+<td><code>awk</code></td>
+<td>字段处理和分析</td>
+</tr>
+<tr>
+<td><strong>格式化输出</strong></td>
+<td><code>printf</code></td>
+<td>格式化打印</td>
+</tr>
+<tr>
+<td><strong>文件比对</strong></td>
+<td><code>diff</code></td>
+<td>比较文件差异</td>
+</tr>
+<tr>
+<td></td>
+<td><code>cmp</code></td>
+<td>字节级比较</td>
+</tr>
+<tr>
+<td></td>
+<td><code>patch</code></td>
+<td>应用补丁文件</td>
+</tr>
+<tr>
+<td><strong>打印准备</strong></td>
+<td><code>pr</code></td>
+<td>格式化文件为打印格式</td>
+</tr>
+</tbody></table>
+<h2 id="7-核心要点"><a href="#7-核心要点" class="headerlink" title="7. 核心要点"></a>7. 核心要点</h2><h3 id="7-1-正则表达式的核心思想"><a href="#7-1-正则表达式的核心思想" class="headerlink" title="7.1 正则表达式的核心思想"></a>7.1 正则表达式的核心思想</h3><ul>
+<li>正则表达式是<strong>处理字符串</strong>的方法，以<strong>行</strong>为单位进行操作</li>
+<li>通过特殊符号的组合，实现<strong>搜索、删除、替换</strong>功能</li>
+<li>区分正则表达式与通配符：通配符用于文件名匹配，正则表达式用于内容处理</li>
+</ul>
+<h3 id="7-2-基础正则表达式-vs-扩展正则表达式"><a href="#7-2-基础正则表达式-vs-扩展正则表达式" class="headerlink" title="7.2 基础正则表达式 vs 扩展正则表达式"></a>7.2 基础正则表达式 vs 扩展正则表达式</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>基础正则表达式</th>
+<th>扩展正则表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工具</td>
+<td>grep, sed</td>
+<td>grep -E, egrep, awk</td>
+</tr>
+<tr>
+<td>分组</td>
+<td>不支持 <code>()</code></td>
+<td>支持 <code>()</code></td>
+</tr>
+<tr>
+<td>或运算</td>
+<td>不支持 &#96;</td>
+<td>&#96;</td>
+</tr>
+<tr>
+<td>一次或多次</td>
+<td>不支持 <code>+</code></td>
+<td>支持 <code>+</code></td>
+</tr>
+</tbody></table>
+<h3 id="7-3-sed-vs-awk-对比"><a href="#7-3-sed-vs-awk-对比" class="headerlink" title="7.3 sed vs awk 对比"></a>7.3 sed vs awk 对比</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>sed</th>
+<th>awk</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>处理单位</td>
+<td>行</td>
+<td>字段</td>
+</tr>
+<tr>
+<td>主要功能</td>
+<td>替换、删除、新增</td>
+<td>字段分析、计算</td>
+</tr>
+<tr>
+<td>编程能力</td>
+<td>简单</td>
+<td>较强（支持条件判断）</td>
+</tr>
+<tr>
+<td>典型场景</td>
+<td>文本替换</td>
+<td>数据报表</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 正则表达式的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 正则表达式与通配符的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 正则表达式的两种类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. 基础正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E5%AD%97%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基础正则表达式元字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%A1%8C%E9%A6%96%E4%B8%8E%E8%A1%8C%E5%B0%BE%E7%AC%A6%E5%8F%B7"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 行首与行尾符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BB%BB%E6%84%8F%E5%AD%97%E7%AC%A6%E4%B8%8E%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 任意字符与重复字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%99%90%E5%AE%9A%E8%BF%9E%E7%BB%ADRE%E5%AD%97%E7%AC%A6%E8%8C%83%E5%9B%B4"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 限定连续RE字符范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%BB%83%E4%B9%A0%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 基础正则表达式练习示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3. 扩展正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E5%AD%97%E7%AC%A6"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 扩展正则表达式元字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BD%BF%E7%94%A8%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 使用扩展正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-grep-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E6%B1%87%E6%80%BB"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 grep 常用选项汇总</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%EF%BC%9Ased"><span class="toc-number">4.</span> <span class="toc-text">4. 文件格式化处理工具：sed</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-sed-%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 sed 命令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-sed-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 sed 常用选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-sed-%E5%8A%A8%E4%BD%9C%E8%AF%B4%E6%98%8E%EF%BC%88function%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 sed 动作说明（function）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-sed-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 sed 使用示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">5. 文件的格式化与相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%89%93%E5%8D%B0%EF%BC%9Aprintf"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 格式化打印：printf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-awk%EF%BC%9A%E5%A5%BD%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 awk：好用的数据处理工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%96%87%E4%BB%B6%E6%AF%94%E5%AF%B9%E5%B7%A5%E5%85%B7"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 文件比对工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E6%96%87%E4%BB%B6%E6%89%93%E5%8D%B0%E5%87%86%E5%A4%87%EF%BC%9Apr"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 文件打印准备：pr</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9C%AC%E7%AB%A0%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">6. 本章重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">7.</span> <span class="toc-text">7. 核心要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 正则表达式的核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-vs-%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 基础正则表达式 vs 扩展正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-sed-vs-awk-%E5%AF%B9%E6%AF%94"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 sed vs awk 对比</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter11/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&text=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&is_video=false&description=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(8) 正则表达式与文件格式化处理&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter11/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&title=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&name=Linux学习日志(8) 正则表达式与文件格式化处理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter11/&t=Linux学习日志(8) 正则表达式与文件格式化处理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考资料：鳥哥私房菜 - 第七章、Linux 磁碟與檔案系統管理  1. 认识Linux文件系统1.1 磁盘组成与分区 磁盘物理组成：盘片、机械手臂、磁头、主轴马达 物理单位：扇区（最小存储单位，512B或4K）、磁柱（扇区组成的圆） 设备命名：&#x2F;dev&#x2F;sd[a-p]（SATA&#x2F;SCSI&#x2F;USB）、&#x2F;dev&#x2F;vd[a-d]（虚拟化） 分区编号：主分区1-4，逻辑分区从5开始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习日志(4) Linux磁盘与文件系统管理">
+<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter07/">
+<meta property="og:site_name" content="青橙日志">
+<meta property="og:description" content="参考资料：鳥哥私房菜 - 第七章、Linux 磁碟與檔案系統管理  1. 认识Linux文件系统1.1 磁盘组成与分区 磁盘物理组成：盘片、机械手臂、磁头、主轴马达 物理单位：扇区（最小存储单位，512B或4K）、磁柱（扇区组成的圆） 设备命名：&#x2F;dev&#x2F;sd[a-p]（SATA&#x2F;SCSI&#x2F;USB）、&#x2F;dev&#x2F;vd[a-d]（虚拟化） 分区编号：主分区1-4，逻辑分区从5开始">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-03T20:26:53.000Z">
+<meta property="article:modified_time" content="2026-04-17T09:43:48.000Z">
+<meta property="article:author" content="青橙">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux学习日志(4) Linux磁盘与文件系统管理</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+  <!-- Waline Comments -->
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-study-day01/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter06/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter07/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&text=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&is_video=false&description=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(4) Linux磁盘与文件系统管理&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter07/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&name=Linux学习日志(4) Linux磁盘与文件系统管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&t=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%86Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">1. 认识Linux文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%A3%81%E7%9B%98%E7%BB%84%E6%88%90%E4%B8%8E%E5%88%86%E5%8C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 磁盘组成与分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 文件系统特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Ext2%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Ext2文件系统结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%A0%91%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 与目录树的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%97%A5%E5%BF%97%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 日志式文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 Linux文件系统的运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E6%8C%82%E8%BD%BD%E7%82%B9%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 挂载点的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-%E5%85%B6%E4%BB%96Linux%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%8EVFS"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 其他Linux支持的文件系统与VFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-XFS%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 XFS文件系统简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">2. 文件系统的简单操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%A3%81%E7%9B%98%E4%B8%8E%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%B9%E9%87%8F%EF%BC%9Adf-du"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 磁盘与目录的容量：df, du</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%9E%E4%BD%93%E9%93%BE%E6%8E%A5%E4%B8%8E%E7%AC%A6%E5%8F%B7%E9%93%BE%E6%8E%A5%EF%BC%9Aln"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 实体链接与符号链接：ln</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%A3%81%E7%9B%98%E7%9A%84%E5%88%86%E5%8C%BA%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%A3%80%E9%AA%8C%E4%B8%8E%E6%8C%82%E8%BD%BD"><span class="toc-number">3.</span> <span class="toc-text">3. 磁盘的分区、格式化、检验与挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%A7%82%E5%AF%9F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%8A%B6%E6%80%81"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 观察磁盘分区状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%EF%BC%9Agdisk-fdisk"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 磁盘分区：gdisk&#x2F;fdisk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 磁盘格式化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A3%80%E9%AA%8C"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 文件系统检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%8C%82%E8%BD%BD%E4%B8%8E%E5%8D%B8%E8%BD%BD"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 文件系统挂载与卸载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E7%A3%81%E7%9B%98-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 磁盘&#x2F;文件系统参数修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E6%8C%82%E8%BD%BD"><span class="toc-number">4.</span> <span class="toc-text">4. 设置开机挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-etc-fstab%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 &#x2F;etc&#x2F;fstab详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%89%B9%E6%AE%8A%E8%AE%BE%E5%A4%87loop%E6%8C%82%E8%BD%BD"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 特殊设备loop挂载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%86%85%E5%AD%98%E7%BD%AE%E6%8D%A2%E7%A9%BA%E9%97%B4%EF%BC%88swap%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">5. 内存置换空间（swap）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-swap%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 swap的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%9F%A5%E7%9C%8Bswap"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 查看swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BD%93%E5%88%86%E5%8C%BA%E6%9E%84%E5%BB%BAswap"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 使用实体分区构建swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E6%9E%84%E5%BB%BAswap"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 使用文件构建swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E6%B0%B8%E4%B9%85%E5%90%AF%E7%94%A8swap"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 永久启用swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-swap%E5%A4%A7%E5%B0%8F%E5%BB%BA%E8%AE%AE"><span class="toc-number">5.6.</span> <span class="toc-text">5.6 swap大小建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%9F%A5%E7%9C%8B%E4%B8%8E%E6%93%8D%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text">6. 文件系统的特殊查看与操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E6%B5%AA%E8%B4%B9%E9%97%AE%E9%A2%98"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 磁盘空间浪费问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%88%A9%E7%94%A8GPT%E5%88%86%E5%8C%BA%E8%A1%A8%E4%B8%8EUEFI-BIOS%E5%BC%80%E6%9C%BA"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 利用GPT分区表与UEFI BIOS开机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%9A-proc%E4%B8%8E-sys"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 虚拟文件系统：&#x2F;proc与&#x2F;sys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E7%89%B9%E6%AE%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%88udev%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">6.4 特殊文件系统（udev）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">7.</span> <span class="toc-text">7. 重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">8. 核心要点总结</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux学习日志(4) Linux磁盘与文件系统管理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">青橙</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-03-03T20:26:53.000Z" class="dt-published" itemprop="datePublished">Mar 04 2026</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/centos7/0230filesystem.php">鳥哥私房菜 - 第七章、Linux 磁碟與檔案系統管理</a></p>
+</blockquote>
+<h2 id="1-认识Linux文件系统"><a href="#1-认识Linux文件系统" class="headerlink" title="1. 认识Linux文件系统"></a>1. 认识Linux文件系统</h2><h3 id="1-1-磁盘组成与分区"><a href="#1-1-磁盘组成与分区" class="headerlink" title="1.1 磁盘组成与分区"></a>1.1 磁盘组成与分区</h3><ul>
+<li><strong>磁盘物理组成</strong>：盘片、机械手臂、磁头、主轴马达</li>
+<li><strong>物理单位</strong>：扇区（最小存储单位，512B或4K）、磁柱（扇区组成的圆）</li>
+<li><strong>设备命名</strong>：<code>/dev/sd[a-p]</code>（SATA&#x2F;SCSI&#x2F;USB）、<code>/dev/vd[a-d]</code>（虚拟化）</li>
+<li><strong>分区编号</strong>：主分区1-4，逻辑分区从5开始</li>
+</ul>
+<h3 id="1-2-文件系统特性"><a href="#1-2-文件系统特性" class="headerlink" title="1.2 文件系统特性"></a>1.2 文件系统特性</h3><ul>
+<li><strong>索引式文件系统</strong>：通过inode找到数据block，无需碎片整理</li>
+<li><strong>superblock</strong>：记录文件系统整体信息（总量、使用量、剩余量）</li>
+<li><strong>inode</strong>：记录文件属性和数据所在的block号码</li>
+<li><strong>block</strong>：实际存放数据，一个block只能放一个文件</li>
+</ul>
+<h3 id="1-3-Ext2文件系统结构"><a href="#1-3-Ext2文件系统结构" class="headerlink" title="1.3 Ext2文件系统结构"></a>1.3 Ext2文件系统结构</h3><ul>
+<li><strong>区块群组</strong>：格式化时分多个群组，便于管理</li>
+<li><strong>inode&#x2F;block bitmap</strong>：记录使用情况</li>
+<li><strong>dumpe2fs</strong>：查看Ext家族superblock信息</li>
+</ul>
+<h3 id="1-4-与目录树的关系"><a href="#1-4-与目录树的关系" class="headerlink" title="1.4 与目录树的关系"></a>1.4 与目录树的关系</h3><ul>
+<li><strong>目录</strong>：inode记录权限，block记录文件名和inode对应关系</li>
+<li><strong>文件读取流程</strong>：通过目录block找到inode，再通过inode找到数据block</li>
+<li><strong>挂载点</strong>：文件系统与目录树结合的人口</li>
+</ul>
+<h3 id="1-5-日志式文件系统"><a href="#1-5-日志式文件系统" class="headerlink" title="1.5 日志式文件系统"></a>1.5 日志式文件系统</h3><ul>
+<li><strong>数据不一致</strong>：系统中断导致metadata与实际数据不符</li>
+<li><strong>日志功能</strong>：记录预备、实际写入、结束三个阶段，快速恢复</li>
+</ul>
+<h3 id="1-6-Linux文件系统的运行"><a href="#1-6-Linux文件系统的运行" class="headerlink" title="1.6 Linux文件系统的运行"></a>1.6 Linux文件系统的运行</h3><ul>
+<li><strong>异步处理</strong>：数据先载入内存，标记为dirty，定期写回磁盘</li>
+<li><strong>sync</strong>：手动强制写入磁盘</li>
+</ul>
+<h3 id="1-7-挂载点的意义"><a href="#1-7-挂载点的意义" class="headerlink" title="1.7 挂载点的意义"></a>1.7 挂载点的意义</h3><ul>
+<li>挂载点一定是目录，是进入文件系统的入口</li>
+</ul>
+<h3 id="1-8-其他Linux支持的文件系统与VFS"><a href="#1-8-其他Linux支持的文件系统与VFS" class="headerlink" title="1.8 其他Linux支持的文件系统与VFS"></a>1.8 其他Linux支持的文件系统与VFS</h3><ul>
+<li><strong>支持类型</strong>：ext2&#x2F;ext3&#x2F;ext4、xfs、vfat、ntfs、iso9660等</li>
+<li><strong>VFS</strong>：管理所有文件系统的接口</li>
+</ul>
+<h3 id="1-9-XFS文件系统简介"><a href="#1-9-XFS文件系统简介" class="headerlink" title="1.9 XFS文件系统简介"></a>1.9 XFS文件系统简介</h3><ul>
+<li><strong>特点</strong>：高性能，适合大文件，RHEL&#x2F;CentOS 7+默认</li>
+<li><strong>三大区块</strong>：数据区、日志区、实时运行区</li>
+<li><strong>动态配置</strong>：inode和block动态分配，格式化更快</li>
+</ul>
+<h2 id="2-文件系统的简单操作"><a href="#2-文件系统的简单操作" class="headerlink" title="2. 文件系统的简单操作"></a>2. 文件系统的简单操作</h2><h3 id="2-1-磁盘与目录的容量：df-du"><a href="#2-1-磁盘与目录的容量：df-du" class="headerlink" title="2.1 磁盘与目录的容量：df, du"></a>2.1 磁盘与目录的容量：df, du</h3><p><strong>df命令详解：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>                     <span class="comment"># 以KB为单位显示</span></span><br><span class="line"><span class="built_in">df</span> -h                  <span class="comment"># 人类可读格式（GB、MB）</span></span><br><span class="line"><span class="built_in">df</span> -T                  <span class="comment"># 显示文件系统类型</span></span><br><span class="line"><span class="built_in">df</span> -hT                 <span class="comment"># 最常用：人类可读+显示类型</span></span><br><span class="line"><span class="built_in">df</span> -i                  <span class="comment"># 显示inode使用情况</span></span><br><span class="line"><span class="built_in">df</span> -a                  <span class="comment"># 显示所有文件系统（包括/proc）</span></span><br><span class="line"><span class="built_in">df</span> /home               <span class="comment"># 指定目录所在分区</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>输出字段说明：</strong></p>
+<ul>
+<li>Filesystem：文件系统（设备名）</li>
+<li>Type：文件系统类型（ext4、xfs等）</li>
+<li>Size：总容量</li>
+<li>Used：已使用</li>
+<li>Avail：可用</li>
+<li>Use%：使用百分比</li>
+<li>Mounted on：挂载点</li>
+<li>Inodes：inode总量（用-i时）</li>
+<li>IUsed：已用inode</li>
+</ul>
+<p><strong>du命令详解：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">du</span>                     <span class="comment"># 列出当前目录所有子目录大小</span></span><br><span class="line"><span class="built_in">du</span> -h                  <span class="comment"># 人类可读格式</span></span><br><span class="line"><span class="built_in">du</span> -sh /目录           <span class="comment"># 只显示目录总大小</span></span><br><span class="line"><span class="built_in">du</span> -sh *               <span class="comment"># 显示当前目录下所有文件和目录大小</span></span><br><span class="line"><span class="built_in">du</span> -sm /*              <span class="comment"># 显示根目录下每个目录大小（MB）</span></span><br><span class="line"><span class="built_in">du</span> -h --max-depth=1    <span class="comment"># 显示一层子目录大小</span></span><br><span class="line"><span class="built_in">du</span> -h --<span class="keyword">time</span>           <span class="comment"># 同时显示修改时间</span></span><br><span class="line"><span class="built_in">du</span> -sh .[!.]*          <span class="comment"># 显示隐藏文件大小</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>实用场景：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找出根目录下最大的10个目录</span></span><br><span class="line"><span class="built_in">du</span> -sm /* 2&gt;/dev/null | <span class="built_in">sort</span> -nr | <span class="built_in">head</span> -10</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找出当前目录下大于100M的文件</span></span><br><span class="line">find . -<span class="built_in">type</span> f -size +100M -<span class="built_in">exec</span> <span class="built_in">du</span> -sh &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-实体链接与符号链接：ln"><a href="#2-2-实体链接与符号链接：ln" class="headerlink" title="2.2 实体链接与符号链接：ln"></a>2.2 实体链接与符号链接：ln</h3><p><strong>实体链接（hard link）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> 源文件 目标文件      <span class="comment"># 创建硬链接</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong></p>
+<ul>
+<li>多个文件名对应同一个inode</li>
+<li>删除任一文件名，不影响另一个文件</li>
+<li>修改任意文件，内容同步改变</li>
+<li><strong>限制</strong>：不能跨文件系统，不能链接目录</li>
+<li>查看：<code>ls -li</code> 可看到inode相同</li>
+</ul>
+<p><strong>符号链接（symbolic link）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s 源文件 目标文件   <span class="comment"># 创建符号链接</span></span><br><span class="line"><span class="built_in">ln</span> -sf 源文件 目标文件  <span class="comment"># 若目标存在则强制覆盖</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong></p>
+<ul>
+<li>相当于Windows的快捷方式</li>
+<li>创建一个独立的文件，文件内容指向源文件</li>
+<li>如果源文件被删除，链接文件会失效（变成死链接）</li>
+<li>可跨文件系统，可链接目录</li>
+<li>查看：<code>ls -l</code> 显示 <code>-&gt;</code> 指向</li>
+</ul>
+<p><strong>区别对比：</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>实体链接</th>
+<th>符号链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>inode</td>
+<td>相同</td>
+<td>不同</td>
+</tr>
+<tr>
+<td>跨文件系统</td>
+<td>不能</td>
+<td>能</td>
+</tr>
+<tr>
+<td>链接目录</td>
+<td>不能</td>
+<td>能</td>
+</tr>
+<tr>
+<td>源文件删除</td>
+<td>仍可访问</td>
+<td>失效</td>
+</tr>
+<tr>
+<td>文件大小</td>
+<td>同源文件</td>
+<td>路径名字符数</td>
+</tr>
+</tbody></table>
+<h2 id="3-磁盘的分区、格式化、检验与挂载"><a href="#3-磁盘的分区、格式化、检验与挂载" class="headerlink" title="3. 磁盘的分区、格式化、检验与挂载"></a>3. 磁盘的分区、格式化、检验与挂载</h2><h3 id="3-1-观察磁盘分区状态"><a href="#3-1-观察磁盘分区状态" class="headerlink" title="3.1 观察磁盘分区状态"></a>3.1 观察磁盘分区状态</h3><p><strong>lsblk（list block devices）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lsblk                    <span class="comment"># 树状显示所有磁盘和分区</span></span><br><span class="line">lsblk -f                 <span class="comment"># 显示文件系统类型和UUID（最常用）</span></span><br><span class="line">lsblk -m                 <span class="comment"># 显示设备权限</span></span><br><span class="line">lsblk -d                 <span class="comment"># 仅显示磁盘本身，不显示分区</span></span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NAME   FSTYPE LABEL UUID                                 MOUNTPOINT</span><br><span class="line">sda                                                      </span><br><span class="line">├─sda1 ext4        12345678-1234-1234-1234-123456789abc /boot</span><br><span class="line">├─sda2 ext4        abcdef12-3456-7890-abcd-ef1234567890 /</span><br><span class="line">├─sda3 ext4        98765432-1000-2000-3000-123456789000 /home</span><br><span class="line">└─sda4 swap        56781234-4321-8765-2109-abcdef123456 [SWAP]</span><br></pre></td></tr></table></figure>
+
+<p><strong>blkid：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">blkid                    <span class="comment"># 查看所有设备的UUID和文件系统类型</span></span><br><span class="line">blkid /dev/sda1          <span class="comment"># 查看指定设备</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>parted：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parted /dev/sda <span class="built_in">print</span>    <span class="comment"># 查看分区表类型（MBR或GPT）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-磁盘分区：gdisk-fdisk"><a href="#3-2-磁盘分区：gdisk-fdisk" class="headerlink" title="3.2 磁盘分区：gdisk&#x2F;fdisk"></a>3.2 磁盘分区：gdisk&#x2F;fdisk</h3><p><strong>MBR分区（fdisk）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sdb           <span class="comment"># 进入交互模式</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>fdisk常用命令：</strong></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>n</code></td>
+<td>新建分区</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>删除分区</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>显示分区表</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>保存并退出</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>不保存退出</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>修改分区类型（83&#x3D;Linux, 82&#x3D;swap）</td>
+</tr>
+</tbody></table>
+<p><strong>GPT分区（gdisk）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdisk /dev/sdb           <span class="comment"># 进入交互模式</span></span><br></pre></td></tr></table></figure>
+
+<p>命令与fdisk类似，支持GPT特性。</p>
+<p><strong>分区后通知内核：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">partprobe                <span class="comment"># 重新读取分区表</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>分区类型代码：</strong></p>
+<ul>
+<li>83：Linux native（普通文件系统）</li>
+<li>82：Linux swap（交换分区）</li>
+<li>8e：Linux LVM</li>
+<li>fd：Linux RAID</li>
+</ul>
+<h3 id="3-3-磁盘格式化"><a href="#3-3-磁盘格式化" class="headerlink" title="3.3 磁盘格式化"></a>3.3 磁盘格式化</h3><p><strong>mkfs命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkfs.xfs /dev/sdb1               <span class="comment"># 格式化为XFS</span></span><br><span class="line">mkfs.ext4 /dev/sdb1              <span class="comment"># 格式化为ext4</span></span><br><span class="line">mkfs -t ext4 /dev/sdb1           <span class="comment"># 指定类型</span></span><br><span class="line">mkfs -t xfs -f /dev/sdb1         <span class="comment"># 强制格式化（覆盖原有数据）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>格式化参数：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 -b 4096 /dev/sdb1      <span class="comment"># 指定block大小（1K/2K/4K）</span></span><br><span class="line">mkfs.ext4 -L mydata /dev/sdb1    <span class="comment"># 设置卷标</span></span><br><span class="line">mkfs.xfs -f -L mydata /dev/sdb1  <span class="comment"># XFS设置卷标</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查看文件系统信息：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">blkid /dev/sdb1                  <span class="comment"># 查看UUID和类型</span></span><br><span class="line">xfs_info /dev/sdb1               <span class="comment"># 查看XFS信息</span></span><br><span class="line">dumpe2fs /dev/sdb1               <span class="comment"># 查看ext信息</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-文件系统检验"><a href="#3-4-文件系统检验" class="headerlink" title="3.4 文件系统检验"></a>3.4 文件系统检验</h3><p><strong>fsck（file system check）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fsck /dev/sdb1                   <span class="comment"># 检查并修复（需卸载）</span></span><br><span class="line">fsck -f /dev/sdb1                <span class="comment"># 强制检查</span></span><br><span class="line">fsck.ext4 /dev/sdb1              <span class="comment"># 指定类型</span></span><br><span class="line">fsck -y /dev/sdb1                <span class="comment"># 自动回答yes</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>xfs_repair：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xfs_repair /dev/sdb1             <span class="comment"># 修复XFS（需卸载）</span></span><br><span class="line">xfs_repair -n /dev/sdb1          <span class="comment"># 只检查不修复</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️ 重要原则：</strong> 执行fsck或xfs_repair前必须<strong>卸载</strong>文件系统，否则可能造成数据损坏。</p>
+</blockquote>
+<h3 id="3-5-文件系统挂载与卸载"><a href="#3-5-文件系统挂载与卸载" class="headerlink" title="3.5 文件系统挂载与卸载"></a>3.5 文件系统挂载与卸载</h3><p><strong>mount（挂载）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdb1 /mnt/data        <span class="comment"># 挂载设备到目录</span></span><br><span class="line">mount /dev/sdb1 /mnt/data -o ro  <span class="comment"># 只读挂载</span></span><br><span class="line">mount -o loop /path/image.iso /mnt/iso  <span class="comment"># 挂载ISO镜像</span></span><br><span class="line">mount -o remount,rw /mnt/data     <span class="comment"># 重新挂载（修改选项）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>常用挂载选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ro</code></td>
+<td>只读挂载</td>
+</tr>
+<tr>
+<td><code>rw</code></td>
+<td>读写挂载</td>
+</tr>
+<tr>
+<td><code>noexec</code></td>
+<td>禁止执行二进制文件</td>
+</tr>
+<tr>
+<td><code>nosuid</code></td>
+<td>禁止SUID功能</td>
+</tr>
+<tr>
+<td><code>auto/noauto</code></td>
+<td>是否自动挂载</td>
+</tr>
+<tr>
+<td><code>user/nouser</code></td>
+<td>是否允许普通用户挂载</td>
+</tr>
+</tbody></table>
+<p><strong>查看挂载：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount                    <span class="comment"># 查看所有挂载</span></span><br><span class="line"><span class="built_in">df</span> -hT                   <span class="comment"># 查看已挂载分区使用情况</span></span><br><span class="line">findmnt                  <span class="comment"># 树状显示挂载</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>umount（卸载）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">umount /mnt/data         <span class="comment"># 按挂载点卸载</span></span><br><span class="line">umount /dev/sdb1         <span class="comment"># 按设备卸载</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>无法卸载的解决：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof /mnt/data           <span class="comment"># 查看哪些进程在使用</span></span><br><span class="line">fuser -km /mnt/data      <span class="comment"># 强制终止使用进程</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-磁盘-文件系统参数修改"><a href="#3-6-磁盘-文件系统参数修改" class="headerlink" title="3.6 磁盘&#x2F;文件系统参数修改"></a>3.6 磁盘&#x2F;文件系统参数修改</h3><p><strong>mknod：创建设备文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mknod</span> /dev/sdc b 8 32    <span class="comment"># 创建块设备文件（主设备号8，次设备号32）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>e2label：修改ext卷标</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e2label /dev/sdb1 mydata   <span class="comment"># 设置卷标</span></span><br><span class="line">e2label /dev/sdb1          <span class="comment"># 查看卷标</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>xfs_admin：修改XFS参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xfs_admin -L mydata /dev/sdb1   <span class="comment"># 设置XFS卷标</span></span><br><span class="line">xfs_admin -u /dev/sdb1          <span class="comment"># 查看UUID</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>tune2fs：调整ext文件系统参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tune2fs -L mydata /dev/sdb1     <span class="comment"># 修改卷标</span></span><br><span class="line">tune2fs -l /dev/sdb1            <span class="comment"># 查看文件系统信息</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>hdparm：硬盘参数设置</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdparm -I /dev/sda       <span class="comment"># 查看硬盘详细信息</span></span><br><span class="line">hdparm -t /dev/sda       <span class="comment"># 测试读取速度</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-设置开机挂载"><a href="#4-设置开机挂载" class="headerlink" title="4. 设置开机挂载"></a>4. 设置开机挂载</h2><h3 id="4-1-etc-fstab详解"><a href="#4-1-etc-fstab详解" class="headerlink" title="4.1 &#x2F;etc&#x2F;fstab详解"></a>4.1 &#x2F;etc&#x2F;fstab详解</h3><p><strong>六字段格式：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[设备/UUID] [挂载点] [文件系统] [选项] [dump] [pass]</span><br></pre></td></tr></table></figure>
+
+<p><strong>字段详解：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第1字段</td>
+<td>设备&#x2F;UUID</td>
+<td>推荐使用UUID避免设备名变动</td>
+</tr>
+<tr>
+<td>第2字段</td>
+<td>挂载点</td>
+<td>挂载的目录（swap用swap）</td>
+</tr>
+<tr>
+<td>第3字段</td>
+<td>文件系统</td>
+<td>ext4、xfs、swap等</td>
+</tr>
+<tr>
+<td>第4字段</td>
+<td>选项</td>
+<td>挂载参数（defaults等）</td>
+</tr>
+<tr>
+<td>第5字段</td>
+<td>dump</td>
+<td>是否备份（0不备份，1备份）</td>
+</tr>
+<tr>
+<td>第6字段</td>
+<td>pass</td>
+<td>fsck检查顺序（0不检查，1根目录，2其他）</td>
+</tr>
+</tbody></table>
+<p><strong>常用选项（第4字段）：</strong></p>
+<ul>
+<li><code>defaults</code>：默认值（rw, suid, dev, exec, auto, nouser, async）</li>
+<li><code>noexec</code>：不允许执行二进制文件</li>
+<li><code>ro</code>：只读挂载</li>
+<li><code>auto/noauto</code>：是否自动挂载</li>
+<li><code>user/nouser</code>：是否允许普通用户挂载</li>
+<li><code>usrquota</code>：启用用户磁盘配额</li>
+<li><code>grpquota</code>：启用组磁盘配额</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UUID=1234-5678-9012-3456 /data ext4 defaults 0 2</span><br><span class="line">/dev/sdb1 /backup xfs defaults 0 0</span><br><span class="line">/dev/sdb2 swap swap defaults 0 0</span><br><span class="line">tmpfs /tmp tmpfs defaults 0 0</span><br></pre></td></tr></table></figure>
+
+<p><strong>UUID获取：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">blkid</span><br><span class="line">lsblk -f</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试fstab：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -a                 <span class="comment"># 重新加载fstab（测试配置是否正确）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>fstab错误导致无法启动的修复：</strong></p>
+<ol>
+<li>进入紧急模式</li>
+<li><code>mount -o remount,rw /</code>   # 重新挂载根为可读写</li>
+<li><code>vim /etc/fstab</code>          # 修复错误</li>
+<li><code>mount -a</code>                 # 测试</li>
+<li><code>reboot</code></li>
+</ol>
+<h3 id="4-2-特殊设备loop挂载"><a href="#4-2-特殊设备loop挂载" class="headerlink" title="4.2 特殊设备loop挂载"></a>4.2 特殊设备loop挂载</h3><p><strong>挂载ISO镜像：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -o loop /path/to/image.iso /mnt/iso</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建并使用镜像文件：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/tmp/disk.img bs=1M count=100   <span class="comment"># 创建100M空文件</span></span><br><span class="line">mkfs.ext4 /tmp/disk.img                             <span class="comment"># 格式化为ext4</span></span><br><span class="line">mount -o loop /tmp/disk.img /mnt/disk               <span class="comment"># 挂载使用</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查看loop设备：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">losetup -a                    <span class="comment"># 查看所有loop设备</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-内存置换空间（swap）"><a href="#5-内存置换空间（swap）" class="headerlink" title="5. 内存置换空间（swap）"></a>5. 内存置换空间（swap）</h2><h3 id="5-1-swap的作用"><a href="#5-1-swap的作用" class="headerlink" title="5.1 swap的作用"></a>5.1 swap的作用</h3><ul>
+<li><strong>内存扩展</strong>：物理内存不足时，将不活跃数据移到swap</li>
+<li><strong>休眠支持</strong>：系统休眠时将内存数据保存到swap</li>
+<li><strong>内存溢出保护</strong>：防止系统崩溃</li>
+</ul>
+<h3 id="5-2-查看swap"><a href="#5-2-查看swap" class="headerlink" title="5.2 查看swap"></a>5.2 查看swap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">free -h                    <span class="comment"># 查看内存和swap使用情况</span></span><br><span class="line">swapon -s                  <span class="comment"># 查看swap分区信息</span></span><br><span class="line"><span class="built_in">cat</span> /proc/swaps            <span class="comment"># 查看swap设备列表</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-使用实体分区构建swap"><a href="#5-3-使用实体分区构建swap" class="headerlink" title="5.3 使用实体分区构建swap"></a>5.3 使用实体分区构建swap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 分区（用fdisk或gdisk，类型设为82）</span></span><br><span class="line"><span class="comment"># 2. 格式化</span></span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 启用</span></span><br><span class="line">swapon /dev/sdb2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 查看</span></span><br><span class="line">swapon -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 关闭</span></span><br><span class="line">swapoff /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-使用文件构建swap"><a href="#5-4-使用文件构建swap" class="headerlink" title="5.4 使用文件构建swap"></a>5.4 使用文件构建swap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建文件（1GB）</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/swapfile bs=1M count=1024</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 设置权限（安全考虑）</span></span><br><span class="line"><span class="built_in">chmod</span> 600 /swapfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 格式化为swap</span></span><br><span class="line">mkswap /swapfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 启用</span></span><br><span class="line">swapon /swapfile</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-5-永久启用swap"><a href="#5-5-永久启用swap" class="headerlink" title="5.5 永久启用swap"></a>5.5 永久启用swap</h3><p>在 <code>/etc/fstab</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdb2 swap swap defaults 0 0</span><br><span class="line">/swapfile swap swap defaults 0 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-6-swap大小建议"><a href="#5-6-swap大小建议" class="headerlink" title="5.6 swap大小建议"></a>5.6 swap大小建议</h3><table>
+<thead>
+<tr>
+<th>物理内存</th>
+<th>swap大小建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;2GB</td>
+<td>内存 × 2</td>
+</tr>
+<tr>
+<td>2-8GB</td>
+<td>等于内存大小</td>
+</tr>
+<tr>
+<td>&gt;8GB</td>
+<td>4-8GB</td>
+</tr>
+<tr>
+<td>启用休眠</td>
+<td>≥ 内存大小</td>
+</tr>
+</tbody></table>
+<h2 id="6-文件系统的特殊查看与操作"><a href="#6-文件系统的特殊查看与操作" class="headerlink" title="6. 文件系统的特殊查看与操作"></a>6. 文件系统的特殊查看与操作</h2><h3 id="6-1-磁盘空间浪费问题"><a href="#6-1-磁盘空间浪费问题" class="headerlink" title="6.1 磁盘空间浪费问题"></a>6.1 磁盘空间浪费问题</h3><ul>
+<li>block越大，空间浪费越多（一个block只能放一个文件）</li>
+<li>小文件多时建议用较小block（如1K）</li>
+<li>大文件多时可用较大block（如4K）提高性能</li>
+</ul>
+<h3 id="6-2-利用GPT分区表与UEFI-BIOS开机"><a href="#6-2-利用GPT分区表与UEFI-BIOS开机" class="headerlink" title="6.2 利用GPT分区表与UEFI BIOS开机"></a>6.2 利用GPT分区表与UEFI BIOS开机</h3><ul>
+<li>GPT支持大于2TB磁盘</li>
+<li>UEFI取代传统BIOS，启动更快</li>
+<li>需要创建EFI系统分区（通常为100MB，类型EF00）</li>
+</ul>
+<h3 id="6-3-虚拟文件系统：-proc与-sys"><a href="#6-3-虚拟文件系统：-proc与-sys" class="headerlink" title="6.3 虚拟文件系统：&#x2F;proc与&#x2F;sys"></a>6.3 虚拟文件系统：&#x2F;proc与&#x2F;sys</h3><p><strong>&#x2F;proc</strong>：进程信息、系统状态（内存中的信息）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/cpuinfo        <span class="comment"># CPU信息</span></span><br><span class="line"><span class="built_in">cat</span> /proc/meminfo        <span class="comment"># 内存信息</span></span><br><span class="line"><span class="built_in">cat</span> /proc/version        <span class="comment"># 内核版本</span></span><br><span class="line"><span class="built_in">cat</span> /proc/filesystems    <span class="comment"># 支持的文件系统</span></span><br><span class="line"><span class="built_in">ls</span> /proc/PID             <span class="comment"># 指定进程的信息</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>&#x2F;sys</strong>：内核对象、设备信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /sys/block/           <span class="comment"># 块设备信息</span></span><br><span class="line"><span class="built_in">ls</span> /sys/bus/             <span class="comment"># 总线信息</span></span><br><span class="line"><span class="built_in">ls</span> /sys/class/           <span class="comment"># 设备类别</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-4-特殊文件系统（udev）"><a href="#6-4-特殊文件系统（udev）" class="headerlink" title="6.4 特殊文件系统（udev）"></a>6.4 特殊文件系统（udev）</h3><ul>
+<li>动态管理设备文件</li>
+<li>设备插入时自动在<code>/dev</code>下创建对应文件</li>
+<li>配置文件：<code>/etc/udev/rules.d/</code></li>
+</ul>
+<h2 id="7-重点命令速查"><a href="#7-重点命令速查" class="headerlink" title="7. 重点命令速查"></a>7. 重点命令速查</h2><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>命令</th>
+<th>用途</th>
+<th>常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>查看</strong></td>
+<td><code>lsblk</code></td>
+<td>查看磁盘结构</td>
+<td><code>lsblk -f</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>df</code></td>
+<td>查看分区使用</td>
+<td><code>df -hT</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>du</code></td>
+<td>查看目录大小</td>
+<td><code>du -sh /home</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>blkid</code></td>
+<td>查看UUID</td>
+<td><code>blkid /dev/sda1</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>free</code></td>
+<td>查看内存&#x2F;swap</td>
+<td><code>free -h</code></td>
+</tr>
+<tr>
+<td><strong>分区</strong></td>
+<td><code>fdisk</code></td>
+<td>MBR分区</td>
+<td><code>fdisk /dev/sdb</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>gdisk</code></td>
+<td>GPT分区</td>
+<td><code>gdisk /dev/sdb</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>parted</code></td>
+<td>查看分区表</td>
+<td><code>parted /dev/sda print</code></td>
+</tr>
+<tr>
+<td><strong>格式化</strong></td>
+<td><code>mkfs.ext4</code></td>
+<td>格式化为ext4</td>
+<td><code>mkfs.ext4 /dev/sdb1</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>mkfs.xfs</code></td>
+<td>格式化为XFS</td>
+<td><code>mkfs.xfs /dev/sdb1</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>mkswap</code></td>
+<td>创建交换分区</td>
+<td><code>mkswap /dev/sdb2</code></td>
+</tr>
+<tr>
+<td><strong>挂载</strong></td>
+<td><code>mount</code></td>
+<td>挂载</td>
+<td><code>mount /dev/sdb1 /mnt</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>umount</code></td>
+<td>卸载</td>
+<td><code>umount /mnt</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>mount -a</code></td>
+<td>加载fstab</td>
+<td><code>mount -a</code></td>
+</tr>
+<tr>
+<td><strong>检查</strong></td>
+<td><code>fsck</code></td>
+<td>检查ext</td>
+<td><code>fsck /dev/sdb1</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>xfs_repair</code></td>
+<td>检查XFS</td>
+<td><code>xfs_repair /dev/sdb1</code></td>
+</tr>
+<tr>
+<td><strong>swap</strong></td>
+<td><code>swapon</code></td>
+<td>启用swap</td>
+<td><code>swapon /dev/sdb2</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>swapoff</code></td>
+<td>关闭swap</td>
+<td><code>swapoff /dev/sdb2</code></td>
+</tr>
+<tr>
+<td><strong>链接</strong></td>
+<td><code>ln</code></td>
+<td>创建链接</td>
+<td><code>ln -s source target</code></td>
+</tr>
+<tr>
+<td><strong>其他</strong></td>
+<td><code>partprobe</code></td>
+<td>更新分区表</td>
+<td><code>partprobe</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>dd</code></td>
+<td>备份&#x2F;创建文件</td>
+<td><code>dd if=/dev/zero of=/swapfile bs=1M count=1024</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>e2label</code></td>
+<td>修改ext卷标</td>
+<td><code>e2label /dev/sdb1 mydata</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>xfs_admin</code></td>
+<td>修改XFS参数</td>
+<td><code>xfs_admin -L mydata /dev/sdb1</code></td>
+</tr>
+</tbody></table>
+<h2 id="8-核心要点总结"><a href="#8-核心要点总结" class="headerlink" title="8. 核心要点总结"></a>8. 核心要点总结</h2><p><strong>磁盘管理三步曲：</strong></p>
+<ol>
+<li><strong>分区</strong>：fdisk（MBR）或gdisk（GPT）</li>
+<li><strong>格式化</strong>：mkfs.ext4或mkfs.xfs</li>
+<li><strong>挂载</strong>：mount + &#x2F;etc&#x2F;fstab永久生效</li>
+</ol>
+<p><strong>重要原则：</strong></p>
+<ul>
+<li>用UUID代替设备名写入fstab，避免设备名变动</li>
+<li>修改fstab后执行 <code>mount -a</code> 测试配置是否正确</li>
+<li>fsck或xfs_repair前必须<strong>卸载</strong>文件系统</li>
+<li>重要数据定期备份</li>
+</ul>
+<p><strong>日常维护命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -hT        <span class="comment"># 查看磁盘使用情况</span></span><br><span class="line">lsblk -f      <span class="comment"># 查看磁盘结构</span></span><br><span class="line"><span class="built_in">du</span> -sh /home  <span class="comment"># 查看目录大小</span></span><br><span class="line">free -h       <span class="comment"># 查看内存和swap使用</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>常见问题解决：</strong></p>
+<ul>
+<li>磁盘空间不足：<code>du</code>找出大文件清理，或扩展LVM</li>
+<li>无法卸载：<code>lsof</code>或<code>fuser</code>找出占用进程</li>
+<li>fstab错误：进入紧急模式修复</li>
+<li>swap不足：增加swap分区或文件</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+<!-- twikoo Comments -->
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">/home</a></li>
+        
+          <li><a href="/archives/">/archive</a></li>
+        
+          <li><a href="/tags/">/tag</a></li>
+        
+          <li><a href="/categories/">/category</a></li>
+        
+          <li><a href="/search/">/search</a></li>
+        
+          <li><a href="/about/">/about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%86Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">1. 认识Linux文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%A3%81%E7%9B%98%E7%BB%84%E6%88%90%E4%B8%8E%E5%88%86%E5%8C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 磁盘组成与分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 文件系统特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Ext2%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Ext2文件系统结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%A0%91%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 与目录树的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%97%A5%E5%BF%97%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 日志式文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 Linux文件系统的运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E6%8C%82%E8%BD%BD%E7%82%B9%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 挂载点的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-%E5%85%B6%E4%BB%96Linux%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%8EVFS"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 其他Linux支持的文件系统与VFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-XFS%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 XFS文件系统简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">2. 文件系统的简单操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%A3%81%E7%9B%98%E4%B8%8E%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%B9%E9%87%8F%EF%BC%9Adf-du"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 磁盘与目录的容量：df, du</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%9E%E4%BD%93%E9%93%BE%E6%8E%A5%E4%B8%8E%E7%AC%A6%E5%8F%B7%E9%93%BE%E6%8E%A5%EF%BC%9Aln"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 实体链接与符号链接：ln</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%A3%81%E7%9B%98%E7%9A%84%E5%88%86%E5%8C%BA%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%A3%80%E9%AA%8C%E4%B8%8E%E6%8C%82%E8%BD%BD"><span class="toc-number">3.</span> <span class="toc-text">3. 磁盘的分区、格式化、检验与挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%A7%82%E5%AF%9F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%8A%B6%E6%80%81"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 观察磁盘分区状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%EF%BC%9Agdisk-fdisk"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 磁盘分区：gdisk&#x2F;fdisk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 磁盘格式化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A3%80%E9%AA%8C"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 文件系统检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%8C%82%E8%BD%BD%E4%B8%8E%E5%8D%B8%E8%BD%BD"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 文件系统挂载与卸载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E7%A3%81%E7%9B%98-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 磁盘&#x2F;文件系统参数修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E6%8C%82%E8%BD%BD"><span class="toc-number">4.</span> <span class="toc-text">4. 设置开机挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-etc-fstab%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 &#x2F;etc&#x2F;fstab详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%89%B9%E6%AE%8A%E8%AE%BE%E5%A4%87loop%E6%8C%82%E8%BD%BD"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 特殊设备loop挂载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%86%85%E5%AD%98%E7%BD%AE%E6%8D%A2%E7%A9%BA%E9%97%B4%EF%BC%88swap%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">5. 内存置换空间（swap）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-swap%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 swap的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%9F%A5%E7%9C%8Bswap"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 查看swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BD%93%E5%88%86%E5%8C%BA%E6%9E%84%E5%BB%BAswap"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 使用实体分区构建swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E6%9E%84%E5%BB%BAswap"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 使用文件构建swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E6%B0%B8%E4%B9%85%E5%90%AF%E7%94%A8swap"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 永久启用swap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-swap%E5%A4%A7%E5%B0%8F%E5%BB%BA%E8%AE%AE"><span class="toc-number">5.6.</span> <span class="toc-text">5.6 swap大小建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%9F%A5%E7%9C%8B%E4%B8%8E%E6%93%8D%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text">6. 文件系统的特殊查看与操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E6%B5%AA%E8%B4%B9%E9%97%AE%E9%A2%98"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 磁盘空间浪费问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%88%A9%E7%94%A8GPT%E5%88%86%E5%8C%BA%E8%A1%A8%E4%B8%8EUEFI-BIOS%E5%BC%80%E6%9C%BA"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 利用GPT分区表与UEFI BIOS开机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%9A-proc%E4%B8%8E-sys"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 虚拟文件系统：&#x2F;proc与&#x2F;sys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E7%89%B9%E6%AE%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%88udev%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">6.4 特殊文件系统（udev）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%87%8D%E7%82%B9%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">7.</span> <span class="toc-text">7. 重点命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">8. 核心要点总结</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter07/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&text=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&is_video=false&description=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(4) Linux磁盘与文件系统管理&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter07/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&title=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&name=Linux学习日志(4) Linux磁盘与文件系统管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter07/&t=Linux学习日志(4) Linux磁盘与文件系统管理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2026
+    青橙
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">/home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">/archive</a></li><!--
+     --><!--
+       --><li><a href="/tags/">/tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">/category</a></li><!--
+     --><!--
+       --><li><a href="/search/">/search</a></li><!--
+     --><!--
+       --><li><a href="/about/">/about</a></li><!--
+     -->
+      </ul>
+      <!-- 不蒜子统计 -->
+      <ul>
+            
+          </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'orangelegy/utterances';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'photon-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+
+<!-- Waline Comments -->
+
+</body>
+</html>
