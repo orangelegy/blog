@@ -500,6 +500,7 @@ body {
   -moz-hyphens: auto;
   -ms-hyphens: auto;
   -webkit-hyphens: auto;
+  margin: 10px 0px;
 }
 .content code {
   hyphens: manual;
@@ -1634,7 +1635,7 @@ code {
 }
 .highlight {
   overflow-x: auto;
-  margin: 0;
+  margin: 1rem 0;
   padding: 10px 15px;
   border-radius: 4px;
   background: #2c3039;
