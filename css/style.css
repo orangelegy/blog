@@ -437,7 +437,7 @@ body td {
 @font-face {
   font-style: normal;
   font-family: "Cascadia Next SC";
-  src: url("../lib/CascadiaNext/");
+  src: url("../lib/CascadiaNext/CascadiaNextSC.wght.woff2");
 }
 *,
 *:before,
@@ -1625,16 +1625,16 @@ pre code {
   border: none;
 }
 code {
-  padding: 0 5px;
+  padding: 1px 2px;
   border: 1px dotted #818896;
   border-radius: 2px;
   -webkit-border-radius: 2px;
   font-family: "Cascadia Next SC", "Cascadia Mono", Consolas, Menlo, Monaco, "DejaVu Sans Mono", sans-serif;
-  font-weight: bold;
+  font-weight: 400;
 }
 .highlight {
   overflow-x: auto;
-  margin: 1rem 0;
+  margin: 0;
   padding: 10px 15px;
   border-radius: 4px;
   background: #2c3039;
