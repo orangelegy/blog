@@ -9,7 +9,7 @@
     <meta name="description" content="在 BASH 的管线操作中，有很多实用的小工具可以帮我们快速处理文本数据，这些工具可以帮我们完成数据选取、排序、转换、分割等常见操作，极大提升文本处理的效率。下面我们就来逐一梳理这些常用命令的用法。 一、选取命令：cut、grep选取命令的作用是将一段数据经过分析后，取出我们想要的部分，这类命令通常是针对一行一行的信息来进行分析的。 cutcut 可以将一行信息的某一段切出来，处理的信息以行为单位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="&lt;笔记&gt; Linux BASH 常用管线命令总结">
-<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-bash-pipe/">
+<meta property="og:url" content="https://lwlog.cn/posts/linux-bash-pipe/">
 <meta property="og:site_name" content="青橙日志">
 <meta property="og:description" content="在 BASH 的管线操作中，有很多实用的小工具可以帮我们快速处理文本数据，这些工具可以帮我们完成数据选取、排序、转换、分割等常见操作，极大提升文本处理的效率。下面我们就来逐一梳理这些常用命令的用法。 一、选取命令：cut、grep选取命令的作用是将一段数据经过分析后，取出我们想要的部分，这类命令通常是针对一行一行的信息来进行分析的。 cutcut 可以将一行信息的某一段切出来，处理的信息以行为单位">
 <meta property="og:locale" content="en_US">
@@ -119,17 +119,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-bash-pipe/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&text=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&is_video=false&description=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; Linux BASH 常用管线命令总结&body=Check out this article: https://blog.webrelay.cn/posts/linux-bash-pipe/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&name=&lt;笔记&gt; Linux BASH 常用管线命令总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-bash-pipe/&t=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-bash-pipe/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-bash-pipe/&text=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-bash-pipe/&is_video=false&description=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; Linux BASH 常用管线命令总结&body=Check out this article: https://lwlog.cn/posts/linux-bash-pipe/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-bash-pipe/&name=&lt;笔记&gt; Linux BASH 常用管线命令总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-bash-pipe/&t=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -466,17 +466,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-bash-pipe/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&text=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&is_video=false&description=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; Linux BASH 常用管线命令总结&body=Check out this article: https://blog.webrelay.cn/posts/linux-bash-pipe/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-bash-pipe/&name=&lt;笔记&gt; Linux BASH 常用管线命令总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-bash-pipe/&t=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-bash-pipe/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-bash-pipe/&text=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-bash-pipe/&is_video=false&description=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; Linux BASH 常用管线命令总结&body=Check out this article: https://lwlog.cn/posts/linux-bash-pipe/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-bash-pipe/&title=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-bash-pipe/&name=&lt;笔记&gt; Linux BASH 常用管线命令总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-bash-pipe/&t=&lt;笔记&gt; Linux BASH 常用管线命令总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -9,7 +9,7 @@
     <meta name="description" content="参考资料：鳥哥私房菜 - 第九章、vim 程式編輯器  1. vim 概述1.1 什么是 vim vi：Unix-like系统中内建的标准文本编辑器 vim：Vi IMproved，vi的进阶版本，增加了颜色显示、语法检查等功能 几乎所有Linux发行版都会内置vi&#x2F;vim，很多软件的编辑界面也会主动调用vi（如crontab、visudo等）  1.2 为什么要学习 vim 所有Un">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux学习日志(6) vim程序编辑器">
-<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter09/">
+<meta property="og:url" content="https://lwlog.cn/posts/linux-vbird-chapter09/">
 <meta property="og:site_name" content="青橙日志">
 <meta property="og:description" content="参考资料：鳥哥私房菜 - 第九章、vim 程式編輯器  1. vim 概述1.1 什么是 vim vi：Unix-like系统中内建的标准文本编辑器 vim：Vi IMproved，vi的进阶版本，增加了颜色显示、语法检查等功能 几乎所有Linux发行版都会内置vi&#x2F;vim，很多软件的编辑界面也会主动调用vi（如crontab、visudo等）  1.2 为什么要学习 vim 所有Un">
 <meta property="og:locale" content="en_US">
@@ -119,17 +119,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&text=Linux学习日志(6) vim程序编辑器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&is_video=false&description=Linux学习日志(6) vim程序编辑器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(6) vim程序编辑器&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&name=Linux学习日志(6) vim程序编辑器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&t=Linux学习日志(6) vim程序编辑器"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-vbird-chapter09/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-vbird-chapter09/&text=Linux学习日志(6) vim程序编辑器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-vbird-chapter09/&is_video=false&description=Linux学习日志(6) vim程序编辑器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(6) vim程序编辑器&body=Check out this article: https://lwlog.cn/posts/linux-vbird-chapter09/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-vbird-chapter09/&name=Linux学习日志(6) vim程序编辑器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-vbird-chapter09/&t=Linux学习日志(6) vim程序编辑器"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -853,17 +853,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&text=Linux学习日志(6) vim程序编辑器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&is_video=false&description=Linux学习日志(6) vim程序编辑器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(6) vim程序编辑器&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter09/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&name=Linux学习日志(6) vim程序编辑器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter09/&t=Linux学习日志(6) vim程序编辑器"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-vbird-chapter09/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-vbird-chapter09/&text=Linux学习日志(6) vim程序编辑器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-vbird-chapter09/&is_video=false&description=Linux学习日志(6) vim程序编辑器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(6) vim程序编辑器&body=Check out this article: https://lwlog.cn/posts/linux-vbird-chapter09/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter09/&title=Linux学习日志(6) vim程序编辑器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-vbird-chapter09/&name=Linux学习日志(6) vim程序编辑器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-vbird-chapter09/&t=Linux学习日志(6) vim程序编辑器"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

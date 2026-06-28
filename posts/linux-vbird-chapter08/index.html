@@ -9,7 +9,7 @@
     <meta name="description" content="参考资料：鳥哥私房菜 - 第八章、檔案與檔案系統的壓縮,打包與備份  1. 压缩的基本概念1.1 为什么需要压缩 减少文件占用的磁盘空间 降低网络传输时间 便于数据归档和备份  1.2 Linux常见压缩文件扩展名   扩展名 对应压缩程序 说明    *.Z compress 已不流行，gzip可替代   *.zip zip Windows常见压缩格式   *.gz gzip GNU压缩，速度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux学习日志(5) 文件与文件系统的压缩、打包与备份">
-<meta property="og:url" content="https://blog.webrelay.cn/posts/linux-vbird-chapter08/">
+<meta property="og:url" content="https://lwlog.cn/posts/linux-vbird-chapter08/">
 <meta property="og:site_name" content="青橙日志">
 <meta property="og:description" content="参考资料：鳥哥私房菜 - 第八章、檔案與檔案系統的壓縮,打包與備份  1. 压缩的基本概念1.1 为什么需要压缩 减少文件占用的磁盘空间 降低网络传输时间 便于数据归档和备份  1.2 Linux常见压缩文件扩展名   扩展名 对应压缩程序 说明    *.Z compress 已不流行，gzip可替代   *.zip zip Windows常见压缩格式   *.gz gzip GNU压缩，速度">
 <meta property="og:locale" content="en_US">
@@ -120,17 +120,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter08/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-vbird-chapter08/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://lwlog.cn/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -693,17 +693,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.webrelay.cn/posts/linux-vbird-chapter08/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://blog.webrelay.cn/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.webrelay.cn/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-vbird-chapter08/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://lwlog.cn/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
