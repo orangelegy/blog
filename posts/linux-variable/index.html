@@ -9,7 +9,7 @@
     <meta name="description" content="变量与变量的内容荣以一个等号&#x3D;来连接  1myname&#x3D;Vbird   等号两边不能直接接空格  1myname &#x3D; VBird 或 myname&#x3D;VBird Tsai ❌   变量名称只能是英文字母与数字，但是开头字符不能是数字  12myname&#x3D;VBird ❌   变量内容若有空格可使用双引号&quot;或单引号&#39;将变量内容结合起来，但：  双引号内的特殊字符如$等，可以保有原本的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="&lt;笔记&gt; 变量的设置规则">
-<meta property="og:url" content="https://lwlog.cn/posts/linux-variable/">
+<meta property="og:url" content="https://orangelegy.github.io/blog/posts/linux-variable/">
 <meta property="og:site_name" content="青橙日志">
 <meta property="og:description" content="变量与变量的内容荣以一个等号&#x3D;来连接  1myname&#x3D;Vbird   等号两边不能直接接空格  1myname &#x3D; VBird 或 myname&#x3D;VBird Tsai ❌   变量名称只能是英文字母与数字，但是开头字符不能是数字  12myname&#x3D;VBird ❌   变量内容若有空格可使用双引号&quot;或单引号&#39;将变量内容结合起来，但：  双引号内的特殊字符如$等，可以保有原本的">
 <meta property="og:locale" content="en_US">
@@ -22,17 +22,17 @@
     
       
         
-          <link rel="shortcut icon" href="/images/favicon.ico">
+          <link rel="shortcut icon" href="/blog/images/favicon.ico">
         
       
       
         
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
         
       
       
         
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
         
       
     
@@ -47,14 +47,14 @@
 
     <!-- styles -->
     
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/blog/css/style.css">
 
     <!-- persian styles -->
     
     <!-- rss -->
     
     
-      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
+      <link rel="alternate" href="/blog/atom.xml" title="青橙日志" type="application/atom+xml" />
     
 	<!-- mathjax -->
 	
@@ -72,17 +72,17 @@
     <span id="nav">
       <ul>
         <!--
-       --><li><a href="/">/home</a></li><!--
+       --><li><a href="/blog/">/home</a></li><!--
      --><!--
-       --><li><a href="/archives/">/archive</a></li><!--
+       --><li><a href="/blog/archives/">/archive</a></li><!--
      --><!--
-       --><li><a href="/tags/">/tag</a></li><!--
+       --><li><a href="/blog/tags/">/tag</a></li><!--
      --><!--
-       --><li><a href="/categories/">/category</a></li><!--
+       --><li><a href="/blog/categories/">/category</a></li><!--
      --><!--
-       --><li><a href="/search/">/search</a></li><!--
+       --><li><a href="/blog/search/">/search</a></li><!--
      --><!--
-       --><li><a href="/about/">/about</a></li><!--
+       --><li><a href="/blog/about/">/about</a></li><!--
      -->
       </ul>
     </span>
@@ -90,10 +90,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/posts/pc-setup-software-md/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/blog/posts/pc-setup-software-md/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/posts/linux-study-day04/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/blog/posts/linux-study-day04/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -106,17 +106,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-variable/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-variable/&text=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-variable/&is_video=false&description=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; 变量的设置规则&body=Check out this article: https://lwlog.cn/posts/linux-variable/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-variable/&name=&lt;笔记&gt; 变量的设置规则&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-variable/&t=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/blog/posts/linux-variable/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/blog/posts/linux-variable/&text=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/blog/posts/linux-variable/&is_video=false&description=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; 变量的设置规则&body=Check out this article: https://orangelegy.github.io/blog/posts/linux-variable/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/blog/posts/linux-variable/&name=&lt;笔记&gt; 变量的设置规则&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/blog/posts/linux-variable/&t=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -153,14 +153,14 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/categories/Linux/">Linux</a>
+        <a class="category-link" href="/blog/categories/Linux/">Linux</a>
     </div>
 
 
       
     <div class="article-tag">
         <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/variable/" rel="tag">variable</a>
+        <a class="p-category" href="/blog/tags/variable/" rel="tag">variable</a>
     </div>
 
 
@@ -247,17 +247,17 @@
     <div id="nav-footer" style="display: none">
       <ul>
         
-          <li><a href="/">/home</a></li>
+          <li><a href="/blog/">/home</a></li>
         
-          <li><a href="/archives/">/archive</a></li>
+          <li><a href="/blog/archives/">/archive</a></li>
         
-          <li><a href="/tags/">/tag</a></li>
+          <li><a href="/blog/tags/">/tag</a></li>
         
-          <li><a href="/categories/">/category</a></li>
+          <li><a href="/blog/categories/">/category</a></li>
         
-          <li><a href="/search/">/search</a></li>
+          <li><a href="/blog/search/">/search</a></li>
         
-          <li><a href="/about/">/about</a></li>
+          <li><a href="/blog/about/">/about</a></li>
         
       </ul>
     </div>
@@ -267,17 +267,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lwlog.cn/posts/linux-variable/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lwlog.cn/posts/linux-variable/&text=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lwlog.cn/posts/linux-variable/&is_video=false&description=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; 变量的设置规则&body=Check out this article: https://lwlog.cn/posts/linux-variable/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lwlog.cn/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lwlog.cn/posts/linux-variable/&name=&lt;笔记&gt; 变量的设置规则&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lwlog.cn/posts/linux-variable/&t=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/blog/posts/linux-variable/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/blog/posts/linux-variable/&text=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/blog/posts/linux-variable/&is_video=false&description=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;笔记&gt; 变量的设置规则&body=Check out this article: https://orangelegy.github.io/blog/posts/linux-variable/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/blog/posts/linux-variable/&title=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/blog/posts/linux-variable/&name=&lt;笔记&gt; 变量的设置规则&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/blog/posts/linux-variable/&t=&lt;笔记&gt; 变量的设置规则"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -305,17 +305,17 @@
     <nav>
       <ul>
         <!--
-       --><li><a href="/">/home</a></li><!--
+       --><li><a href="/blog/">/home</a></li><!--
      --><!--
-       --><li><a href="/archives/">/archive</a></li><!--
+       --><li><a href="/blog/archives/">/archive</a></li><!--
      --><!--
-       --><li><a href="/tags/">/tag</a></li><!--
+       --><li><a href="/blog/tags/">/tag</a></li><!--
      --><!--
-       --><li><a href="/categories/">/category</a></li><!--
+       --><li><a href="/blog/categories/">/category</a></li><!--
      --><!--
-       --><li><a href="/search/">/search</a></li><!--
+       --><li><a href="/blog/search/">/search</a></li><!--
      --><!--
-       --><li><a href="/about/">/about</a></li><!--
+       --><li><a href="/blog/about/">/about</a></li><!--
      -->
       </ul>
       <!-- 不蒜子统计 -->
@@ -333,21 +333,21 @@
  
   <link
     rel="preload"
-    href="/lib/font-awesome/css/all.min.css"
+    href="/blog/lib/font-awesome/css/all.min.css"
     as="style"
     onload="this.onload=null;this.rel='stylesheet'"
   />
   <noscript
     ><link
       rel="stylesheet"
-      href="/lib/font-awesome/css/all.min.css"
+      href="/blog/lib/font-awesome/css/all.min.css"
   /></noscript>
 
 
     <!-- jquery -->
 
   
-<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/jquery/jquery.min.js"></script>
 
 
 
@@ -357,7 +357,7 @@
 
   
     
-<script src="/lib/clipboard/clipboard.min.js"></script>
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
 
   
   <script type="text/javascript">
@@ -381,7 +381,7 @@
   </script>
 
 
-<script src="/js/main.js"></script>
+<script src="/blog/js/main.js"></script>
 
 <!-- search -->
 
