@@ -9,7 +9,7 @@
     <meta name="description" content="参考资料：鳥哥私房菜 - 第八章、檔案與檔案系統的壓縮,打包與備份  1. 压缩的基本概念1.1 为什么需要压缩 减少文件占用的磁盘空间 降低网络传输时间 便于数据归档和备份  1.2 Linux常见压缩文件扩展名   扩展名 对应压缩程序 说明    *.Z compress 已不流行，gzip可替代   *.zip zip Windows常见压缩格式   *.gz gzip GNU压缩，速度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux学习日志(5) 文件与文件系统的压缩、打包与备份">
-<meta property="og:url" content="https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/">
+<meta property="og:url" content="https://orangelegy.github.io/posts/linux-vbird-chapter08/">
 <meta property="og:site_name" content="青橙日志">
 <meta property="og:description" content="参考资料：鳥哥私房菜 - 第八章、檔案與檔案系統的壓縮,打包與備份  1. 压缩的基本概念1.1 为什么需要压缩 减少文件占用的磁盘空间 降低网络传输时间 便于数据归档和备份  1.2 Linux常见压缩文件扩展名   扩展名 对应压缩程序 说明    *.Z compress 已不流行，gzip可替代   *.zip zip Windows常见压缩格式   *.gz gzip GNU压缩，速度">
 <meta property="og:locale" content="en_US">
@@ -26,17 +26,17 @@
     
       
         
-          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          <link rel="shortcut icon" href="/images/favicon.ico">
         
       
       
         
-          <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
         
       
       
         
-          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
       
     
@@ -51,14 +51,14 @@
 
     <!-- styles -->
     
-<link rel="stylesheet" href="/blog/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
     <!-- persian styles -->
     
     <!-- rss -->
     
     
-      <link rel="alternate" href="/blog/atom.xml" title="青橙日志" type="application/atom+xml" />
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
     
 	<!-- mathjax -->
 	
@@ -76,17 +76,17 @@
     <span id="nav">
       <ul>
         <!--
-       --><li><a href="/blog/">/home</a></li><!--
+       --><li><a href="/">/home</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">/archive</a></li><!--
+       --><li><a href="/archives/">/archive</a></li><!--
      --><!--
-       --><li><a href="/blog/tags/">/tag</a></li><!--
+       --><li><a href="/tags/">/tag</a></li><!--
      --><!--
-       --><li><a href="/blog/categories/">/category</a></li><!--
+       --><li><a href="/categories/">/category</a></li><!--
      --><!--
-       --><li><a href="/blog/search/">/search</a></li><!--
+       --><li><a href="/search/">/search</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">/about</a></li><!--
+       --><li><a href="/about/">/about</a></li><!--
      -->
       </ul>
     </span>
@@ -94,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/blog/posts/linux-vbird-chapter09/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter09/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/blog/posts/linux-regular-expression/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-regular-expression/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -110,17 +110,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/posts/linux-vbird-chapter08/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://orangelegy.github.io/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -161,14 +161,14 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/blog/categories/Linux/">Linux</a>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
     </div>
 
 
       
     <div class="article-tag">
         <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/blog/tags/backup/" rel="tag">backup</a>, <a class="p-category" href="/blog/tags/command/" rel="tag">command</a>, <a class="p-category" href="/blog/tags/file/" rel="tag">file</a>, <a class="p-category" href="/blog/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/blog/tags/zip/" rel="tag">zip</a>
+        <a class="p-category" href="/tags/backup/" rel="tag">backup</a>, <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/file/" rel="tag">file</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/zip/" rel="tag">zip</a>
     </div>
 
 
@@ -659,17 +659,17 @@
     <div id="nav-footer" style="display: none">
       <ul>
         
-          <li><a href="/blog/">/home</a></li>
+          <li><a href="/">/home</a></li>
         
-          <li><a href="/blog/archives/">/archive</a></li>
+          <li><a href="/archives/">/archive</a></li>
         
-          <li><a href="/blog/tags/">/tag</a></li>
+          <li><a href="/tags/">/tag</a></li>
         
-          <li><a href="/blog/categories/">/category</a></li>
+          <li><a href="/categories/">/category</a></li>
         
-          <li><a href="/blog/search/">/search</a></li>
+          <li><a href="/search/">/search</a></li>
         
-          <li><a href="/blog/about/">/about</a></li>
+          <li><a href="/about/">/about</a></li>
         
       </ul>
     </div>
@@ -683,17 +683,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/posts/linux-vbird-chapter08/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&text=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&is_video=false&description=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&body=Check out this article: https://orangelegy.github.io/posts/linux-vbird-chapter08/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&title=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/posts/linux-vbird-chapter08/&name=Linux学习日志(5) 文件与文件系统的压缩、打包与备份&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/posts/linux-vbird-chapter08/&t=Linux学习日志(5) 文件与文件系统的压缩、打包与备份"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -723,17 +723,17 @@
     <nav>
       <ul>
         <!--
-       --><li><a href="/blog/">/home</a></li><!--
+       --><li><a href="/">/home</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">/archive</a></li><!--
+       --><li><a href="/archives/">/archive</a></li><!--
      --><!--
-       --><li><a href="/blog/tags/">/tag</a></li><!--
+       --><li><a href="/tags/">/tag</a></li><!--
      --><!--
-       --><li><a href="/blog/categories/">/category</a></li><!--
+       --><li><a href="/categories/">/category</a></li><!--
      --><!--
-       --><li><a href="/blog/search/">/search</a></li><!--
+       --><li><a href="/search/">/search</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">/about</a></li><!--
+       --><li><a href="/about/">/about</a></li><!--
      -->
       </ul>
       <!-- 不蒜子统计 -->
@@ -751,21 +751,21 @@
  
   <link
     rel="preload"
-    href="/blog/lib/font-awesome/css/all.min.css"
+    href="/lib/font-awesome/css/all.min.css"
     as="style"
     onload="this.onload=null;this.rel='stylesheet'"
   />
   <noscript
     ><link
       rel="stylesheet"
-      href="/blog/lib/font-awesome/css/all.min.css"
+      href="/lib/font-awesome/css/all.min.css"
   /></noscript>
 
 
     <!-- jquery -->
 
   
-<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/lib/jquery/jquery.min.js"></script>
 
 
 
@@ -775,7 +775,7 @@
 
   
     
-<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+<script src="/lib/clipboard/clipboard.min.js"></script>
 
   
   <script type="text/javascript">
@@ -799,7 +799,7 @@
   </script>
 
 
-<script src="/blog/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- search -->
 

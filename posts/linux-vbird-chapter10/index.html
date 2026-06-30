@@ -9,7 +9,7 @@
     <meta name="description" content="参考资料：鳥哥私房菜 - 第十章、認識與學習BASH  1. 认识 BASH 这个 Shell1.1 什么是 Shell 管理计算机硬件的其实是操作系统的核心（Kernel），这个核心需要被保护 我们只能通过 Shell 将输入的指令与 Kernel 沟通，让 Kernel 控制硬件来正确无误地工作 Shell 是用户与操作系统核心之间的接口程序  1.2 硬件、核心与 Shell 的关系 当你">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux学习日志(7) 认识与学习BASH">
-<meta property="og:url" content="https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/">
+<meta property="og:url" content="https://orangelegy.github.io/posts/linux-vbird-chapter10/">
 <meta property="og:site_name" content="青橙日志">
 <meta property="og:description" content="参考资料：鳥哥私房菜 - 第十章、認識與學習BASH  1. 认识 BASH 这个 Shell1.1 什么是 Shell 管理计算机硬件的其实是操作系统的核心（Kernel），这个核心需要被保护 我们只能通过 Shell 将输入的指令与 Kernel 沟通，让 Kernel 控制硬件来正确无误地工作 Shell 是用户与操作系统核心之间的接口程序  1.2 硬件、核心与 Shell 的关系 当你">
 <meta property="og:locale" content="en_US">
@@ -24,17 +24,17 @@
     
       
         
-          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          <link rel="shortcut icon" href="/images/favicon.ico">
         
       
       
         
-          <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
         
       
       
         
-          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
       
     
@@ -49,14 +49,14 @@
 
     <!-- styles -->
     
-<link rel="stylesheet" href="/blog/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
     <!-- persian styles -->
     
     <!-- rss -->
     
     
-      <link rel="alternate" href="/blog/atom.xml" title="青橙日志" type="application/atom+xml" />
+      <link rel="alternate" href="/atom.xml" title="青橙日志" type="application/atom+xml" />
     
 	<!-- mathjax -->
 	
@@ -74,17 +74,17 @@
     <span id="nav">
       <ul>
         <!--
-       --><li><a href="/blog/">/home</a></li><!--
+       --><li><a href="/">/home</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">/archive</a></li><!--
+       --><li><a href="/archives/">/archive</a></li><!--
      --><!--
-       --><li><a href="/blog/tags/">/tag</a></li><!--
+       --><li><a href="/tags/">/tag</a></li><!--
      --><!--
-       --><li><a href="/blog/categories/">/category</a></li><!--
+       --><li><a href="/categories/">/category</a></li><!--
      --><!--
-       --><li><a href="/blog/search/">/search</a></li><!--
+       --><li><a href="/search/">/search</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">/about</a></li><!--
+       --><li><a href="/about/">/about</a></li><!--
      -->
       </ul>
     </span>
@@ -92,10 +92,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/blog/posts/linux-vbird-chapter11/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/posts/linux-vbird-chapter11/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/blog/posts/linux-vbird-chapter09/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/posts/linux-vbird-chapter09/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -108,17 +108,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&text=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&is_video=false&description=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(7) 认识与学习BASH&body=Check out this article: https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&name=Linux学习日志(7) 认识与学习BASH&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&t=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/posts/linux-vbird-chapter10/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&text=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&is_video=false&description=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(7) 认识与学习BASH&body=Check out this article: https://orangelegy.github.io/posts/linux-vbird-chapter10/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&name=Linux学习日志(7) 认识与学习BASH&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/posts/linux-vbird-chapter10/&t=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -159,14 +159,14 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/blog/categories/Linux/">Linux</a>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
     </div>
 
 
       
     <div class="article-tag">
         <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/blog/tags/bash/" rel="tag">bash</a>, <a class="p-category" href="/blog/tags/command/" rel="tag">command</a>, <a class="p-category" href="/blog/tags/linux/" rel="tag">linux</a>
+        <a class="p-category" href="/tags/bash/" rel="tag">bash</a>, <a class="p-category" href="/tags/command/" rel="tag">command</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
     </div>
 
 
@@ -863,17 +863,17 @@
     <div id="nav-footer" style="display: none">
       <ul>
         
-          <li><a href="/blog/">/home</a></li>
+          <li><a href="/">/home</a></li>
         
-          <li><a href="/blog/archives/">/archive</a></li>
+          <li><a href="/archives/">/archive</a></li>
         
-          <li><a href="/blog/tags/">/tag</a></li>
+          <li><a href="/tags/">/tag</a></li>
         
-          <li><a href="/blog/categories/">/category</a></li>
+          <li><a href="/categories/">/category</a></li>
         
-          <li><a href="/blog/search/">/search</a></li>
+          <li><a href="/search/">/search</a></li>
         
-          <li><a href="/blog/about/">/about</a></li>
+          <li><a href="/about/">/about</a></li>
         
       </ul>
     </div>
@@ -887,17 +887,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&text=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&is_video=false&description=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux学习日志(7) 认识与学习BASH&body=Check out this article: https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&name=Linux学习日志(7) 认识与学习BASH&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/blog/posts/linux-vbird-chapter10/&t=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://orangelegy.github.io/posts/linux-vbird-chapter10/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&text=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&is_video=false&description=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux学习日志(7) 认识与学习BASH&body=Check out this article: https://orangelegy.github.io/posts/linux-vbird-chapter10/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&title=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://orangelegy.github.io/posts/linux-vbird-chapter10/&name=Linux学习日志(7) 认识与学习BASH&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://orangelegy.github.io/posts/linux-vbird-chapter10/&t=Linux学习日志(7) 认识与学习BASH"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -927,17 +927,17 @@
     <nav>
       <ul>
         <!--
-       --><li><a href="/blog/">/home</a></li><!--
+       --><li><a href="/">/home</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">/archive</a></li><!--
+       --><li><a href="/archives/">/archive</a></li><!--
      --><!--
-       --><li><a href="/blog/tags/">/tag</a></li><!--
+       --><li><a href="/tags/">/tag</a></li><!--
      --><!--
-       --><li><a href="/blog/categories/">/category</a></li><!--
+       --><li><a href="/categories/">/category</a></li><!--
      --><!--
-       --><li><a href="/blog/search/">/search</a></li><!--
+       --><li><a href="/search/">/search</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">/about</a></li><!--
+       --><li><a href="/about/">/about</a></li><!--
      -->
       </ul>
       <!-- 不蒜子统计 -->
@@ -955,21 +955,21 @@
  
   <link
     rel="preload"
-    href="/blog/lib/font-awesome/css/all.min.css"
+    href="/lib/font-awesome/css/all.min.css"
     as="style"
     onload="this.onload=null;this.rel='stylesheet'"
   />
   <noscript
     ><link
       rel="stylesheet"
-      href="/blog/lib/font-awesome/css/all.min.css"
+      href="/lib/font-awesome/css/all.min.css"
   /></noscript>
 
 
     <!-- jquery -->
 
   
-<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/lib/jquery/jquery.min.js"></script>
 
 
 
@@ -979,7 +979,7 @@
 
   
     
-<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+<script src="/lib/clipboard/clipboard.min.js"></script>
 
   
   <script type="text/javascript">
@@ -1003,7 +1003,7 @@
   </script>
 
 
-<script src="/blog/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- search -->
 
